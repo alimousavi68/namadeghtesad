@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+  نکته مهم:
+  ما متغیرها (--color-primary) را اینجا تعریف نمی‌کنیم.
+  آن‌ها در فایل tokens.css هستند که جداگانه لود می‌شود.
+  اینجا فقط ساختار Tailwind را ایمپورت می‌کنیم.
+*/
+
+@layer base {
+  body {
+    @apply bg-background text-text-main;
+  }
+}

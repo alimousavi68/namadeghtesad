@@ -1,0 +1,12 @@
+{
+  "name": "hasht-theme",
+  "version": "1.0.0",
+  "description": "WordPress Theme with Core Framework",
+  "scripts": {
+    "dev": "tailwindcss -i ./assets/css/src/input.css -o ./assets/css/theme.css --watch",
+    "build": "tailwindcss -i ./assets/css/src/input.css -o ./assets/css/theme.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}

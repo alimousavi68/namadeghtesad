@@ -8,9 +8,68 @@
   آن‌ها در فایل tokens.css هستند که جداگانه لود می‌شود.
   اینجا فقط ساختار Tailwind را ایمپورت می‌کنیم.
 */
+@font-face {
+  font-family: 'IRANYekanX';
+  src: url('../../fonts/\ IRANYekanX/woff/IRANYekanX-Regular.woff2') format('woff2'),
+       url('../../fonts/\ IRANYekanX/woff/IRANYekanX-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IRANYekanX';
+  src: url('../../fonts/\ IRANYekanX/woff/IRANYekanX-Bold.woff2') format('woff2'),
+       url('../../fonts/\ IRANYekanX/woff/IRANYekanX-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
 
 @layer base {
   body {
     @apply bg-background text-text-main;
+    font-family: 'IRANYekanX', sans-serif;
   }
+}
+
+body {
+    font-family: 'IRANYekanX', 'Vazirmatn', sans-serif;
+    background-color: #ffffff;
+    color: #1f2937;
+}
+
+/* Custom scrollbar for horizontal navigation */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Dark Mode Styles Logic */
+body.dark {
+    background-color: #111827;
+    color: #f3f4f6;
+}
+body.dark .bg-white { background-color: #1f2937; }
+body.dark .bg-gray-50 { background-color: #111827; }
+body.dark .bg-gray-100 { background-color: #374151; }
+body.dark .border-gray-200, body.dark .border-gray-100, body.dark .border-gray-50 { border-color: #374151; }
+body.dark .text-gray-900 { color: #f9fafb; }
+body.dark .text-gray-800 { color: #f3f4f6; }
+body.dark .text-gray-700 { color: #e5e7eb; }
+body.dark .text-gray-600 { color: #9ca3af; }
+body.dark .text-gray-500 { color: #9ca3af; }
+body.dark input { background-color: #374151; color: white; }
+
+/* Heartbeat Animation */
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.animate-heartbeat {
+    animation: heartbeat 1.7s infinite ease-in-out;
 }

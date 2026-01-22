@@ -12,17 +12,17 @@ if (file_exists(__DIR__ . '/_hasht_core/bootstrap.php')) {
 
 
 
-add_action('wp_enqueue_scripts', function () {
-    //1. Enqueue the lucide.js script
-    wp_enqueue_script(
-        'lucide',
-        'https://unpkg.com/lucide@latest',
-        [],
-        '1.0',
-        false
-    );
+// add_action('wp_enqueue_scripts', function () {
+//     //1. Enqueue the lucide.js script
+//     wp_enqueue_script(
+//         'lucide',
+//         'https://unpkg.com/lucide@latest',
+//         [],
+//         '1.0',
+//         false
+//     );
  
-});
+// });
 
 
 // add_action('wp_head', function () {

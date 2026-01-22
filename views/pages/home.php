@@ -1,171 +1,66 @@
 <?php
-
 /**
- * 
- * Home page view 
+ * Home page view
  */
-core_start_section('title'); ?>
-<?php core_end_section(); ?>
+core_start_section('title'); ?>نماد اقتصاد - پایگاه خبری تحلیلی<?php core_end_section(); ?>
 
-<!-- 1. Add Head Section -->
 <?php core_start_section('head'); ?>
-<!-- Add custom head content here -->
+<!-- Custom styles for Home Page -->
 <?php core_end_section(); ?>
 
-
-
-<!-- A. Add Content Section -->
 <?php core_start_section('content'); ?>
+    <!-- Hero Section -->
+    <?php core_view('partials/hero-section'); ?>
 
-<body class="transition-colors duration-300">
+    <!-- Content Body -->
+    <div class="container mx-auto px-4 mt-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
-    <!-- Sidebar Overlay & Menu -->
-    <?php core_view('partials/mobile-menu'); ?>
+            <!-- Main Content (Columns 1-9) -->
+            <div class="lg:col-span-9 space-y-8">
 
-    <!-- Header -->
-    <?php if (function_exists('core_view_exists') && core_view_exists('partials/header'))  core_view('partials/header'); ?>
+                <!-- Macro Econ Category -->
+                <?php core_view('partials/section-macro-economics'); ?>
 
+                <!-- Company Stories -->
+                <?php core_view('partials/section-company-stories'); ?>
 
+                <!-- Society + Sidebar -->
+                <div class="grid grid-cols-1 xl:grid-cols-12 gap-12">
+                    <div class="xl:col-span-8">
+                        <?php core_view('partials/section-society-economics'); ?>
+                    </div>
+                    <aside class="xl:col-span-4">
+                        <?php core_view('partials/section-notes-interviews'); ?>
+                    </aside>
+                </div>
 
-    <!-- Main Content -->
-    <main class="max-w-[1200px] mx-auto px-4 sm:px-6">
+                <!-- Industry & Energy (Feature Section) -->
+                <?php core_view('partials/section-industry-energy'); ?>
 
-        <!-- Hero Section -->
-        <?php
-        $hero_query_type = get_theme_mod('hasht_home_hero_query_type', 'latest');
-        $hero_cat        = get_theme_mod('hasht_home_hero_cat', '');
-        $hero_count      = get_theme_mod('hasht_home_hero_count', 5);
-        $hero_pt         = get_theme_mod('hasht_home_hero_post_type', 'all');
+                <!-- Visual Multimedia Showcase -->
+                <?php core_view('partials/section-multimedia'); ?>
 
-        $hero_args = ['posts_per_page' => $hero_count];
-        if ($hero_pt === 'all') {
-            $hero_args['post_type'] = ['post', 'aggregated_news'];
-        } else {
-            $hero_args['post_type'] = $hero_pt;
-        }
-        if ($hero_query_type === 'category' && !empty($hero_cat)) {
-            $hero_args['category_name'] = $hero_cat;
-        }
+            </div>
 
-        $hero_query = hasht_get_posts($hero_args);
-        
-        core_view('partials/hero', ['query' => $hero_query]);
-        ?>
+            <!-- Sidebar Area (Columns 10-12) -->
+            <aside class="lg:col-span-3">
+                <?php core_view('partials/sidebar-home'); ?>
+            </aside>
 
+        </div>
 
-        <!-- Latest News -->
-        <?php 
-        $latest_title      = get_theme_mod('hasht_home_latest_title', 'جدیدترین اخبار');
-        $latest_query_type = get_theme_mod('hasht_home_latest_query_type', 'latest');
-        $latest_cat        = get_theme_mod('hasht_home_latest_cat', '');
-        $latest_count      = get_theme_mod('hasht_home_latest_count', 6);
-        $latest_offset     = get_theme_mod('hasht_home_latest_offset', 5);
-        $latest_pt         = get_theme_mod('hasht_home_latest_post_type', 'all');
+        <!-- Bottom Categories -->
+        <?php core_view('partials/section-bottom-categories'); ?>
 
-        $latest_args = [
-            'posts_per_page' => $latest_count,
-            'offset'         => $latest_offset
-        ];
-        if ($latest_pt === 'all') {
-            $latest_args['post_type'] = ['post', 'aggregated_news'];
-        } else {
-            $latest_args['post_type'] = $latest_pt;
-        }
+        <!-- Publications -->
+        <?php core_view('partials/section-publications'); ?>
 
-        if ($latest_query_type === 'category' && !empty($latest_cat)) {
-            $latest_args['category_name'] = $latest_cat;
-        }
+    </div>
+<?php core_end_section(); ?>
 
-        $latest_query = hasht_get_posts($latest_args);
+<?php core_start_section('scripts'); ?>
+    <script src="<?php echo get_template_directory_uri(); ?>/assets/js/main.js" defer></script>
+<?php core_end_section(); ?>
 
-        core_view('partials/latest-news', [
-            'query' => $latest_query,
-            'title' => $latest_title
-        ]); 
-        ?>
-
-
-        <!-- Most visited -->
-        <?php 
-        $visited_title      = get_theme_mod('hasht_home_visited_title', 'اخبار پربازدید');
-        $visited_query_type = get_theme_mod('hasht_home_visited_query_type', 'latest');
-        $visited_cat        = get_theme_mod('hasht_home_visited_cat', '');
-        $visited_count      = get_theme_mod('hasht_home_visited_count', 10);
-        $visited_pt         = get_theme_mod('hasht_home_visited_post_type', 'all');
-
-        $visited_args = ['posts_per_page' => $visited_count];
-        if ($visited_pt === 'all') {
-            $visited_args['post_type'] = ['post', 'aggregated_news'];
-        } else {
-            $visited_args['post_type'] = $visited_pt;
-        }
-
-        if ($visited_query_type === 'category' && !empty($visited_cat)) {
-            $visited_args['category_name'] = $visited_cat;
-        }
-
-        $visited_query = hasht_get_posts($visited_args);
-
-        core_view('partials/most-visited', [
-            'query' => $visited_query,
-            'title' => $visited_title
-        ]);
-        ?>
-
-
-        <!-- Topic Section -->
-        <?php 
-        $topics_data = [];
-        for ($i = 1; $i <= 6; $i++) {
-            $t_title = get_theme_mod("hasht_home_topic_{$i}_title", "موضوع $i");
-            $t_cat   = get_theme_mod("hasht_home_topic_{$i}_cat", '');
-            $t_pt    = get_theme_mod("hasht_home_topic_{$i}_post_type", 'all');
-            
-            if (!empty($t_cat)) {
-                $t_args = [
-                    'category_name'  => $t_cat,
-                    'posts_per_page' => 5 
-                ];
-                if ($t_pt === 'all') {
-                    $t_args['post_type'] = ['post', 'aggregated_news'];
-                } else {
-                    $t_args['post_type'] = $t_pt;
-                }
-                $t_query = hasht_get_posts($t_args);
-                
-                if ($t_query->have_posts()) {
-                    $topics_data[] = [
-                        'title'    => $t_title,
-                        'query'    => $t_query,
-                        'cat_slug' => $t_cat
-                    ];
-                }
-            }
-        }
-
-        if (!empty($topics_data)) {
-            core_view('partials/topic-section', ['topics' => $topics_data]);
-        }
-        ?>
-
-    </main>
-
-    <!-- Footer -->
-    <?php core_view('partials/footer'); ?>
-
-    <?php core_end_section(); ?>
-
-
-    <!-- B. Add Scripts Section -->
-    <?php core_start_section('scripts'); ?>
-
-    <!-- JavaScript Logic -->
-    <script>
-        // Add your custom JavaScript code here
-    </script>
-    <?php core_end_section(); ?>
-
-
-    <?php
-    // Extend the base layout 
-    core_view('layout/base');
+<?php core_view('layout/base'); ?>

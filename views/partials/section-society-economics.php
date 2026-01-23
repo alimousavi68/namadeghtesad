@@ -1,3 +1,33 @@
+<?php
+// Retrieve settings
+$title    = get_theme_mod('hasht_home_society_title', 'جامعه و اقتصاد');
+$cat_slug = get_theme_mod('hasht_home_society_cat', '');
+$count    = get_theme_mod('hasht_home_society_count', 4);
+
+// Query
+$args = [
+    'post_type'      => ['post', 'aggregated_news'],
+    'posts_per_page' => $count,
+    'post_status'    => 'publish',
+    'orderby'        => 'date',
+    'order'          => 'DESC',
+];
+if ($cat_slug) {
+    $args['category_name'] = $cat_slug;
+}
+$query = new WP_Query($args);
+
+// Link to category if selected
+$cat_link = '#';
+if ($cat_slug) {
+    $cat_obj = get_category_by_slug($cat_slug);
+    if ($cat_obj) {
+        $cat_link = get_category_link($cat_obj->term_id);
+    }
+}
+?>
+
+<?php if ($query->have_posts()) : ?>
 <section class="mb-16">
     <div class="flex items-center justify-between mb-8">
         <h3 class="section-title flex items-center gap-4">
@@ -5,73 +35,37 @@
                 <div class="h-1/3 bg-slate-400"></div>
                 <div class="h-2/3 bg-primary-600"></div>
             </div>
-            جامعه و اقتصاد
+            <?php echo esc_html($title); ?>
         </h3>
-        <a href="#"
+        <a href="<?php echo esc_url($cat_link); ?>"
             class="link-more">
             مشاهده بیشتر <i data-lucide="arrow-left" width="16"></i>
         </a>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-        <!-- Item 1 -->
+        <?php while ($query->have_posts()) : $query->the_post(); 
+             $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'medium');
+        ?>
         <article class="news-card-v">
             <div class="news-card-v-img-wrapper">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gold-05.jpg" alt="Society"
-                    class="news-card-v-img">
+                <a href="<?php the_permalink(); ?>" class="block w-full h-full">
+                    <?php if ($thumb_url): ?>
+                        <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>"
+                            class="news-card-v-img">
+                    <?php else: ?>
+                        <div class="w-full h-full bg-slate-200"></div>
+                    <?php endif; ?>
+                </a>
             </div>
             <div class="news-card-v-content">
-                <h3
-                    class="news-card-v-title">
-                    افزایش تولید نفت در حوزه‌های مشترک خلیج فارس
+                <h3 class="news-card-v-title">
+                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                 </h3>
-                <span class="meta-text mt-auto block pt-1">۱۰ دقیقه
-                    پیش</span>
+                <span class="meta-text mt-auto block pt-1"><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?></span>
             </div>
         </article>
-        <!-- Item 2 -->
-        <article class="news-card-v">
-            <div class="news-card-v-img-wrapper">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/trid-11.jpg" alt="Society"
-                    class="news-card-v-img">
-            </div>
-            <div class="news-card-v-content">
-                <h3
-                    class="news-card-v-title">
-                    گزارش بانک مرکزی از وضعیت نقدینگی در پایان فصل
-                </h3>
-                <span class="meta-text mt-auto block pt-1">۱۵ دقیقه
-                    پیش</span>
-            </div>
-        </article>
-        <!-- Item 3 -->
-        <article class="news-card-v">
-            <div class="news-card-v-img-wrapper">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/N82862417-72240196.jpg" alt="Society"
-                    class="news-card-v-img">
-            </div>
-            <div class="news-card-v-content">
-                <h3
-                    class="news-card-v-title">
-                    صادرات محصولات پتروشیمی ۱۵ درصد رشد داشت
-                </h3>
-                <span class="meta-text mt-auto block pt-1">۲۵ دقیقه
-                    پیش</span>
-            </div>
-        </article>
-        <!-- Item 4 -->
-        <article class="news-card-v">
-            <div class="news-card-v-img-wrapper">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/bours-18.jpg" alt="Society"
-                    class="news-card-v-img">
-            </div>
-            <div class="news-card-v-content">
-                <h3
-                    class="news-card-v-title">
-                    بورس تهران دوباره سبز شد؛ گروه‌های بانکی پیشتاز
-                </h3>
-                <span class="meta-text mt-auto block pt-1">۳۰ دقیقه
-                    پیش</span>
-            </div>
-        </article>
+        <?php endwhile; wp_reset_postdata(); ?>
     </div>
 </section>
+<?php endif; ?>
+

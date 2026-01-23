@@ -34,77 +34,17 @@
             </div>
 
             <!-- Desktop Nav -->
-            <nav class="hidden lg:block">
-                <ul class="flex items-center">
-                    <li class="relative group">
-                        <a href="#"
-                            class="flex items-center gap-1 py-1.5 px-3 text-base font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-500 transition-all whitespace-nowrap">
-                            صفحه اصلی
-                        </a>
-                    </li>
-                    <span class="w-px h-5 bg-slate-200 dark:bg-slate-800 mx-1"></span>
-
-                    <li class="relative group">
-                        <a href="#"
-                            class="flex items-center gap-1 py-1.5 px-3 text-base font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-500 transition-all whitespace-nowrap">
-                            اقتصاد کلان
-                            <i data-lucide="chevron-down" width="14"
-                                class="opacity-50 group-hover:rotate-180 transition-transform"></i>
-                        </a>
-                        <ul
-                            class="absolute top-[100%] right-0 w-56 bg-white dark:bg-slate-800 shadow-xl border border-slate-100 dark:border-slate-700 rounded-xl py-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-[60]">
-                            <li><a href="#"
-                                    class="block px-6 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-rose-600">بودجه
-                                    و مالیات</a></li>
-                            <li><a href="#"
-                                    class="block px-6 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-rose-600">تورم
-                                    و رکود</a></li>
-                            <li><a href="#"
-                                    class="block px-6 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-rose-600">تجارت
-                                    خارجی</a></li>
-                        </ul>
-                    </li>
-                    <span class="w-px h-5 bg-slate-200 dark:bg-slate-800 mx-1"></span>
-
-                    <li class="relative group">
-                        <a href="#"
-                            class="flex items-center gap-1 py-1.5 px-3 text-base font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-500 transition-all whitespace-nowrap">
-                            صنعت و معدن
-                            <i data-lucide="chevron-down" width="14"
-                                class="opacity-50 group-hover:rotate-180 transition-transform"></i>
-                        </a>
-                        <ul
-                            class="absolute top-[100%] right-0 w-56 bg-white dark:bg-slate-800 shadow-xl border border-slate-100 dark:border-slate-700 rounded-xl py-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-[60]">
-                            <li><a href="#"
-                                    class="block px-6 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-rose-600">فولاد
-                                    و ذوب‌آهن</a></li>
-                            <li><a href="#"
-                                    class="block px-6 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-rose-600">صنایع
-                                    غذایی</a></li>
-                            <li><a href="#"
-                                    class="block px-6 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-rose-600">معدن
-                                    و اکتشاف</a></li>
-                        </ul>
-                    </li>
-                    <span class="w-px h-5 bg-slate-200 dark:bg-slate-800 mx-1"></span>
-
-                    <li class="relative group"><a href="#"
-                            class="flex items-center gap-1 py-1.5 px-3 text-base font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-500 transition-all whitespace-nowrap">بانک
-                            و بیمه</a></li>
-                    <span class="w-px h-5 bg-slate-200 dark:bg-slate-800 mx-1"></span>
-                    <li class="relative group"><a href="#"
-                            class="flex items-center gap-1 py-1.5 px-3 text-base font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-500 transition-all whitespace-nowrap">بورس</a>
-                    </li>
-                    <span class="w-px h-5 bg-slate-200 dark:bg-slate-800 mx-1"></span>
-                    <li class="relative group"><a href="#"
-                            class="flex items-center gap-1 py-1.5 px-3 text-base font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-500 transition-all whitespace-nowrap">انرژی</a>
-                    </li>
-                    <span class="w-px h-5 bg-slate-200 dark:bg-slate-800 mx-1"></span>
-                    <li class="relative group"><a href="#"
-                            class="flex items-center gap-1 py-1.5 px-3 text-base font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-500 transition-all whitespace-nowrap">خودرو</a>
-                    </li>
-                </ul>
-            </nav>
+            <?php
+            wp_nav_menu([
+                'theme_location' => 'header_main',
+                'container'      => 'nav',
+                'container_class'=> 'hidden lg:block',
+                'menu_class'     => 'flex items-center',
+                'fallback_cb'    => false,
+                'walker'         => new Hasht_Header_Walker(),
+                'depth'          => 2,
+            ]);
+            ?>
         </div>
 
         <!-- Action Buttons -->

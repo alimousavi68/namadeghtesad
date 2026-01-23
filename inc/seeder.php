@@ -14,98 +14,322 @@ function hasht_run_seeder() {
     echo '<div style="background:#fff; padding:20px; border:2px solid #000; position:relative; z-index:9999; direction:rtl; text-align:right; font-family:tahoma; line-height:1.6;">';
     echo '<h2>شروع عملیات تزریق محتوا...</h2>';
 
-    // Data Source: Real news titles and images
     $data = [
-        'technology' => [
-            'name' => 'فناوری',
+        'macro-economics' => [
+            'name' => 'اقتصاد کلان',
             'posts' => [
                 [
-                    'title' => 'هوش مصنوعی گوگل جمنای پرو ۱.۵ رونمایی شد؛ رقیب سرسخت GPT-4',
-                    'img' => 'https://cdn.zoomit.ir/2024/02/google-gemini-1-5-pro-cover.jpg',
+                    'title' => 'تحلیل جامع بودجه ۱۴۰۴: سناریوهای تورمی و رشد اقتصادی در سایه تحریم‌ها',
+                    'img' => '1906636_306.jpg', 
+                    'excerpt' => 'لایحه بودجه سال آینده در حالی به مجلس ارائه شده است که کارشناسان اقتصادی نظرات متفاوتی درباره میزان تحقق درآمدهای نفتی و مالیاتی آن دارند.',
+                    'content' => 'این یک متن نمونه برای پست است.',
+                    'meta' => [
+                        '_featured' => 'yes' 
+                    ]
                 ],
                 [
-                    'title' => 'سامسونگ گلکسی S24 اولترا بررسی شد: پادشاه جدید اندروید؟',
-                    'img' => 'https://cdn.zoomit.ir/2024/01/samsung-galaxy-s24-ultra-review-cover.jpg',
+                    'title' => 'نوسانات جدید در بازار ارز؛ واکنش بازار به اخبار سیاسی اخیر چه بود؟',
+                    'img' => '1906636_306.jpg',
+                    'excerpt' => 'بازار ارز در هفته گذشته نوسانات زیادی را تجربه کرد.',
                 ],
                 [
-                    'title' => 'مایکروسافت ویندوز ۱۲ را با تمرکز بر هوش مصنوعی منتشر می‌کند',
-                    'img' => 'https://cdn.zoomit.ir/2023/12/windows-12-ai-cover.jpg',
+                    'title' => 'تحول در صنعت خودرو؛ ورود برندهای جدید و کاهش قیمت‌های درب کارخانه',
+                    'img' => 'saipa-5.jpg', 
                 ],
                 [
-                    'title' => 'اپل ویژن پرو وارد بازار شد؛ انقلابی در دنیای واقعیت ترکیبی',
-                    'img' => 'https://cdn.zoomit.ir/2024/02/apple-vision-pro-review-cover.jpg',
+                    'title' => 'برداشت گندم در مزارع جنوبی کشور رکورد زد',
+                    'img' => 'e8b41645-22c4-4888-a71f-08ee61bf44fc.jpeg',
+                ],
+                [
+                    'title' => 'بهره‌برداری از فاز جدید پالایشگاه آبادان',
+                    'img' => 'gold-05.jpg', 
+                ],
+                [
+                    'title' => 'تسهیلات جدید دولت برای بافت فرسوده شهری',
+                    'img' => 'apartoman.jpg', 
+                ],
+                [
+                    'title' => 'رایزنی‌های اقتصادی ایران و کشورهای منطقه در تهران',
+                    'img' => 'hoseini-hi.jpg', 
+                ],
+                [
+                    'title' => 'برگزاری نمایشگاه بین‌المللی خودرو در اواخر بهمن',
+                    'img' => 'samand.jpg', 
+                ],
+                 [
+                    'title' => 'رشد اقتصادی ۸ درصدی در برنامه هفتم توسعه؛ رویا یا واقعیت؟',
+                    'img' => 'bank-168.jpg',
+                    'excerpt' => 'برنامه هفتم توسعه با هدف دستیابی به رشد اقتصادی ۸ درصدی تدوین شده است. اما کارشناسان نسبت به تحقق این هدف ابراز تردید می‌کنند.',
+                ]
+            ]
+        ],
+        'industry-mining' => [
+            'name' => 'صنعت و معدن',
+            'posts' => [
+                [
+                    'title' => 'شکست رکورد تولید فولاد در مجتمع‌های صنعتی کشور',
+                    'img' => 'Steel-production-1.webp',
+                ],
+                [
+                    'title' => 'اکتشاف پهنه‌های جدید معدنی در استان یزد',
+                    'img' => 'servatmand-15.jpg',
+                ],
+                [
+                    'title' => 'نوسازی ناوگان ماشین‌آلات سنگین معادن آغاز شد',
+                    'img' => 'seif-4.jpg',
                 ],
             ]
         ],
-        'sport' => [
-            'name' => 'ورزش',
+        'energy' => [
+            'name' => 'انرژی',
             'posts' => [
                 [
-                    'title' => 'پرسپولیس قهرمان نیم‌فصل لیگ برتر شد',
-                    'img' => 'https://newsmedia.tasnimnews.com/Tasnim/Uploaded/Image/1402/10/14/140210141947573429158374.jpg',
+                    'title' => 'توافق جدید گازی ایران با همسایگان شمالی',
+                    'img' => 'bit-usa.jpg',
                 ],
                 [
-                    'title' => 'لیست نهایی تیم ملی برای جام ملت‌های آسیا اعلام شد',
-                    'img' => 'https://cdn.isna.ir/d/2023/12/31/3/62804576.jpg',
+                    'title' => 'بهره‌برداری از بزرگترین مزرعه خورشیدی کشور',
+                    'img' => 'bit-usa.jpg', 
                 ],
                 [
-                    'title' => 'کریستیانو رونالدو بهترین گلزن سال ۲۰۲۳ جهان شد',
-                    'img' => 'https://cdn.isna.ir/d/2023/12/27/3/62801234.jpg',
+                    'title' => 'مدیریت مصرف برق صنایع در تابستان پیش‌رو',
+                    'img' => 'trid-11.jpg', 
+                ],
+                 [
+                    'title' => 'سرمایه‌گذاری خارجی در صنعت نفت و گاز افزایش یافت',
+                    'img' => 'bours-18.jpg',
+                    'excerpt' => 'وزیر نفت از امضای قراردادهای جدید با شرکت‌های خارجی خبر داد. این سرمایه‌گذاری‌ها می‌تواند ظرفیت تولید نفت ایران را افزایش دهد.',
+                ]
+            ]
+        ],
+        'society-economy' => [
+            'name' => 'جامعه و اقتصاد',
+            'posts' => [
+                [
+                    'title' => 'افزایش تولید نفت در حوزه‌های مشترک خلیج فارس',
+                    'img' => 'gold-05.jpg',
                 ],
                 [
-                    'title' => 'استقلال با نکونام به صدر جدول بازگشت',
-                    'img' => 'https://newsmedia.tasnimnews.com/Tasnim/Uploaded/Image/1402/09/23/140209231735431622896584.jpg',
+                    'title' => 'گزارش بانک مرکزی از وضعیت نقدینگی در پایان فصل',
+                    'img' => 'trid-11.jpg',
+                ],
+                [
+                    'title' => 'صادرات محصولات پتروشیمی ۱۵ درصد رشد داشت',
+                    'img' => 'N82862417-72240196.jpg',
+                ],
+                 [
+                    'title' => 'تاثیر نوسانات ارزی بر بازار مسکن؛ آیا زمان خرید فرا رسیده است؟',
+                    'img' => 'apartoman.jpg',
+                ],
+                 [
+                    'title' => 'جزئیات جدید از طرح مالیات بر عایدی سرمایه و طلا',
+                    'img' => 'gold-05.jpg',
                 ],
             ]
         ],
-        'cinema' => [
-            'name' => 'سینما',
+        'bank-insurance' => [
+            'name' => 'بانک و بیمه',
             'posts' => [
                 [
-                    'title' => 'فیلم "اوپنهایمر" جوایز اسکار را درو کرد',
-                    'img' => 'https://cdn.zoomg.ir/2023/7/oppenheimer-movie-review-cover.jpg',
+                    'title' => 'تحلیل جامع بودجه ۱۴۰۴: سناریوهای تورمی',
+                    'img' => 'seifi-2-672x378.jpg',
                 ],
                 [
-                    'title' => 'نقد و بررسی فیلم "قاتلان ماه گل"؛ شاهکار جدید اسکورسیزی',
-                    'img' => 'https://cdn.zoomg.ir/2023/10/killers-of-the-flower-moon-movie-review-cover.jpg',
+                    'title' => 'افزایش سرمایه بانک‌های دولتی در دستور کار',
+                    'img' => '_DSC4590-03.jpg',
                 ],
                 [
-                    'title' => 'فصل دوم سریال "زخم کاری" رکورد بازدید را شکست',
-                    'img' => 'https://cinematicket.org/v1/image/6530f0a0d9e5b.jpg',
+                    'title' => 'نرخ سود بین بانکی کاهش یافت',
+                    'img' => 'bank-168.jpg',
                 ],
                 [
-                    'title' => 'پوستر رسمی جشنواره فیلم فجر رونمایی شد',
-                    'img' => 'https://cdn.isna.ir/d/2024/01/20/3/62820543.jpg',
+                    'title' => 'تحلیل جامع سیاست‌های جدید بانک مرکزی؛ آیا نرخ سود تغییر می‌کند؟',
+                    'img' => 'bank-168.jpg',
+                    'excerpt' => 'رئیس کل بانک مرکزی در آخرین نشست خبری خود اشاراتی به تغییرات احتمالی در نرخ سود سپرده‌ها داشت.',
+                ],
+                [
+                     'title' => 'افزایش نرخ سود سپرده‌های بانکی؛ موافقان و مخالفان چه می‌گویند؟',
+                     'img' => 'bank-168.jpg',
+                     'excerpt' => 'شورای پول و اعتبار در جلسه اخیر خود با افزایش نرخ سود سپرده‌ها موافقت کرد.',
+                ],
+                [
+                    'title' => 'تاثیر نوسانات ارزی بر شرکت‌های بورسی؛ گزارش ویژه',
+                    'img' => 'bank-168.jpg',
+                    'excerpt' => 'بررسی صورت‌های مالی شرکت‌های صادرات‌محور نشان می‌دهد که افزایش نرخ ارز می‌تواند سودآوری این شرکت‌ها را در نیمه دوم سال به طرز چشمگیری افزایش دهد.',
+                ]
+            ]
+        ],
+        'bourse' => [
+            'name' => 'بورس',
+            'posts' => [
+                [
+                    'title' => 'بورس تهران دوباره سبز شد؛ گروه‌های بانکی پیشتاز',
+                    'img' => 'bours-18.jpg',
+                ],
+                [
+                    'title' => 'ثبت بیشترین حجم معاملات خرد در بورس تهران',
+                    'img' => 'bours-26.jpg',
+                ],
+                [
+                    'title' => 'عرضه اولیه جدید در راه است؛ سهامداران آماده باشند',
+                    'img' => 'bours-11.jpg',
+                    'excerpt' => 'شرکت سرمایه‌گذاری تامین اجتماعی از عرضه اولیه زیرمجموعه‌های خود خبر داد.',
+                ],
+                [
+                    'title' => 'شاخص کل از مرز ۲ میلیون واحد گذشت',
+                    'img' => 'bours-18.jpg',
+                ],
+                [
+                    'title' => 'رشد ۵۰ هزار واحدی شاخص کل؛ ورود پول حقیقی به بازار سهام',
+                    'img' => 'bours-18.jpg',
+                    'excerpt' => 'بازار بورس تهران امروز شاهد یکی از بهترین روزهای خود در سال جاری بود.',
+                ],
+                 [
+                    'title' => 'آینده بورس تهران در نیمه دوم سال چگونه خواهد بود؟',
+                    'img' => 'bours-26.jpg',
+                ],
+                 [
+                    'title' => 'سقوط آزاد بیت‌کوین؛ تحلیل تکنیکال روند بازار کریپتو',
+                    'img' => 'bit-usa.jpg',
+                ]
+            ]
+        ],
+        'gold-currency' => [
+            'name' => 'طلا و ارز',
+            'posts' => [
+                [
+                    'title' => 'نوسانات جدید در بازار ارز',
+                    'img' => 'gold-05.jpg',
+                ],
+                [
+                    'title' => 'قیمت سکه به کانال جدید وارد شد',
+                    'img' => 'trid-11.jpg',
+                ],
+                [
+                    'title' => 'پیش‌بینی قیمت طلا در هفته آینده؛ آیا روند صعودی ادامه خواهد داشت؟',
+                    'img' => 'bitcoin-gold20.jpg',
+                    'excerpt' => 'انس جهانی طلا با کاهش ۲۰ دلاری مواجه شد.',
+                ],
+                 [
+                    'title' => 'تحلیل تکنیکال دلار؛ مقاومت ۵۰ هزار تومانی شکسته می‌شود؟',
+                    'img' => 'gold-05.jpg',
+                    'excerpt' => 'بازار ارز در هفته گذشته نوسانات زیادی را تجربه کرد.',
+                ]
+            ]
+        ],
+        'automotive' => [
+            'name' => 'خودرو',
+            'posts' => [
+                [
+                    'title' => 'تحول در صنعت خودرو',
+                    'img' => 'sahand-411x231.jpg',
+                ],
+                [
+                    'title' => 'واردات خودروهای برقی سرعت گرفت',
+                    'img' => 'samand.jpg',
+                ],
+                [
+                    'title' => 'طرح جدید فروش ایران خودرو',
+                    'img' => 'saipa-5.jpg',
+                ],
+                 [
+                    'title' => 'جزئیات عرضه جدید خودرو در سامانه یکپارچه اعلام شد',
+                    'img' => 'saipa-5.jpg',
+                    'excerpt' => 'وزارت صمت در اطلاعیه‌ای شرایط جدید ثبت‌نام خودروهای داخلی و وارداتی را اعلام کرد.',
+                ],
+                 [
+                    'title' => 'واردات خودروهای کارکرده؛ چالش‌ها و فرصت‌ها',
+                    'img' => 'saipa-5.jpg',
+                    'excerpt' => 'مجلس شورای اسلامی لایحه واردات خودروهای کارکرده را تصویب کرد.',
+                ]
+            ]
+        ],
+        'multimedia' => [
+            'name' => 'چندرسانه‌ای',
+            'posts' => [
+                [
+                    'title' => 'تحلیل جامع: نبض بازارهای سرمایه‌گذاری در نیمه دوم سال (قسمت ۱)',
+                    'img' => '8424781_828.jpg',
+                    'excerpt' => 'ویدیو تحلیل بازار',
+                ],
+                [
+                    'title' => 'تحلیل جامع: نبض بازارهای سرمایه‌گذاری در نیمه دوم سال (قسمت ۲)',
+                    'img' => '8418285_305.jpg',
+                     'excerpt' => 'ویدیو تحلیل بازار',
+                ],
+                [
+                    'title' => 'تحلیل جامع: نبض بازارهای سرمایه‌گذاری در نیمه دوم سال (قسمت ۳)',
+                    'img' => 'IMG_0546-ak7532-ak7003-1200x800-1024x683.webp',
+                     'excerpt' => 'ویدیو تحلیل بازار',
                 ],
             ]
         ],
-         'economy' => [
-            'name' => 'اقتصاد',
+        'publications' => [
+            'name' => 'نشریات',
             'posts' => [
-                ['title' => 'قیمت دلار و طلا در بازار امروز کاهش یافت', 'img' => 'https://cdn.isna.ir/d/2023/05/01/3/62601234.jpg'],
-                ['title' => 'بورس تهران سبزپوش شد؛ شاخص کل بالا رفت', 'img' => 'https://cdn.isna.ir/d/2023/06/10/3/62654321.jpg'],
-                ['title' => 'شرایط جدید ثبت‌نام خودروهای وارداتی اعلام شد', 'img' => 'https://cdn.isna.ir/d/2023/08/15/3/62709876.jpg'],
-                ['title' => 'افزایش حقوق کارمندان در بودجه سال آینده تصویب شد', 'img' => 'https://cdn.isna.ir/d/2023/11/20/3/62765432.jpg'],
+                [
+                    'title' => 'ویژه نامه صنعت خودروسازی',
+                    'img' => '391-FelezatOnline-Final-scaled.jpg',
+                    'excerpt' => 'بررسی آینده برقی‌سازی ناوگان حمل و نقل عمومی در ایران.',
+                ],
+                [
+                    'title' => 'ماهنامه نماد اقتصاد - شماره ۴۲',
+                    'img' => '392-FelezatOnline-Cover-scaled.jpg',
+                    'excerpt' => 'پرونده ویژه: عبور از رکود تورمی.',
+                ],
+                [
+                    'title' => 'فصلنامه بررسی‌های اقتصادی',
+                    'img' => '393-Felezatonline-cover-V01-scaled.jpg',
+                    'excerpt' => 'تحلیل دقیق شاخص‌های کلان اقتصادی.',
+                ],
+                [
+                    'title' => 'سالنامه آماری اقتصاد ایران',
+                    'img' => '394-FelezatOnline-Final-Cover-scaled.jpg',
+                    'excerpt' => 'جامع‌ترین مرجع داده‌های اقتصادی ایران.',
+                ],
             ]
         ],
-        'health' => [
-            'name' => 'سلامت',
+        'notes-interviews' => [
+            'name' => 'یادداشت و مصاحبه',
             'posts' => [
-                ['title' => 'تاثیر ورزش روزانه بر کاهش استرس و اضطراب', 'img' => 'https://cdn.isna.ir/d/2023/04/10/3/62554321.jpg'],
-                ['title' => 'خواص شگفت‌انگیز چای سبز برای سلامتی', 'img' => 'https://cdn.isna.ir/d/2023/05/20/3/62612345.jpg'],
-                ['title' => 'چگونه خواب بهتری داشته باشیم؟ ۱۰ راهکار علمی', 'img' => 'https://cdn.isna.ir/d/2023/06/30/3/62698765.jpg'],
-                ['title' => 'علائم کمبود ویتامین D را جدی بگیرید', 'img' => 'https://cdn.isna.ir/d/2023/07/15/3/62745678.jpg'],
+                [
+                    'title' => 'بازگشت به ریل توسعه؛ نقشه راه میان‌مدت اقتصاد',
+                    'img' => 'janansefat-3.jpg',
+                    'meta' => [
+                        'author_name' => 'دکتر علیرضا افشار',
+                        'author_role' => 'شورای سردبیری',
+                    ]
+                ],
+                [
+                    'title' => 'گفت‌وگو با مدیرعامل بورس تهران درباره نوسانات اخیر',
+                    'img' => 'hoseini-hi.jpg',
+                    'meta' => [
+                        'author_name' => 'مهندس سهراب سپهری',
+                        'author_role' => 'شورای سردبیری',
+                    ]
+                ],
+                [
+                    'title' => 'سیاست‌های ارزی جدید و تاثیر آن بر صادرات غیرنفتی',
+                    'img' => 'download (3).jpeg',
+                    'meta' => [
+                        'author_name' => 'خانم دکتر مریم ایمانی',
+                        'author_role' => 'شورای سردبیری',
+                    ]
+                ],
             ]
         ],
-        'tourism' => [
-            'name' => 'گردشگری',
+         'companies' => [
+            'name' => 'شرکت‌ها',
             'posts' => [
-                ['title' => 'جاذبه‌های گردشگری ناشناخته ایران را بشناسید', 'img' => 'https://cdn.isna.ir/d/2023/03/10/3/62498765.jpg'],
-                ['title' => 'راهنمای سفر ارزان به استانبول', 'img' => 'https://cdn.isna.ir/d/2023/04/05/3/62543210.jpg'],
-                ['title' => 'بهترین زمان سفر به جزیره کیش', 'img' => 'https://cdn.isna.ir/d/2023/05/12/3/62609876.jpg'],
-                ['title' => 'روستای ماسوله؛ نگین گردشگری گیلان', 'img' => 'https://cdn.isna.ir/d/2023/06/25/3/62687654.jpg'],
+                 ['title' => 'ایران خودرو', 'img' => 'saipa-5.jpg'], 
+                 ['title' => 'سایپا', 'img' => 'saipa-5.jpg'],
+                 ['title' => 'بانک مرکزی', 'img' => 'bank-168.jpg'],
+                 ['title' => 'نفت و گاز پارس', 'img' => 'gold-05.jpg'],
+                 ['title' => 'فولاد مبارکه', 'img' => 'Steel-production-1.webp'],
+                 ['title' => 'ذوب آهن', 'img' => 'Steel-production-1.webp'],
+                 ['title' => 'مس کرمان', 'img' => 'servatmand-15.jpg'],
             ]
-        ]
+         ]
     ];
 
     foreach ($data as $slug => $info) {
@@ -129,38 +353,53 @@ function hasht_run_seeder() {
         foreach ($info['posts'] as $post_info) {
             // Check existence
             $exist = get_page_by_title($post_info['title'], OBJECT, 'post');
+            
+            $post_id = 0;
+            
             if ($exist) {
                 echo "<p style='color:orange'>پست موجود است: {$post_info['title']}</p>";
-                continue;
+                $post_id = $exist->ID;
+                // Ensure category
+                wp_set_post_categories($post_id, [$cat_id], true);
+            } else {
+                $post_data = [
+                    'post_title'    => $post_info['title'],
+                    'post_content'  => isset($post_info['content']) ? $post_info['content'] : 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.',
+                    'post_status'   => 'publish',
+                    'post_author'   => get_current_user_id(),
+                    'post_category' => [$cat_id],
+                    'post_excerpt'  => isset($post_info['excerpt']) ? $post_info['excerpt'] : 'خلاصه خبر: لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.',
+                ];
+
+                $post_id = wp_insert_post($post_data);
+
+                if (!is_wp_error($post_id)) {
+                    echo "<p style='color:green'>پست ایجاد شد: {$post_info['title']}</p>";
+                } else {
+                     echo "<p style='color:red'>خطا در ایجاد پست</p>";
+                     continue;
+                }
             }
 
-            $post_data = [
-                'post_title'    => $post_info['title'],
-                'post_content'  => 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.',
-                'post_status'   => 'publish',
-                'post_author'   => get_current_user_id(),
-                'post_category' => [$cat_id],
-                'post_excerpt'  => 'خلاصه خبر: لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.',
-            ];
+            // 3. Handle Meta
+            if (isset($post_info['meta']) && $post_id) {
+                foreach ($post_info['meta'] as $key => $value) {
+                    update_post_meta($post_id, $key, $value);
+                }
+            }
 
-            $post_id = wp_insert_post($post_data);
-
-            if (!is_wp_error($post_id)) {
-                echo "<p style='color:green'>پست ایجاد شد: {$post_info['title']}</p>";
-
-                // 3. Upload and Attach Image
-                if (!empty($post_info['img'])) {
-                    echo "<span> ... در حال دانلود تصویر ... </span>";
-                    $attach_id = hasht_sideload_image($post_info['img'], $post_id);
+            // 4. Upload and Attach Image (Local)
+            if (!empty($post_info['img']) && $post_id) {
+                if (!has_post_thumbnail($post_id)) {
+                    echo "<span> ... در حال اتصال تصویر ... </span>";
+                    $attach_id = hasht_import_local_image($post_info['img'], $post_id);
                     if ($attach_id) {
                         set_post_thumbnail($post_id, $attach_id);
                         echo "<span style='font-size:12px; color:blue; font-weight:bold;'> + تصویر شاخص ست شد</span>";
                     } else {
-                         echo "<span style='font-size:12px; color:red; font-weight:bold;'> - خطا در دانلود تصویر</span>";
+                         echo "<span style='font-size:12px; color:red; font-weight:bold;'> - تصویر یافت نشد یا خطا</span>";
                     }
                 }
-            } else {
-                 echo "<p style='color:red'>خطا در ایجاد پست</p>";
             }
         }
     }
@@ -170,27 +409,38 @@ function hasht_run_seeder() {
     exit;
 }
 
-// Helper to sideload image
-function hasht_sideload_image($url, $post_id) {
-    // Download file to temp
-    $tmp = download_url($url);
+// Helper to handle local image upload
+function hasht_import_local_image($filename, $post_id) {
+    if (empty($filename)) return false;
 
-    if (is_wp_error($tmp)) {
+    // Possible locations in assets
+    $assets_path = get_template_directory() . '/assets/images/';
+    $file_path = $assets_path . $filename;
+
+    if (!file_exists($file_path)) {
         return false;
     }
 
-    $file_array = [
-        'name' => basename($url),
-        'tmp_name' => $tmp
-    ];
-
-    // Check for file extension, if missing, assume jpg (common with some cdns)
-    if (!pathinfo($file_array['name'], PATHINFO_EXTENSION)) {
-        $file_array['name'] .= '.jpg';
+    // Check if already attached to avoid duplicates
+    $args = array(
+        'post_type' => 'attachment',
+        'name' => sanitize_title(pathinfo($filename, PATHINFO_FILENAME)),
+        'posts_per_page' => 1,
+        'post_status' => 'inherit',
+    );
+    $_attachments = get_posts( $args );
+    if ( $_attachments ) {
+         return $_attachments[0]->ID;
     }
 
-    // Fix query string in filename if present
-    $file_array['name'] = strtok($file_array['name'], '?');
+    // Copy to temp dir for media_handle_sideload
+    $tmp = sys_get_temp_dir() . '/' . $filename;
+    copy($file_path, $tmp);
+
+    $file_array = array(
+        'name'     => $filename,
+        'tmp_name' => $tmp,
+    );
 
     $id = media_handle_sideload($file_array, $post_id);
 
@@ -198,7 +448,7 @@ function hasht_sideload_image($url, $post_id) {
         @unlink($file_array['tmp_name']);
         return false;
     }
-
+    
     return $id;
 }
 

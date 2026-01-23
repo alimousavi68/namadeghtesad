@@ -56,35 +56,69 @@ class Hasht_Header_Walker extends Walker_Nav_Menu
     public function start_lvl(&$output, $depth = 0, $args = null)
     {
         $indent = str_repeat("\t", $depth);
-        $output .= "\n$indent<ul class=\"absolute top-full right-0 bg-white border border-gray-100 rounded-lg shadow-lg mt-3 min-w-[200px] py-2 hidden group-hover:block\">\n";
+        $output .= "\n$indent<ul class=\"absolute top-[100%] right-0 w-56 bg-white dark:bg-slate-800 shadow-xl border border-slate-100 dark:border-slate-700 rounded-xl py-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-[60]\">\n";
     }
+
     public function end_lvl(&$output, $depth = 0, $args = null)
     {
         $indent = str_repeat("\t", $depth);
         $output .= "$indent</ul>\n";
     }
+
     public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0)
     {
+        $indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
         $has_children = in_array('menu-item-has-children', (array)$item->classes, true);
-        $is_active = in_array('current-menu-item', (array)$item->classes, true)
-            || in_array('current_page_item', (array)$item->classes, true)
-            || in_array('current-menu-ancestor', (array)$item->classes, true)
-            || in_array('current_page_ancestor', (array)$item->classes, true)
-            || in_array('current-menu-parent', (array)$item->classes, true)
-            || in_array('current_page_parent', (array)$item->classes, true);
-        $li_classes = $depth === 0 ? 'relative group' : 'relative';
-        $output .= '<li class="' . esc_attr($li_classes) . '">';
-        $link_classes = $depth === 0
-            ? 'py-3 text-base font-medium whitespace-nowrap border-b-[3px] transition-colors duration-200'
-            : 'block px-4 py-2.5 text-base text-gray-700 hover:bg-gray-50';
+        
+        // Classes for the <li>
+        $li_classes = [];
         if ($depth === 0) {
-            $link_classes .= $is_active ? ' text-blue-700 border-blue-700' : ' border-transparent text-gray-600 hover:text-gray-900';
+            $li_classes[] = 'relative group flex items-center';
+        } else {
+            // Submenu item li classes? The static HTML doesn't show specific classes on submenu LI, only on A.
+            // But standard behavior needs some.
         }
-        $output .= '<a href="' . esc_url($item->url) . '" class="' . esc_attr($link_classes) . '">' . esc_html($item->title) . '</a>';
+        $class_names = join(' ', apply_filters('nav_menu_css_class', array_filter($li_classes), $item, $args, $depth));
+        $class_names = $class_names ? ' class="' . esc_attr($class_names) . '"' : '';
+
+        $output .= $indent . '<li' . $class_names . '>';
+
+        // Classes for the <a>
+        $link_classes = '';
+        if ($depth === 0) {
+            $link_classes = 'flex items-center gap-1 py-1.5 px-3 text-base font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-500 transition-all whitespace-nowrap';
+        } else {
+            $link_classes = 'block px-6 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-rose-600';
+        }
+
+        $attributes  = ! empty( $item->attr_title ) ? ' title="'  . esc_attr( $item->attr_title ) .'"' : '';
+        $attributes .= ! empty( $item->target )     ? ' target="' . esc_attr( $item->target     ) .'"' : '';
+        $attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : '';
+        $attributes .= ! empty( $item->url )        ? ' href="'   . esc_attr( $item->url        ) .'"' : '';
+        $attributes .= ' class="' . esc_attr($link_classes) . '"';
+
+        $item_output = $args->before;
+        $item_output .= '<a'. $attributes .'>';
+        $item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
+        
+        // Chevron for top level with children
+        if ($depth === 0 && $has_children) {
+            $item_output .= '<i data-lucide="chevron-down" width="14" class="opacity-50 group-hover:rotate-180 transition-transform"></i>';
+        }
+
+        $item_output .= '</a>';
+        $item_output .= $args->after;
+
+        $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
     }
+
     public function end_el(&$output, $item, $depth = 0, $args = null)
     {
-        $output .= "</li>";
+        // Add separator for top level items (except the last one which we handle via CSS group-last:hidden)
+        if ($depth === 0) {
+            $output .= '<span class="w-px h-5 bg-slate-200 dark:bg-slate-800 mx-1 block"></span>';
+        }
+        $output .= "</li>\n";
     }
 }
 

@@ -21,6 +21,40 @@ $settings = [
         'priority' => 30,
         'sections' => [
             
+            // News Ticker Settings
+            'hasht_home_ticker_sec' => [
+                'title' => 'خبرخوان متحرک (News Ticker)',
+                'fields' => [
+                    'hasht_home_ticker_enable' => [
+                        'label'   => 'فعال‌سازی خبرخوان',
+                        'type'    => 'checkbox',
+                        'default' => true,
+                    ],
+                    'hasht_home_ticker_title' => [
+                        'label'   => 'عنوان خبرخوان',
+                        'type'    => 'text',
+                        'default' => 'اخبار فوری',
+                    ],
+                    'hasht_home_ticker_cat' => [
+                        'label'   => 'دسته‌بندی مطالب',
+                        'type'    => 'select',
+                        'choices' => $cats_options,
+                        'default' => '',
+                    ],
+                    'hasht_home_ticker_count' => [
+                        'label'   => 'تعداد خبرها',
+                        'type'    => 'number',
+                        'default' => 5,
+                    ],
+                    'hasht_home_ticker_speed' => [
+                        'label'   => 'سرعت حرکت (ثانیه)',
+                        'description' => 'هرچه عدد بیشتر باشد، حرکت آهسته‌تر خواهد بود.',
+                        'type'    => 'number',
+                        'default' => 20,
+                    ],
+                ]
+            ],
+
             // Hero Section Settings
             'hasht_home_hero_sec' => [
                 'title' => 'بخش هیرو (Hero)',
@@ -160,8 +194,42 @@ $settings = [
                     ],
                 ]
             ],
+        ]
+    ],
 
-            // We can add other sections later as needed, keeping it clean for now.
+    // Social Media Settings (Independent Section)
+    'hasht_social_sec' => [
+        'title'    => 'شبکه‌های اجتماعی',
+        'priority' => 35,
+        'fields'   => [
+            // International
+            'hasht_social_instagram_enable' => [ 'label' => 'فعال‌سازی اینستاگرام', 'type' => 'checkbox', 'default' => false ],
+            'hasht_social_instagram_url'    => [ 'label' => 'لینک اینستاگرام', 'type' => 'text', 'default' => '' ],
+            
+            'hasht_social_twitter_enable'   => [ 'label' => 'فعال‌سازی توییتر (X)', 'type' => 'checkbox', 'default' => false ],
+            'hasht_social_twitter_url'      => [ 'label' => 'لینک توییتر', 'type' => 'text', 'default' => '' ],
+
+            'hasht_social_linkedin_enable'  => [ 'label' => 'فعال‌سازی لینکدین', 'type' => 'checkbox', 'default' => false ],
+            'hasht_social_linkedin_url'     => [ 'label' => 'لینک لینکدین', 'type' => 'text', 'default' => '' ],
+
+            'hasht_social_facebook_enable'  => [ 'label' => 'فعال‌سازی فیسبوک', 'type' => 'checkbox', 'default' => false ],
+            'hasht_social_facebook_url'     => [ 'label' => 'لینک فیسبوک', 'type' => 'text', 'default' => '' ],
+
+            'hasht_social_telegram_enable'  => [ 'label' => 'فعال‌سازی تلگرام', 'type' => 'checkbox', 'default' => false ],
+            'hasht_social_telegram_url'     => [ 'label' => 'لینک تلگرام', 'type' => 'text', 'default' => '' ],
+
+            // Iranian
+            'hasht_social_bale_enable'      => [ 'label' => 'فعال‌سازی بله', 'type' => 'checkbox', 'default' => false ],
+            'hasht_social_bale_url'         => [ 'label' => 'لینک بله', 'type' => 'text', 'default' => '' ],
+
+            'hasht_social_eitaa_enable'     => [ 'label' => 'فعال‌سازی ایتا', 'type' => 'checkbox', 'default' => false ],
+            'hasht_social_eitaa_url'        => [ 'label' => 'لینک ایتا', 'type' => 'text', 'default' => '' ],
+
+            'hasht_social_rubika_enable'    => [ 'label' => 'فعال‌سازی روبیکا', 'type' => 'checkbox', 'default' => false ],
+            'hasht_social_rubika_url'       => [ 'label' => 'لینک روبیکا', 'type' => 'text', 'default' => '' ],
+
+            'hasht_social_igap_enable'      => [ 'label' => 'فعال‌سازی آی‌گپ', 'type' => 'checkbox', 'default' => false ],
+            'hasht_social_igap_url'         => [ 'label' => 'لینک آی‌گپ', 'type' => 'text', 'default' => '' ],
         ]
     ]
 ];

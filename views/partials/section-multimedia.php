@@ -31,20 +31,20 @@ if ($cat_slug) {
 <?php if ($query->have_posts()) : ?>
 <section class="bg-slate-900 dark:bg-slate-950 rounded-xl p-8 md:p-10 text-white shadow-2xl relative overflow-hidden group">
 
-    <div class="absolute -top-24 -right-24 w-96 h-96 bg-rose-600/10 blur-[150px] rounded-full"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 blur-[150px] rounded-full"></div>
     <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 relative z-10 gap-8">
         <div>
             <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-4">
                 <div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">
                     <div class="h-1/3 bg-slate-400"></div>
-                    <div class="h-2/3 bg-rose-600"></div>
+                    <div class="h-2/3 bg-primary"></div>
                 </div>
                 <?php echo esc_html($title); ?>
             </h3>
-            <p class="text-slate-400 text-lg font-medium"><?php echo esc_html($subtitle); ?></p>
+            <p class="text-text-light text-lg font-medium"><?php echo esc_html($subtitle); ?></p>
         </div>
         <a href="<?php echo esc_url($cat_link); ?>"
-            class="flex items-center gap-1 text-sm font-bold text-white/70 hover:text-rose-500 transition-all">
+            class="flex items-center gap-1 text-sm font-bold text-white/70 hover:text-primary transition-all">
             مشاهده آرشیو <i data-lucide="arrow-left" width="16"></i>
         </a>
     </div>
@@ -62,7 +62,7 @@ if ($cat_slug) {
                         <div class="w-full h-full bg-slate-700 opacity-60"></div>
                     <?php endif; ?>
                     <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover/item:bg-transparent transition-colors">
-                        <div class="w-20 h-20 rounded-full bg-rose-600 flex items-center justify-center group-hover/item:bg-rose-300 group-hover/item:scale-110 transition-all shadow-2xl border-4 border-slate-400">
+                        <div class="w-20 h-20 rounded-full bg-primary flex items-center justify-center group-hover/item:bg-rose-300 group-hover/item:scale-110 transition-all shadow-2xl border-4 border-slate-400">
                             <i data-lucide="play" fill="white" class="text-white ml-1.5" width="32"></i>
                         </div>
                     </div>

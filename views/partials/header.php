@@ -1,24 +1,55 @@
 <!-- Header -->
 <header id="main-header"
-    class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-all duration-300 z-50 w-full relative">
+    class="bg-header-bg border-b border-slate-200 dark:border-slate-800 transition-all duration-300 z-50 w-full sticky top-0">
     <!-- Utility Bar -->
     <div
         class="bg-slate-50 dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800 py-1.5 hidden md:block">
         <div
-            class="container mx-auto px-4 flex justify-between items-center text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+            class="container mx-auto px-4 flex justify-between items-center text-[11px] text-slate-500 dark:text-text-light font-medium">
             <div class="flex items-center gap-6">
                 <span class="flex items-center gap-1.5"><i data-lucide="calendar" width="13"></i> <span
                         id="current-date"></span></span>
                 <span class="flex items-center gap-1.5"><i data-lucide="clock" width="13"></i> بروزرسانی:
-                    ۱۴:۳۵</span>
+                    <?php echo date_i18n('H:i'); ?></span>
             </div>
             <div class="flex items-center gap-6">
-                <a href="#" class="hover:text-rose-600 transition-colors">درباره ما</a>
-                <a href="#" class="hover:text-rose-600 transition-colors">تماس با ما</a>
+                <?php
+                wp_nav_menu([
+                    'theme_location' => 'top_bar',
+                    'container'      => false,
+                    'menu_class'     => 'flex items-center gap-6',
+                    'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                    'fallback_cb'    => false,
+                    'depth'          => 1,
+                    // Remove default list styles in a cleaner way if needed, but flex gap-6 handles layout
+                ]);
+                ?>
+                
                 <div class="flex items-center gap-4 pr-4 border-r border-slate-300 dark:border-slate-700">
-                    <i data-lucide="instagram" width="13" class="cursor-pointer hover:text-rose-600"></i>
-                    <i data-lucide="twitter" width="13" class="cursor-pointer hover:text-rose-600"></i>
-                    <i data-lucide="linkedin" width="13" class="cursor-pointer hover:text-rose-600"></i>
+                    <?php
+                    $socials = [
+                        'instagram' => 'instagram',
+                        'twitter'   => 'twitter',
+                        'linkedin'  => 'linkedin',
+                        'facebook'  => 'facebook',
+                        'telegram'  => 'send',
+                        'bale'      => 'message-circle', // Placeholder
+                        'eitaa'     => 'message-square', // Placeholder
+                        'rubika'    => 'box',            // Placeholder
+                        'igap'      => 'message-circle', // Placeholder
+                    ];
+
+                    foreach ($socials as $key => $icon) {
+                        $enable = get_theme_mod("hasht_social_{$key}_enable", false);
+                        $url    = get_theme_mod("hasht_social_{$key}_url", '#');
+
+                        if ($enable && !empty($url)) {
+                            echo '<a href="' . esc_url($url) . '" target="_blank" class="cursor-pointer hover:text-primary transition-colors">';
+                            echo '<i data-lucide="' . esc_attr($icon) . '" width="13"></i>';
+                            echo '</a>';
+                        }
+                    }
+                    ?>
                 </div>
             </div>
         </div>
@@ -29,8 +60,21 @@
         <div class="flex items-center gap-10 lg:gap-14">
             <!-- Logo -->
             <div class="flex items-center shrink-0">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logona (1) copy.webp" alt="نماد اقتصاد"
-                    class="h-[50px] md:h-[70px] w-auto object-contain dark:brightness-0 dark:invert" />
+                <?php 
+                $custom_logo_id = get_theme_mod('custom_logo');
+                if ($custom_logo_id) : 
+                    $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
+                ?>
+                    <a href="<?php echo home_url(); ?>" class="flex items-center">
+                        <img src="<?php echo esc_url($logo[0]); ?>" alt="<?php bloginfo('name'); ?>"
+                            class="block w-[180px] h-[50px] md:h-[70px] max-h-50 md:max-h-[70px] object-contain dark:brightness-0 dark:invert" />
+                    </a>
+                <?php else : ?>
+                    <a href="<?php echo home_url(); ?>" class="flex items-center">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logona (1) copy.webp" alt="<?php bloginfo('name'); ?>"
+                            class="block w-[180px] h-[50px] md:h-[70px] object-contain dark:brightness-0 dark:invert" />
+                    </a>
+                <?php endif; ?>
             </div>
 
             <!-- Desktop Nav -->
@@ -55,13 +99,13 @@
             </button>
 
             <button id="theme-toggle"
-                class="p-2.5 rounded-full hover:text-rose-600 dark:hover:text-rose-600 text-slate-600 dark:text-slate-300 transition-colors">
+                class="p-2.5 rounded-full hover:text-primary dark:hover:text-primary text-slate-600 dark:text-slate-300 transition-colors">
                 <i data-lucide="moon" width="22" stroke-width="1.5" id="theme-icon-moon"></i>
                 <i data-lucide="sun" width="22" stroke-width="1.5" id="theme-icon-sun" class="hidden"></i>
             </button>
 
             <button id="menu-toggle"
-                class="flex p-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+                class="flex p-2 text-text-main dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
                 <i data-lucide="menu" width="28"></i>
             </button>
         </div>
@@ -69,37 +113,30 @@
 
     <!-- Mobile Menu -->
     <nav id="mobile-menu"
-        class="fixed inset-y-0 right-0 w-80 bg-white dark:bg-slate-900 border-r border-slate-100 dark:border-slate-800 shadow-2xl transition-transform duration-300 z-[100] translate-x-full">
+        class="fixed inset-y-0 right-0 w-80 bg-header-bg border-r border-slate-100 dark:border-slate-800 shadow-2xl transition-transform duration-300 z-[100] translate-x-full">
         <div class="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
-            <img src="https://namadeghtesad.ir/wp-content/uploads/2023/12/logona.png" alt="نماد اقتصاد"
-                class="h-10 dark:brightness-0 dark:invert" />
+            <?php if (has_custom_logo()) : 
+                $custom_logo_id = get_theme_mod('custom_logo');
+                $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
+            ?>
+                <img src="<?php echo esc_url($logo[0]); ?>" alt="<?php bloginfo('name'); ?>" class="h-10 dark:brightness-0 dark:invert" />
+            <?php else: ?>
+                <img src="https://namadeghtesad.ir/wp-content/uploads/2023/12/logona.png" alt="نماد اقتصاد"
+                    class="h-10 dark:brightness-0 dark:invert" />
+            <?php endif; ?>
             <button id="menu-close"><i data-lucide="x" width="24"></i></button>
         </div>
-        <ul class="flex flex-col p-4">
-            <li class="border-b border-slate-50 last:border-none"><a href="#"
-                    class="block py-4 px-6 text-lg font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600">صفحه
-                    اصلی</a></li>
-            <li class="border-b border-slate-50 last:border-none"><a href="#"
-                    class="block py-4 px-6 text-lg font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600">اقتصاد
-                    کلان</a></li>
-            <li class="border-b border-slate-50 last:border-none"><a href="#"
-                    class="block py-4 px-6 text-lg font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600">صنعت
-                    و معدن</a></li>
-            <li class="border-b border-slate-50 last:border-none"><a href="#"
-                    class="block py-4 px-6 text-lg font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600">بانک
-                    و بیمه</a></li>
-            <li class="border-b border-slate-50 last:border-none"><a href="#"
-                    class="block py-4 px-6 text-lg font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600">بورس</a>
-            </li>
-            <li class="border-b border-slate-50 last:border-none"><a href="#"
-                    class="block py-4 px-6 text-lg font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600">انرژی</a>
-            </li>
-            <li class="border-b border-slate-50 last:border-none"><a href="#"
-                    class="block py-4 px-6 text-lg font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600">خودرو</a>
-            </li>
-        </ul>
+        
+        <?php
+        wp_nav_menu([
+            'theme_location' => 'mobile',
+            'container'      => false,
+            'menu_class'     => 'flex flex-col p-4',
+            'fallback_cb'    => false,
+            // Custom walker might be needed if mobile menu structure is complex, but standard li > a works for now based on previous HTML
+        ]);
+        ?>
     </nav>
-</header>
 
-<!-- News Ticker -->
-<?php core_view('partials/news-ticker'); ?>
+    <!-- News Ticker -->
+    <?php core_view('partials/news-ticker'); ?>

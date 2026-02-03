@@ -32,12 +32,19 @@ if (file_exists(__DIR__ . '/_hasht_core/bootstrap.php')) {
 // theme support
 add_theme_support('title-tag');
 add_theme_support('post-thumbnails');
+add_theme_support('custom-logo', [
+    'height'      => 100,
+    'width'       => 400,
+    'flex-height' => true,
+    'flex-width'  => true,
+]);
 
 add_action('after_setup_theme', function () {
     register_nav_menus([
         'primary' => 'منوی اصلی',
         'mobile'  => 'منوی موبایل',
         'footer'  => 'منوی فوتر',
+        'top_bar' => 'منوی نوار بالا',
     ]);
 });
 
@@ -49,6 +56,11 @@ if (file_exists(__DIR__ . '/inc/seeder.php')) {
 // Load News Aggregator Logic (CPT & Architecture)
 if (file_exists(__DIR__ . '/inc/news-aggregator.php')) {
     require_once __DIR__ . '/inc/news-aggregator.php';
+}
+
+// Load Custom Widgets
+if (file_exists(__DIR__ . '/inc/widgets.php')) {
+    require_once __DIR__ . '/inc/widgets.php';
 }
 
 class Hasht_Header_Walker extends Walker_Nav_Menu

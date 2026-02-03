@@ -105,20 +105,20 @@
     let lastScrollY = window.scrollY;
     const header = document.getElementById('main-header');
 
-    if (header) {
-        window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
+    // if (header) {
+    //     window.addEventListener('scroll', () => {
+    //         const currentScrollY = window.scrollY;
 
-            if (currentScrollY > lastScrollY && currentScrollY > 100) {
-                // Scrolling down & past threshold -> Hide
-                header.classList.add('-translate-y-full');
-            } else {
-                // Scrolling up -> Show
-                header.classList.remove('-translate-y-full');
-            }
+    //         if (currentScrollY > lastScrollY && currentScrollY > 100) {
+    //             // Scrolling down & past threshold -> Hide
+    //             header.classList.add('-translate-y-full');
+    //         } else {
+    //             // Scrolling up -> Show
+    //             header.classList.remove('-translate-y-full');
+    //         }
 
-            lastScrollY = currentScrollY;
-        });
-    }
+    //         lastScrollY = currentScrollY;
+    //     });
+    // }
 
 })(jQuery);

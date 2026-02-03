@@ -26,16 +26,16 @@ $author_image = $author_image ?? 'images/janansefat-3.jpg';
                 <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 mb-2">
                     <h1 class="text-2xl font-black text-slate-900 dark:text-white"><?php echo $author_name; ?></h1>
                     <span class="hidden md:inline-block w-1.5 h-1.5 bg-slate-300 rounded-full"></span>
-                    <span class="text-rose-600 font-bold text-sm"><?php echo $author_role; ?></span>
+                    <span class="text-primary font-bold text-sm"><?php echo $author_role; ?></span>
                 </div>
                 
-                <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6 text-sm md:text-base max-w-2xl">
+                <p class="text-slate-600 dark:text-text-light leading-relaxed mb-6 text-sm md:text-base max-w-2xl">
                     <?php echo $author_bio; ?>
                 </p>
 
                 <!-- Social Links -->
                 <div class="flex items-center justify-center md:justify-start gap-3">
-                    <a href="#" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-rose-600 hover:text-white flex items-center justify-center transition-all">
+                    <a href="#" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-primary hover:text-white flex items-center justify-center transition-all">
                         <i data-lucide="twitter" width="16"></i>
                     </a>
                     <a href="#" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-blue-600 hover:text-white flex items-center justify-center transition-all">
@@ -51,20 +51,20 @@ $author_image = $author_image ?? 'images/janansefat-3.jpg';
         <!-- Simple Category/Tag Header -->
         <div class="flex flex-col gap-4">
             <!-- Breadcrumb -->
-            <nav class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-2">
-                <a href="<?php echo home_url('/'); ?> " class="hover:text-rose-600 transition-colors">خانه</a>
+            <nav class="flex items-center gap-2 text-sm text-slate-500 dark:text-text-light mb-2">
+                <a href="<?php echo home_url('/'); ?> " class="hover:text-primary transition-colors">خانه</a>
                 <i data-lucide="chevron-left" width="14"></i>
                 <span class="text-slate-800 dark:text-slate-200 font-bold"><?php echo $archive_title; ?></span>
             </nav>
 
             <div class="flex items-center gap-4">
-                <div class="w-1.5 h-12 bg-rose-600 rounded-full"></div>
+                <div class="w-1.5 h-12 bg-primary rounded-full"></div>
                 <div>
                     <h1 class="text-3xl font-black text-slate-900 dark:text-white mb-1">
                         <?php echo $archive_title; ?>
                     </h1>
                     <?php if (!empty($archive_description)): ?>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">
+                        <p class="text-sm text-slate-500 dark:text-text-light">
                             <?php echo $archive_description; ?>
                         </p>
                     <?php endif; ?>

@@ -60,6 +60,44 @@ document.addEventListener('DOMContentLoaded', () => {
     if (menuToggle) menuToggle.addEventListener('click', toggleMenu);
     if (menuClose) menuClose.addEventListener('click', toggleMenu);
 
+
+    // Back to Top Button Logic
+    const backToTopBtn = document.getElementById('back-to-top');
+    const progressCircle = document.getElementById('progress-circle');
+    // r=23 => 2*pi*r ≈ 144.5
+    const circumference = 144.5;
+
+    if (backToTopBtn) {
+        const toggleBackToTop = () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            
+            // Toggle visibility
+            if (scrollTop > 300) {
+                backToTopBtn.classList.remove('opacity-0', 'invisible');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'invisible');
+            }
+
+            // Update progress ring if exists
+            if (progressCircle && docHeight > 0) {
+                const scrollPercent = scrollTop / docHeight;
+                // We want to show progress, so dashoffset goes from circumference (empty) to 0 (full)
+                // Offset = circumference - (percent * circumference)
+                const offset = circumference - (scrollPercent * circumference);
+                progressCircle.style.strokeDashoffset = Math.max(0, offset) + 'px'; // Ensure it doesn't go negative
+            }
+        };
+
+        window.addEventListener('scroll', toggleBackToTop);
+        // Initial check
+        toggleBackToTop();
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
     // Horizontal Scroll for Company Stories
     const scrollContainer = document.getElementById('company-scroll-area');
     const scrollLeftBtn = document.getElementById('scroll-left');
@@ -100,31 +138,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Back to Top Logic
-    const backToTopBtn = document.getElementById('back-to-top');
-    const progressCircle = document.getElementById('progress-circle');
-    const circumference = 301.59; // 2 * pi * r (r=48)
 
-    if (backToTopBtn && progressCircle) {
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = scrollTop / docHeight;
-            
-            // Toggle visibility
-            if (scrollTop > 300) {
-                backToTopBtn.classList.remove('opacity-0', 'invisible');
-            } else {
-                backToTopBtn.classList.add('opacity-0', 'invisible');
-            }
-
-            // Update progress ring
-            const offset = circumference - (scrollPercent * circumference);
-            progressCircle.style.strokeDashoffset = offset;
-        });
-
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    }
 });

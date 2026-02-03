@@ -18,7 +18,7 @@ core_start_section('title'); ?>جستجو - نماد اقتصاد<?php core_end_
                     
                     <!-- Breadcrumb -->
                     <nav class="flex items-center gap-2 text-sm text-slate-500 mb-6">
-                        <a href="<?php echo home_url('/'); ?>" class="hover:text-rose-600 transition-colors">خانه</a>
+                        <a href="<?php echo home_url('/'); ?>" class="hover:text-primary transition-colors">خانه</a>
                         <i data-lucide="chevron-left" width="14"></i>
                         <span class="font-bold text-slate-800 dark:text-slate-200">جستجو</span>
                     </nav>
@@ -28,23 +28,23 @@ core_start_section('title'); ?>جستجو - نماد اقتصاد<?php core_end_
                         <h1 class="text-xl font-black text-slate-900 dark:text-white mb-6">جستجو در اخبار</h1>
                         <form action="search.php" method="GET" class="relative">
                             <input type="text" name="q" placeholder="عبارت مورد نظر را جستجو کنید..." 
-                                class="w-full h-14 pr-12 pl-4 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-rose-500 dark:focus:border-rose-500 focus:ring-1 focus:ring-rose-500 transition-all text-slate-800 dark:text-slate-200 placeholder:text-slate-400">
-                            <button type="submit" class="absolute top-1/2 -translate-y-1/2 right-4 text-slate-400 hover:text-rose-600 transition-colors">
+                                class="w-full h-14 pr-12 pl-4 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-primary dark:focus:border-primary focus:ring-1 focus:ring-primary transition-all text-slate-800 dark:text-slate-200 placeholder:text-text-light">
+                            <button type="submit" class="absolute top-1/2 -translate-y-1/2 right-4 text-text-light hover:text-primary transition-colors">
                                 <i data-lucide="search" width="24"></i>
                             </button>
                         </form>
                         <div class="mt-4 flex flex-wrap items-center gap-2 text-sm text-slate-500">
                             <span>پیشنهادها:</span>
-                            <a href="#" class="px-3 py-1 bg-gray-100 dark:bg-slate-800 rounded-lg hover:bg-rose-50 hover:text-rose-600 transition-colors">بورس</a>
-                            <a href="#" class="px-3 py-1 bg-gray-100 dark:bg-slate-800 rounded-lg hover:bg-rose-50 hover:text-rose-600 transition-colors">قیمت دلار</a>
-                            <a href="#" class="px-3 py-1 bg-gray-100 dark:bg-slate-800 rounded-lg hover:bg-rose-50 hover:text-rose-600 transition-colors">خودرو</a>
+                            <a href="#" class="px-3 py-1 bg-gray-100 dark:bg-slate-800 rounded-lg hover:bg-rose-50 hover:text-primary transition-colors">بورس</a>
+                            <a href="#" class="px-3 py-1 bg-gray-100 dark:bg-slate-800 rounded-lg hover:bg-rose-50 hover:text-primary transition-colors">قیمت دلار</a>
+                            <a href="#" class="px-3 py-1 bg-gray-100 dark:bg-slate-800 rounded-lg hover:bg-rose-50 hover:text-primary transition-colors">خودرو</a>
                         </div>
                     </div>
 
                     <!-- Search Results Title -->
                     <div class="flex items-center justify-between mb-6">
                         <h2 class="text-lg font-bold text-slate-800 dark:text-slate-200">
-                            نتایج جستجو برای: <span class="text-rose-600">"بورس"</span>
+                            نتایج جستجو برای: <span class="text-primary">"بورس"</span>
                         </h2>
                         <span class="text-sm text-slate-500">۱۲ نتیجه یافت شد</span>
                     </div>
@@ -60,7 +60,7 @@ core_start_section('title'); ?>جستجو - نماد اقتصاد<?php core_end_
                             <div class="flex-1 flex flex-col">
                                 <div class="flex items-center gap-2 mb-3">
                                     <span class="text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">بورس</span>
-                                    <span class="text-[10px] text-slate-400 flex items-center gap-1">
+                                    <span class="text-[10px] text-text-light flex items-center gap-1">
                                         <i data-lucide="clock" width="10"></i>
                                         ۵ ساعت پیش
                                     </span>
@@ -68,15 +68,15 @@ core_start_section('title'); ?>جستجو - نماد اقتصاد<?php core_end_
                                 <h2 class="news-title text-lg md:text-xl font-black text-slate-800 dark:text-slate-100 leading-snug mb-3 transition-colors">
                                     <a href="#">رشد ۵۰ هزار واحدی شاخص کل؛ ورود پول حقیقی به بازار سهام</a>
                                 </h2>
-                                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed text-justify mb-4 line-clamp-2 md:line-clamp-3">
+                                <p class="text-sm text-slate-500 dark:text-text-light leading-relaxed text-justify mb-4 line-clamp-2 md:line-clamp-3">
                                     بازار بورس تهران امروز شاهد یکی از بهترین روزهای خود در سال جاری بود. ورود نقدینگی جدید و گزارش‌های مثبت شرکت‌ها باعث سبزپوشی اکثر نمادهای شاخص‌ساز شد.
                                 </p>
                                 <div class="mt-auto flex items-center justify-between border-t border-slate-100 dark:border-slate-800 pt-4">
-                                    <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                                    <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-text-light">
                                         <i data-lucide="user" width="14"></i>
                                         <span>تحریریه نماد</span>
                                     </div>
-                                    <a href="#" class="text-xs font-bold text-rose-600 flex items-center gap-1 hover:gap-2 transition-all">
+                                    <a href="#" class="text-xs font-bold text-primary flex items-center gap-1 hover:gap-2 transition-all">
                                         ادامه مطلب <i data-lucide="arrow-left" width="14"></i>
                                     </a>
                                 </div>
@@ -91,7 +91,7 @@ core_start_section('title'); ?>جستجو - نماد اقتصاد<?php core_end_
                             <div class="flex-1 flex flex-col">
                                 <div class="flex items-center gap-2 mb-3">
                                     <span class="text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">بانک و بیمه</span>
-                                    <span class="text-[10px] text-slate-400 flex items-center gap-1">
+                                    <span class="text-[10px] text-text-light flex items-center gap-1">
                                         <i data-lucide="clock" width="10"></i>
                                         ۲ روز پیش
                                     </span>
@@ -99,15 +99,15 @@ core_start_section('title'); ?>جستجو - نماد اقتصاد<?php core_end_
                                 <h2 class="news-title text-lg md:text-xl font-black text-slate-800 dark:text-slate-100 leading-snug mb-3 transition-colors">
                                     <a href="#">تاثیر نوسانات ارزی بر شرکت‌های بورسی؛ گزارش ویژه</a>
                                 </h2>
-                                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed text-justify mb-4 line-clamp-2 md:line-clamp-3">
+                                <p class="text-sm text-slate-500 dark:text-text-light leading-relaxed text-justify mb-4 line-clamp-2 md:line-clamp-3">
                                     بررسی صورت‌های مالی شرکت‌های صادرات‌محور نشان می‌دهد که افزایش نرخ ارز می‌تواند سودآوری این شرکت‌ها را در نیمه دوم سال به طرز چشمگیری افزایش دهد.
                                 </p>
                                 <div class="mt-auto flex items-center justify-between border-t border-slate-100 dark:border-slate-800 pt-4">
-                                    <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                                    <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-text-light">
                                         <i data-lucide="user" width="14"></i>
                                         <span>دکتر افشار</span>
                                     </div>
-                                    <a href="#" class="text-xs font-bold text-rose-600 flex items-center gap-1 hover:gap-2 transition-all">
+                                    <a href="#" class="text-xs font-bold text-primary flex items-center gap-1 hover:gap-2 transition-all">
                                         ادامه مطلب <i data-lucide="arrow-left" width="14"></i>
                                     </a>
                                 </div>

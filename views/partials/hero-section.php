@@ -49,24 +49,24 @@ if ($hero_query->have_posts()) :
                                 <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>"
                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 opacity-90 group-hover:opacity-100">
                             <?php else: ?>
-                                <div class="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">بدون تصویر</div>
+                                <div class="w-full h-full bg-slate-200 flex items-center justify-center text-text-light">بدون تصویر</div>
                             <?php endif; ?>
                         </a>
                     </div>
                     <div class="absolute -bottom-8 lg:-bottom-12 left-1/2 -translate-x-1/2 w-[90%] bg-white dark:bg-slate-900 p-4 lg:p-7 transition-transform duration-500 group-hover:-translate-y-2 z-20 border border-slate-100 dark:border-slate-800 rounded-t-xl">
                         <div class="pt-2 pb-2">
-                            <h2 class="text-lg lg:text-2xl font-black text-slate-900 dark:text-white leading-tight group-hover:text-rose-700 dark:group-hover:text-rose-500 transition-colors">
+                            <h2 class="text-lg lg:text-2xl font-black text-slate-900 dark:text-white leading-tight group-hover:text-primary dark:group-hover:text-primary transition-colors">
                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                             </h2>
-                            <div class="mt-3 flex items-center text-slate-400 text-[10px] lg:text-xs font-bold gap-3">
+                            <div class="mt-3 flex items-center text-text-light text-[10px] lg:text-xs font-bold gap-3">
                                 <span><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?></span>
                                 <span class="w-1 h-1 rounded-full bg-slate-200 dark:bg-slate-800"></span>
-                                <a href="<?php the_permalink(); ?>" class="text-rose-500">مشاهده کامل گزارش</a>
+                                <a href="<?php the_permalink(); ?>" class="text-primary">مشاهده کامل گزارش</a>
                             </div>
                         </div>
                         <div class="absolute bottom-0 left-0 right-0 h-1.5 flex overflow-hidden">
                             <div class="w-1/4 bg-slate-400"></div>
-                            <div class="w-3/4 bg-rose-600"></div>
+                            <div class="w-3/4 bg-primary"></div>
                         </div>
                     </div>
                 </div>
@@ -96,12 +96,12 @@ if ($hero_query->have_posts()) :
                         </div>
                         <div class="flex flex-col flex-1">
                             <?php if ($cat_name): ?>
-                                <span class="text-[10px] font-black text-rose-600 mb-1 hidden lg:block uppercase"><?php echo esc_html($cat_name); ?></span>
+                                <span class="text-[10px] font-black text-primary mb-1 hidden lg:block uppercase"><?php echo esc_html($cat_name); ?></span>
                             <?php endif; ?>
-                            <h3 class="text-sm lg:text-base font-black text-slate-800 dark:text-slate-100 leading-tight mb-2 group-hover:text-rose-600 transition-colors line-clamp-2">
+                            <h3 class="text-sm lg:text-base font-black text-slate-800 dark:text-slate-100 leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2">
                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                             </h3>
-                            <span class="text-[10px] text-slate-400 mt-auto block pt-1"><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?></span>
+                            <span class="text-[10px] text-text-light mt-auto block pt-1"><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?></span>
                         </div>
                     </div>
                 </div>
@@ -123,10 +123,10 @@ if ($hero_query->have_posts()) :
                             </a>
                         </div>
                         <div class="flex flex-col justify-center">
-                            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 line-clamp-2 leading-snug group-hover:text-rose-600 transition-colors">
+                            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 line-clamp-2 leading-snug group-hover:text-primary transition-colors">
                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                             </h4>
-                            <span class="text-[10px] font-black text-slate-400 mt-1"><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?></span>
+                            <span class="text-[10px] font-black text-text-light mt-1"><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?></span>
                         </div>
                     </div>
                     <?php endforeach; wp_reset_postdata(); ?>

@@ -29,14 +29,14 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                     <!-- Breadcrumb (Moved inside Article) -->
                     <div class="flex items-center justify-between mb-6 print:hidden">
                         <!-- Breadcrumb Links -->
-                        <nav class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-                            <a href="<?php echo home_url('/'); ?>" class="hover:text-rose-600 transition-colors">خانه</a>
+                        <nav class="flex items-center gap-2 text-sm text-slate-500 dark:text-text-light">
+                            <a href="<?php echo home_url('/'); ?>" class="hover:text-primary transition-colors">خانه</a>
                             <i data-lucide="chevron-left" width="14"></i>
-                            <a href="#" class="hover:text-rose-600 transition-colors">اقتصاد کلان</a>
+                            <a href="#" class="hover:text-primary transition-colors">اقتصاد کلان</a>
                         </nav>
 
                         <!-- Author & Date (Moved here) -->
-                        <div class="flex items-center gap-6 text-xs text-slate-400 font-bold">
+                        <div class="flex items-center gap-6 text-xs text-text-light font-bold">
                             <!-- News ID (Moved here) -->
                             <div class="flex items-center gap-2">
                                 <span class="">کد خبر:</span>
@@ -59,9 +59,9 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
 
                         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-6 mb-6 print:border-black">
                             <!-- Author Name (Replaced News ID) -->
-                            <div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 print:text-black">
-                                <i data-lucide="user" width="16" class="text-rose-600"></i>
-                                <span class="font-bold text-slate-700 dark:text-slate-200">دکتر علیرضا افشار</span>
+                            <div class="flex items-center gap-2 text-sm text-slate-500 dark:text-text-light print:text-black">
+                                <i data-lucide="user" width="16" class="text-primary"></i>
+                                <span class="font-bold text-text-main dark:text-slate-200">دکتر علیرضا افشار</span>
                             </div>
 
                             <!-- Tools (Print, Share) - Hidden in Print -->
@@ -89,7 +89,7 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                         </div>
 
                         <!-- Lead (Border moved to right) -->
-                        <p class="text-lg md:text-xl font-bold text-slate-600 dark:text-slate-300 leading-relaxed text-justify border-r-4 border-rose-600 pr-4 mb-8 print:text-black print:border-r-0 print:pr-0">
+                        <p class="text-lg md:text-xl font-bold text-slate-600 dark:text-slate-300 leading-relaxed text-justify border-r-4 border-primary pr-4 mb-8 print:text-black print:border-r-0 print:pr-0">
                             لایحه بودجه سال آینده در حالی به مجلس ارائه شده است که کارشناسان اقتصادی نظرات متفاوتی درباره میزان تحقق درآمدهای نفتی و مالیاتی آن دارند. آیا این بودجه می‌تواند تورم را مهار کند؟
                         </p>
 
@@ -118,12 +118,12 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                         </p>
 
                         <!-- Inline Related News -->
-                        <div class="my-8 bg-rose-50 dark:bg-slate-800/50 border-r-4 border-rose-600 p-5 rounded-l-xl print:hidden flex flex-col gap-2">
-                            <span class="text-xs font-black text-rose-600 flex items-center gap-2">
+                        <div class="my-8 bg-rose-50 dark:bg-slate-800/50 border-r-4 border-primary p-5 rounded-l-xl print:hidden flex flex-col gap-2">
+                            <span class="text-xs font-black text-primary flex items-center gap-2">
                                 <i data-lucide="link" width="14"></i>
                                 بیشتر بخوانید:
                             </span>
-                            <a href="#" class="text-sm md:text-base font-bold text-slate-800 dark:text-slate-200 hover:text-rose-600 transition-colors leading-relaxed">
+                            <a href="#" class="text-sm md:text-base font-bold text-slate-800 dark:text-slate-200 hover:text-primary transition-colors leading-relaxed">
                                 پیش‌بینی قیمت طلا و سکه در هفته آینده؛ آیا روند صعودی ادامه خواهد داشت؟
                             </a>
                         </div>
@@ -150,10 +150,10 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                     <!-- Tags -->
                     <div class="flex flex-wrap items-center gap-2 mt-10 pt-6 border-t border-slate-100 dark:border-slate-800 print:hidden">
                         <span class="text-sm font-bold text-slate-500 ml-2">برچسب‌ها:</span>
-                        <a href="#" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs text-slate-600 dark:text-slate-300 hover:bg-rose-600 hover:text-white transition-colors">بودجه ۱۴۰۴</a>
-                        <a href="#" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs text-slate-600 dark:text-slate-300 hover:bg-rose-600 hover:text-white transition-colors">اقتصاد ایران</a>
-                        <a href="#" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs text-slate-600 dark:text-slate-300 hover:bg-rose-600 hover:text-white transition-colors">تورم</a>
-                        <a href="#" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs text-slate-600 dark:text-slate-300 hover:bg-rose-600 hover:text-white transition-colors">مجلس شورای اسلامی</a>
+                        <a href="#" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs text-slate-600 dark:text-slate-300 hover:bg-primary hover:text-white transition-colors">بودجه ۱۴۰۴</a>
+                        <a href="#" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs text-slate-600 dark:text-slate-300 hover:bg-primary hover:text-white transition-colors">اقتصاد ایران</a>
+                        <a href="#" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs text-slate-600 dark:text-slate-300 hover:bg-primary hover:text-white transition-colors">تورم</a>
+                        <a href="#" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs text-slate-600 dark:text-slate-300 hover:bg-primary hover:text-white transition-colors">مجلس شورای اسلامی</a>
                     </div>
 
                     <!-- Author & Short Link Grid -->
@@ -165,22 +165,22 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                             </div>
                             <div class="flex-1">
                                 <h4 class="text-base font-black text-slate-800 dark:text-slate-100 mb-1">دکتر علیرضا افشار</h4>
-                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-2 line-clamp-2">
+                                <p class="text-xs text-slate-500 dark:text-text-light leading-relaxed mb-2 line-clamp-2">
                                     دکترای اقتصاد بین‌الملل و تحلیل‌گر ارشد بازارهای مالی.
                                 </p>
-                                <a href="#" class="text-rose-600 text-xs font-bold hover:underline">مشاهده دیگر مطالب</a>
+                                <a href="#" class="text-primary text-xs font-bold hover:underline">مشاهده دیگر مطالب</a>
                             </div>
                         </div>
 
                         <!-- Short Link Box -->
                         <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 flex flex-col justify-center items-start gap-3 h-full">
-                            <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                            <div class="flex items-center gap-2 text-slate-500 dark:text-text-light">
                                 <i data-lucide="link" width="16"></i>
                                 <span class="text-sm font-bold">لینک کوتاه مطلب:</span>
                             </div>
                             <div class="flex items-center gap-2 w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2">
                                 <span id="short-link-text" class="text-xs font-mono text-slate-600 dark:text-slate-300 dir-ltr select-all truncate">https://namad.ir/n/25489</span>
-                                <button id="copy-link-btn" class="text-slate-400 hover:text-rose-600 transition-colors shrink-0" title="کپی لینک">
+                                <button id="copy-link-btn" class="text-text-light hover:text-primary transition-colors shrink-0" title="کپی لینک">
                                     <i data-lucide="copy" width="16"></i>
                                 </button>
                             </div>
@@ -201,7 +201,7 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-1.5 h-8 flex flex-col  rounded-full overflow-hidden shrink-0">
                                 <div class="h-1/3 bg-slate-400"></div>
-                                <div class="h-2/3 bg-rose-600"></div>
+                                <div class="h-2/3 bg-primary"></div>
                             </div>
                             <h3 class="text-xl font-black text-slate-800 dark:text-white">اخبار مرتبط</h3>
                         </div>
@@ -212,10 +212,10 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/apartoman.jpg" alt="Related" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                 </div>
                                 <div class="flex-1">
-                                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 leading-relaxed group-hover:text-rose-600 transition-colors mb-2">
+                                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 leading-relaxed group-hover:text-primary transition-colors mb-2">
                                         تاثیر نوسانات ارزی بر بازار مسکن؛ آیا زمان خرید فرا رسیده است؟
                                     </h4>
-                                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                                    <div class="flex items-center gap-2 text-xs text-text-light">
                                         <i data-lucide="clock" width="12"></i>
                                         <span>۲ ساعت پیش</span>
                                     </div>
@@ -227,10 +227,10 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gold-05.jpg" alt="Related" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                 </div>
                                 <div class="flex-1">
-                                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 leading-relaxed group-hover:text-rose-600 transition-colors mb-2">
+                                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 leading-relaxed group-hover:text-primary transition-colors mb-2">
                                         جزئیات جدید از طرح مالیات بر عایدی سرمایه و طلا
                                     </h4>
-                                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                                    <div class="flex items-center gap-2 text-xs text-text-light">
                                         <i data-lucide="clock" width="12"></i>
                                         <span>۵ ساعت پیش</span>
                                     </div>
@@ -242,10 +242,10 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/bit-usa.jpg" alt="Related" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                 </div>
                                 <div class="flex-1">
-                                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 leading-relaxed group-hover:text-rose-600 transition-colors mb-2">
+                                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 leading-relaxed group-hover:text-primary transition-colors mb-2">
                                         سقوط آزاد بیت‌کوین؛ تحلیل تکنیکال روند بازار کریپتو
                                     </h4>
-                                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                                    <div class="flex items-center gap-2 text-xs text-text-light">
                                         <i data-lucide="clock" width="12"></i>
                                         <span>دیروز</span>
                                     </div>
@@ -257,10 +257,10 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/bours-26.jpg" alt="Related" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                 </div>
                                 <div class="flex-1">
-                                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 leading-relaxed group-hover:text-rose-600 transition-colors mb-2">
+                                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 leading-relaxed group-hover:text-primary transition-colors mb-2">
                                         آینده بورس تهران در نیمه دوم سال چگونه خواهد بود؟
                                     </h4>
-                                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                                    <div class="flex items-center gap-2 text-xs text-text-light">
                                         <i data-lucide="clock" width="12"></i>
                                         <span>۲ روز پیش</span>
                                     </div>
@@ -277,7 +277,7 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-1.5 h-8 flex flex-col  rounded-full overflow-hidden shrink-0">
                                 <div class="h-1/3 bg-slate-400"></div>
-                                <div class="h-2/3 bg-rose-600"></div>
+                                <div class="h-2/3 bg-primary"></div>
                             </div>
                             <h3 class="text-xl font-black text-slate-800 dark:text-white">دیدگاه‌ها</h3>
                         </div>
@@ -288,23 +288,23 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                                 <!-- Top Row: Textarea + Send Button -->
                                 <div class="flex items-start gap-3">
                                     <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center shrink-0">
-                                        <i data-lucide="user" class="text-slate-400" width="20"></i>
+                                        <i data-lucide="user" class="text-text-light" width="20"></i>
                                     </div>
                                     <div class="flex-1">
                                         <textarea
                                             id="comment-textarea"
                                             rows="1"
                                             placeholder="دیدگاه خود را بنویسید..."
-                                            class="w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-rose-600 dark:focus:border-rose-500 transition-all text-sm resize-none overflow-hidden min-h-[44px]"
+                                            class="w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-primary dark:focus:border-primary transition-all text-sm resize-none overflow-hidden min-h-[44px]"
                                             oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
 
                                         <!-- Hidden Fields (Toggle on focus) -->
                                         <div id="comment-details" class="hidden mt-3 grid grid-cols-1 md:grid-cols-2 gap-3 animate-fade-in">
-                                            <input type="text" placeholder="نام و نام خانوادگی" class="w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-rose-600 dark:focus:border-rose-500 transition-colors text-sm">
-                                            <input type="email" placeholder="ایمیل (نمایش داده نمی‌شود)" class="w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-rose-600 dark:focus:border-rose-500 transition-colors text-sm">
+                                            <input type="text" placeholder="نام و نام خانوادگی" class="w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-primary dark:focus:border-primary transition-colors text-sm">
+                                            <input type="email" placeholder="ایمیل (نمایش داده نمی‌شود)" class="w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-primary dark:focus:border-primary transition-colors text-sm">
                                         </div>
                                     </div>
-                                    <button type="submit" class="shrink-0 bg-rose-600 hover:bg-rose-700 text-white w-11 h-11 rounded-xl flex items-center justify-center transition-colors shadow-md hover:shadow-lg">
+                                    <button type="submit" class="shrink-0 bg-primary hover:bg-primary text-white w-11 h-11 rounded-xl flex items-center justify-center transition-colors shadow-md hover:shadow-lg">
                                         <i data-lucide="send" width="18"></i>
                                     </button>
                                 </div>
@@ -317,15 +317,15 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                             <div class="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-5">
                                 <div class="flex items-center justify-between mb-3">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-9 h-9 rounded-full bg-rose-50 dark:bg-rose-900/20 flex items-center justify-center text-rose-600 dark:text-rose-400 font-bold text-sm">
+                                        <div class="w-9 h-9 rounded-full bg-rose-50 dark:bg-rose-900/20 flex items-center justify-center text-primary dark:text-rose-400 font-bold text-sm">
                                             م
                                         </div>
                                         <div>
                                             <h5 class="text-sm font-bold text-slate-800 dark:text-slate-200">محمد رضایی</h5>
-                                            <span class="text-[10px] text-slate-400">۱۴ بهمن ۱۴۰۳ - ۱۰:۳۰</span>
+                                            <span class="text-[10px] text-text-light">۱۴ بهمن ۱۴۰۳ - ۱۰:۳۰</span>
                                         </div>
                                     </div>
-                                    <button class="text-xs text-slate-400 hover:text-rose-600 font-medium transition-colors flex items-center gap-1">
+                                    <button class="text-xs text-text-light hover:text-primary font-medium transition-colors flex items-center gap-1">
                                         <i data-lucide="reply" width="14"></i> پاسخ
                                     </button>
                                 </div>
@@ -341,15 +341,15 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                                                 ادمین
                                             </div>
                                             <div>
-                                                <h5 class="text-xs font-bold text-slate-700 dark:text-slate-300">پاسخ ادمین</h5>
-                                                <span class="text-[10px] text-slate-400">۱۰ دقیقه پیش</span>
+                                                <h5 class="text-xs font-bold text-text-main dark:text-slate-300">پاسخ ادمین</h5>
+                                                <span class="text-[10px] text-text-light">۱۰ دقیقه پیش</span>
                                             </div>
                                         </div>
-                                        <button class="text-[10px] text-slate-400 hover:text-rose-600 font-medium transition-colors flex items-center gap-1">
+                                        <button class="text-[10px] text-text-light hover:text-primary font-medium transition-colors flex items-center gap-1">
                                             <i data-lucide="reply" width="12"></i> پاسخ
                                         </button>
                                     </div>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                                    <p class="text-xs text-slate-500 dark:text-text-light leading-relaxed">
                                         سلام محمد عزیز، ممنون از نظر لطف شما. امیدواریم سیاست‌گذار به این نکات توجه کند.
                                     </p>
                                 </div>
@@ -364,10 +364,10 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                                         </div>
                                         <div>
                                             <h5 class="text-sm font-bold text-slate-800 dark:text-slate-200">سارا احمدی</h5>
-                                            <span class="text-[10px] text-slate-400">۱۴ بهمن ۱۴۰۳ - ۱۱:۱۵</span>
+                                            <span class="text-[10px] text-text-light">۱۴ بهمن ۱۴۰۳ - ۱۱:۱۵</span>
                                         </div>
                                     </div>
-                                    <button class="text-xs text-slate-400 hover:text-rose-600 font-medium transition-colors flex items-center gap-1">
+                                    <button class="text-xs text-text-light hover:text-primary font-medium transition-colors flex items-center gap-1">
                                         <i data-lucide="reply" width="14"></i> پاسخ
                                     </button>
                                 </div>
@@ -434,9 +434,9 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                     });
 
                     // Optional: Highlight effect
-                    container.classList.add('ring-2', 'ring-rose-600', 'transition-all', 'duration-500');
+                    container.classList.add('ring-2', 'ring-primary', 'transition-all', 'duration-500');
                     setTimeout(() => {
-                        container.classList.remove('ring-2', 'ring-rose-600');
+                        container.classList.remove('ring-2', 'ring-primary');
                     }, 1500);
                 });
             }

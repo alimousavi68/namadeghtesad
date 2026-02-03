@@ -10,18 +10,10 @@
 */
 @font-face {
   font-family: 'IRANYekanX';
-  src: url('../../fonts/\ IRANYekanX/woff/IRANYekanX-Regular.woff2') format('woff2'),
-       url('../../fonts/\ IRANYekanX/woff/IRANYekanX-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IRANYekanX';
-  src: url('../../fonts/\ IRANYekanX/woff/IRANYekanX-Bold.woff2') format('woff2'),
-       url('../../fonts/\ IRANYekanX/woff/IRANYekanX-Bold.woff') format('woff');
-  font-weight: bold;
+  src: url('../../fonts/IRANYekanX/IRANYekanXVF.woff2') format('woff2-variations'),
+       url('../../fonts/IRANYekanX/IRANYekanXVF.woff2') format('woff2'),
+       url('../../fonts/IRANYekanX/IRANYekanXVF.woff') format('woff');
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }

@@ -138,7 +138,8 @@ class Hasht_Mobile_Walker extends Walker_Nav_Menu
 {
     public function start_lvl(&$output, $depth = 0, $args = null)
     {
-        $output .= '<ul class="hidden pl-3">';
+        // Floating card style for submenus
+        $output .= '<ul class="hidden bg-slate-50 dark:bg-slate-800/50 rounded-xl p-2 mt-2 space-y-1 mx-4 shadow-inner">';
     }
     public function end_lvl(&$output, $depth = 0, $args = null)
     {
@@ -147,13 +148,28 @@ class Hasht_Mobile_Walker extends Walker_Nav_Menu
     public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0)
     {
         $has_children = in_array('menu-item-has-children', (array)$item->classes, true);
-        $output .= '<li class="relative">';
-        $output .= '<div class="flex items-center justify-between">';
-        $output .= '<a href="' . esc_url($item->url) . '" class="px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 dark:text-gray-200 dark:hover:text-gray-400 font-medium transition-colors">' . esc_html($item->title) . '</a>';
-        if ($has_children) {
-            $output .= '<button type="button" class="px-2 text-gray-500" data-toggle-submenu aria-expanded="false"><i data-lucide="chevron-down" class="w-4 h-4"></i></button>';
+        $output .= '<li class="relative group">';
+        
+        if ($depth === 0) {
+            // Top Level Items
+            $output .= '<div class="flex items-center justify-between border-b border-slate-50 dark:border-slate-800/50 last:border-0">';
+            $output .= '<a href="' . esc_url($item->url) . '" class="flex-1 px-4 py-4 text-base font-bold text-slate-800 dark:text-slate-100 hover:text-rose-600 transition-colors">' . esc_html($item->title) . '</a>';
+            
+            if ($has_children) {
+                $output .= '<button type="button" class="p-4 text-slate-400 hover:text-rose-600 transition-colors" data-toggle-submenu aria-expanded="false">';
+                $output .= '<i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></i>';
+                $output .= '</button>';
+            }
+            $output .= '</div>';
+        } else {
+            // Submenu Items
+            $output .= '<a href="' . esc_url($item->url) . '" class="block px-3 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-700 hover:text-rose-600 rounded-lg transition-all shadow-sm hover:shadow-md">';
+            $output .= '<div class="flex items-center gap-2">';
+            $output .= '<span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600 group-hover:bg-rose-500 transition-colors"></span>';
+            $output .= esc_html($item->title);
+            $output .= '</div>';
+            $output .= '</a>';
         }
-        $output .= '</div>';
     }
     public function end_el(&$output, $item, $depth = 0, $args = null)
     {

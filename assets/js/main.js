@@ -49,16 +49,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById('menu-toggle');
     const menuClose = document.getElementById('menu-close');
     const mobileMenu = document.getElementById('mobile-menu');
+    const mobileOverlay = document.getElementById('mobile-menu-overlay');
 
     function toggleMenu() {
         if (mobileMenu) {
             mobileMenu.classList.toggle('translate-x-full');
             mobileMenu.classList.toggle('translate-x-0');
+            
+            if (mobileOverlay) {
+                mobileOverlay.classList.toggle('opacity-0');
+                mobileOverlay.classList.toggle('invisible');
+            }
         }
     }
 
     if (menuToggle) menuToggle.addEventListener('click', toggleMenu);
     if (menuClose) menuClose.addEventListener('click', toggleMenu);
+    if (mobileOverlay) mobileOverlay.addEventListener('click', toggleMenu);
 
 
     // Back to Top Button Logic

@@ -104,7 +104,7 @@ class Hasht_Selected_News_Widget extends WP_Widget {
                 echo '<div class="flex items-center justify-between mb-4 shrink-0">';
                 echo '<h3 class="section-title flex items-center gap-4 text-xl font-black">';
                 echo '<div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">';
-                echo '<div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-rose-600"></div>';
+                echo '<div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div>';
                 echo '</div>';
                 echo esc_html($title);
                 echo '</h3>';
@@ -191,7 +191,7 @@ class Hasht_Selected_News_Widget extends WP_Widget {
                 while ($query->have_posts()) {
                     $query->the_post();
                     ?>
-                    <div class="group cursor-pointer flex items-center gap-3 border-b border-slate-50 dark:border-slate-800/50 py-4 last:border-none">
+                    <div class="group cursor-pointer flex items-center gap-5 border-b border-slate-50 dark:border-slate-800/50 py-4 last:border-none">
                         <div class="flex shrink-0 items-center justify-center min-w-[0.875rem] h-3.5 rounded-full border border-primary/40 bg-primary/5 group-hover:bg-primary transition-colors">
                             <div class="w-1 h-1 rounded-full bg-primary group-hover:bg-white transition-colors"></div>
                         </div>

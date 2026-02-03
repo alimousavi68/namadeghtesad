@@ -30,15 +30,15 @@ if ($cat_slug) {
 <?php if ($query->have_posts()) : ?>
 <section class="mb-16">
     <div class="flex items-center justify-between mb-8">
-        <h3 class="section-title flex items-center gap-4">
+        <h3 class="section-title flex items-center gap-4 text-xl font-black">
             <div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">
                 <div class="h-1/3 bg-slate-400"></div>
-                <div class="h-2/3 bg-primary-600"></div>
+                <div class="h-2/3 bg-primary"></div>
             </div>
             <?php echo esc_html($title); ?>
         </h3>
         <a href="<?php echo esc_url($cat_link); ?>"
-            class="link-more">
+            class="flex items-center gap-1 text-sm font-bold text-text-light dark:text-slate-500 hover:text-primary transition-all">
             مشاهده بیشتر <i data-lucide="arrow-left" width="16"></i>
         </a>
     </div>

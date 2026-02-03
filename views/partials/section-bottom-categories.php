@@ -3,13 +3,13 @@
     <!-- Bank & Insurance -->
     <section class="lg:pl-6">
         <div class="flex items-center justify-between mb-6">
-            <h3 class="section-title flex items-center gap-4">
-                <div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">
-                    <div class="h-1/3 bg-slate-400"></div>
-                    <div class="h-2/3 bg-primary"></div>
-                </div>
-                بانک و بیمه
-            </h3>
+            <h3 class="section-title flex items-center gap-4 text-xl font-black">
+            <div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">
+                <div class="h-1/3 bg-slate-400"></div>
+                <div class="h-2/3 bg-primary"></div>
+            </div>
+            بانک و بیمه
+        </h3>
             <a href="#"
                 class="flex items-center gap-1 text-sm font-bold text-text-light dark:text-slate-500 hover:text-primary transition-all">
                 <i data-lucide="arrow-left" width="16"></i>
@@ -60,7 +60,7 @@
     <!-- Bourse -->
     <section class="lg:px-6">
         <div class="flex items-center justify-between mb-6">
-            <h3 class="section-title flex items-center gap-4">
+            <h3 class="section-title flex items-center gap-4 text-xl font-black">
                 <div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">
                     <div class="h-1/3 bg-slate-400"></div>
                     <div class="h-2/3 bg-primary"></div>
@@ -117,7 +117,7 @@
     <!-- Gold & Currency -->
     <section class="lg:px-6">
         <div class="flex items-center justify-between mb-6">
-            <h3 class="section-title flex items-center gap-4">
+            <h3 class="section-title flex items-center gap-4 text-xl font-black">
                 <div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">
                     <div class="h-1/3 bg-slate-400"></div>
                     <div class="h-2/3 bg-primary"></div>
@@ -174,7 +174,7 @@
     <!-- Auto -->
     <section class="lg:pr-6">
         <div class="flex items-center justify-between mb-6">
-            <h3 class="section-title flex items-center gap-4">
+            <h3 class="section-title flex items-center gap-4 text-xl font-black">
                 <div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">
                     <div class="h-1/3 bg-slate-400"></div>
                     <div class="h-2/3 bg-primary"></div>

@@ -1,7 +1,7 @@
 <!-- Company Stories -->
 <section class="my-16">
     <div class="flex items-center justify-between mb-8">
-        <h3 class="section-title flex items-center gap-4">
+        <h3 class="section-title flex items-center gap-4 text-xl font-black">
             <div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">
                 <div class="h-1/3 bg-slate-400"></div>
                 <div class="h-2/3 bg-primary"></div>

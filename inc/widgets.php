@@ -12,7 +12,7 @@ function hasht_widgets_init() {
         'description'   => 'ویجت‌های سایدبار صفحه اصلی را اینجا قرار دهید.',
         'before_widget' => '<div id="%1$s" class="widget %2$s mb-6">',
         'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="section-title flex items-center gap-4 mb-4"><div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0"><div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div></div>',
+        'before_title'  => '<h3 class="section-title flex items-center gap-4 mb-4 text-xl font-black"><div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0"><div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div></div>',
         'after_title'   => '</h3>',
     ]);
 
@@ -138,7 +138,7 @@ class Hasht_Selected_News_Widget extends WP_Widget {
                 echo '<div class="flex items-center justify-between mb-4 shrink-0">';
                 echo '<h3 class="section-title flex items-center gap-4 text-xl font-black">';
                 echo '<div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">';
-                echo '<div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-rose-600"></div>';
+                echo '<div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div>';
                 echo '</div>';
                 echo esc_html($title);
                 echo '</h3>';
@@ -177,13 +177,18 @@ class Hasht_Selected_News_Widget extends WP_Widget {
             } else {
                 echo '<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">';
 
-                echo '<div class="flex items-center gap-3 mb-4">';
-                echo '<h3 class="section-title flex items-center gap-4">';
+                echo '<div class="flex items-center justify-between mb-4 shrink-0">';
+                echo '<h3 class="section-title flex items-center gap-4 text-xl font-black">';
                 echo '<div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">';
                 echo '<div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div>';
                 echo '</div>';
                 echo esc_html($title);
                 echo '</h3>';
+                if (!empty($view_more_url)) {
+                    echo '<a href="' . esc_url($view_more_url) . '" class="flex items-center gap-1 text-xs font-bold text-rose-600 hover:gap-2 transition-all">';
+                    echo esc_html($view_more_text) . ' <i data-lucide="arrow-left" width="14"></i>';
+                    echo '</a>';
+                }
                 echo '</div>';
 
                 echo '<div class="flex flex-col space-y-4">';

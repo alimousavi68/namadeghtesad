@@ -145,5 +145,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Search Modal Logic
+    const searchToggle = document.getElementById('search-toggle');
+    const searchModal = document.getElementById('search-modal');
+    const searchClose = document.getElementById('search-modal-close');
+
+    if (searchToggle && searchModal && searchClose) {
+        const toggleSearch = () => {
+            searchModal.classList.toggle('opacity-0');
+            searchModal.classList.toggle('invisible');
+            const input = searchModal.querySelector('input');
+            if (!searchModal.classList.contains('invisible') && input) {
+                setTimeout(() => input.focus(), 100);
+            }
+        };
+
+        searchToggle.addEventListener('click', toggleSearch);
+        searchClose.addEventListener('click', toggleSearch);
+        
+        // Close on outside click
+        searchModal.addEventListener('click', (e) => {
+            if (e.target === searchModal) toggleSearch();
+        });
+        
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !searchModal.classList.contains('invisible')) {
+                toggleSearch();
+            }
+        });
+    }
 
 });

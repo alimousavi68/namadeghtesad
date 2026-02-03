@@ -93,7 +93,7 @@
 
         <!-- Action Buttons -->
         <div class="flex items-center gap-2 md:gap-3">
-            <button
+            <button id="search-toggle"
                 class="flex p-2.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors">
                 <i data-lucide="search" width="22"></i>
             </button>

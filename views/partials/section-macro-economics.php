@@ -38,8 +38,8 @@ if ($cat_slug) {
             <?php echo esc_html($title); ?>
         </h3>
         <a href="<?php echo esc_url($cat_link); ?>"
-            class="flex items-center gap-1 text-sm font-bold text-text-light dark:text-slate-500 hover:text-primary transition-all">
-            مشاهده بیشتر <i data-lucide="arrow-left" width="16"></i>
+            class="flex items-center gap-1 text-[11px] font-medium text-text-light dark:text-slate-500 hover:text-primary transition-all">
+            مشاهده بیشتر <i data-lucide="arrow-left" width="12"></i>
         </a>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">

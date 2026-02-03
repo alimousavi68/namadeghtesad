@@ -44,8 +44,8 @@ if ($cat_slug) {
             <p class="text-text-light text-lg font-medium"><?php echo esc_html($subtitle); ?></p>
         </div>
         <a href="<?php echo esc_url($cat_link); ?>"
-            class="flex items-center gap-1 text-sm font-bold text-white/70 hover:text-primary transition-all">
-            مشاهده آرشیو <i data-lucide="arrow-left" width="16"></i>
+            class="flex items-center gap-1 text-[11px] font-medium text-white/70 hover:text-primary transition-all">
+            مشاهده آرشیو <i data-lucide="arrow-left" width="12"></i>
         </a>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">

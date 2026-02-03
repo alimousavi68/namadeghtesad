@@ -10,8 +10,8 @@
         </h3>
 
         <a href="#"
-            class="flex items-center gap-1 text-sm font-bold text-text-light dark:text-slate-500 hover:text-primary transition-all">
-            مشاهده بیشتر <i data-lucide="arrow-left" width="16"></i>
+            class="flex items-center gap-1 text-[11px] font-medium text-text-light dark:text-slate-500 hover:text-primary transition-all">
+            مشاهده بیشتر <i data-lucide="arrow-left" width="12"></i>
         </a>
     </div>
 

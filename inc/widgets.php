@@ -109,8 +109,8 @@ class Hasht_Selected_News_Widget extends WP_Widget {
                 echo esc_html($title);
                 echo '</h3>';
                 if (!empty($view_more_url)) {
-                    echo '<a href="' . esc_url($view_more_url) . '" class="flex items-center gap-1 text-xs font-bold text-rose-600 hover:gap-2 transition-all">';
-                    echo esc_html($view_more_text) . ' <i data-lucide="arrow-left" width="14"></i>';
+                    echo '<a href="' . esc_url($view_more_url) . '" class="flex items-center gap-1 text-[10px] font-medium text-rose-600 hover:gap-2 transition-all">';
+                    echo esc_html($view_more_text) . ' <i data-lucide="arrow-left" width="12"></i>';
                     echo '</a>';
                 }
                 echo '</div>';
@@ -143,8 +143,8 @@ class Hasht_Selected_News_Widget extends WP_Widget {
                 echo esc_html($title);
                 echo '</h3>';
                 if (!empty($view_more_url)) {
-                    echo '<a href="' . esc_url($view_more_url) . '" class="flex items-center gap-1 text-xs font-bold text-rose-600 hover:gap-2 transition-all">';
-                    echo esc_html($view_more_text) . ' <i data-lucide="arrow-left" width="14"></i>';
+                    echo '<a href="' . esc_url($view_more_url) . '" class="flex items-center gap-1 text-[10px] font-medium text-rose-600 hover:gap-2 transition-all">';
+                    echo esc_html($view_more_text) . ' <i data-lucide="arrow-left" width="12"></i>';
                     echo '</a>';
                 }
                 echo '</div>';
@@ -185,8 +185,8 @@ class Hasht_Selected_News_Widget extends WP_Widget {
                 echo esc_html($title);
                 echo '</h3>';
                 if (!empty($view_more_url)) {
-                    echo '<a href="' . esc_url($view_more_url) . '" class="flex items-center gap-1 text-xs font-bold text-rose-600 hover:gap-2 transition-all">';
-                    echo esc_html($view_more_text) . ' <i data-lucide="arrow-left" width="14"></i>';
+                    echo '<a href="' . esc_url($view_more_url) . '" class="flex items-center gap-1 text-[10px] font-medium text-rose-600 hover:gap-2 transition-all">';
+                    echo esc_html($view_more_text) . ' <i data-lucide="arrow-left" width="12"></i>';
                     echo '</a>';
                 }
                 echo '</div>';

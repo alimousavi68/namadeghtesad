@@ -11,8 +11,8 @@
                     هفته‌نامه‌ها، فصلنامه‌ها و سالنامه‌های آماری</p>
             </div>
             <button
-                class="flex items-center gap-1 text-primary font-black hover:gap-3 transition-all text-lg border-b-2 border-primary/20 pb-1">
-                مشاهده بیشتر <i data-lucide="arrow-left" width="22"></i>
+                class="flex items-center gap-1 text-primary font-black hover:gap-3 transition-all text-[11px] font-medium border-b-2 border-primary/20 pb-1">
+                مشاهده بیشتر <i data-lucide="arrow-left" width="12"></i>
             </button>
         </div>
 

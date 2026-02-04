@@ -1,7 +1,7 @@
 <?php
 // Retrieve settings
-$title    = get_theme_mod('hasht_home_multimedia_title', 'چندرسانه‌ای');
-$subtitle = get_theme_mod('hasht_home_multimedia_subtitle', 'تازه‌ترین گفتگوهای اختصاصی');
+$title    = get_theme_mod('hasht_home_multimedia_title', '');
+$subtitle = get_theme_mod('hasht_home_multimedia_subtitle', '');
 $cat_slug = get_theme_mod('hasht_home_multimedia_cat', '');
 $count    = get_theme_mod('hasht_home_multimedia_count', 3);
 

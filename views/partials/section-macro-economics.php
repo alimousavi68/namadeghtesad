@@ -1,6 +1,6 @@
 <?php
 // Retrieve settings
-$title    = get_theme_mod('hasht_home_grid_title', 'اقتصاد کلان');
+$title    = get_theme_mod('hasht_home_grid_title', '');
 $cat_slug = get_theme_mod('hasht_home_grid_cat', '');
 $count    = get_theme_mod('hasht_home_grid_count', 3);
 

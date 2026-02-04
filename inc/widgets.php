@@ -17,7 +17,8 @@ function hasht_widgets_init() {
     ]);
 
     register_widget('Hasht_Selected_News_Widget');
-    // register_widget('Hasht_Advertisement_Widget'); // Commented out until explicitly requested again to focus on the task
+    register_widget('Hasht_Market_Widget');
+    register_widget('Hasht_Advertisement_Widget');
 }
 add_action('widgets_init', 'hasht_widgets_init');
 
@@ -299,6 +300,104 @@ class Hasht_Selected_News_Widget extends WP_Widget {
         $instance['style'] = (!empty($new_instance['style'])) ? sanitize_key($new_instance['style']) : 'list';
         $instance['view_more_text'] = (!empty($new_instance['view_more_text'])) ? strip_tags($new_instance['view_more_text']) : 'مشاهده بیشتر';
         $instance['view_more_url'] = (!empty($new_instance['view_more_url'])) ? esc_url_raw($new_instance['view_more_url']) : '';
+        return $instance;
+    }
+}
+
+/**
+ * Widget: Market Dashboard (Hardcoded static content for now, but wrapper as widget)
+ */
+class Hasht_Market_Widget extends WP_Widget {
+    public function __construct() {
+        parent::__construct(
+            'hasht_market_widget',
+            'نماد اقتصاد: پیشخوان بازار',
+            ['description' => 'نمایش قیمت‌های بازار (استاتیک)']
+        );
+    }
+
+    public function widget($args, $instance) {
+        // Output exactly what was in the partial
+        echo '<section class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-colors mb-6" aria-label="Market Widget">';
+        echo '<h3 class="section-title flex items-center gap-4 mb-4 text-xl font-black">';
+        echo '<div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0"><div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div></div>';
+        echo 'پیشخوان بازار';
+        echo '</h3>';
+        echo '<div class="grid grid-cols-3 gap-3">';
+        
+        $items = [
+            ['icon' => 'newspaper', 'label' => 'روزنامه‌ها'],
+            ['icon' => 'dollar-sign', 'label' => 'ارز'],
+            ['icon' => 'coins', 'label' => 'طلا و سکه'],
+            ['icon' => 'bar-chart-3', 'label' => 'بورس'],
+            ['icon' => 'bitcoin', 'label' => 'ارز دیجیتال'],
+            ['icon' => 'car', 'label' => 'خودرو'],
+        ];
+
+        foreach ($items as $item) {
+            echo '<a href="#" class="flex flex-col items-center gap-2 group transition-all">';
+            echo '<div class="w-full aspect-square flex items-center justify-center bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 rounded-xl group-hover:border-primary group-hover:bg-white dark:group-hover:bg-slate-800 transition-all text-slate-500 dark:text-text-light group-hover:text-primary shadow-sm">';
+            echo '<i data-lucide="' . esc_attr($item['icon']) . '" width="56" stroke-width="1.2"></i>';
+            echo '</div>';
+            echo '<span class="text-sm font-black text-text-main dark:text-slate-300 group-hover:text-primary text-center leading-tight">' . esc_html($item['label']) . '</span>';
+            echo '</a>';
+        }
+
+        echo '</div>';
+        echo '</section>';
+    }
+
+    public function form($instance) {
+        echo '<p>این ابزارک تنظیمات خاصی ندارد.</p>';
+    }
+
+    public function update($new_instance, $old_instance) {
+        return $instance;
+    }
+}
+
+/**
+ * Widget: Advertisement (Flexible Height)
+ */
+class Hasht_Advertisement_Widget extends WP_Widget {
+    public function __construct() {
+        parent::__construct(
+            'hasht_advertisement_widget',
+            'نماد اقتصاد: تبلیغات (متغیر)',
+            ['description' => 'باکس تبلیغاتی با قابلیت تنظیم ارتفاع']
+        );
+    }
+
+    public function widget($args, $instance) {
+        $height_class = !empty($instance['height_class']) ? $instance['height_class'] : 'h-[900px]';
+        // Allow custom height class or style
+        
+        echo '<aside class="hidden md:flex w-full ' . esc_attr($height_class) . ' bg-slate-50 dark:bg-slate-800/40 rounded-xl flex-col items-center justify-center border-2 border-dashed border-slate-200 dark:border-slate-800 text-slate-400 cursor-pointer transition-all hover:bg-slate-100 dark:hover:bg-slate-800/60 group relative mb-6" aria-label="Advertisement">';
+        echo '<div class="absolute top-6 right-6 px-3 py-1 bg-slate-200 dark:bg-slate-700 rounded-lg text-xs font-black group-hover:bg-primary group-hover:text-white transition-colors">تبلیغات</div>';
+        echo '<div class="p-10 text-center">';
+        echo '<div class="w-20 h-20 bg-slate-200 dark:bg-slate-700 rounded-2xl mx-auto mb-8 flex items-center justify-center group-hover:rotate-12 transition-transform">';
+        echo '<i data-lucide="trending-up" width="40" class="text-slate-400 group-hover:text-primary transition-colors"></i>';
+        echo '</div>';
+        echo '<span class="text-2xl font-black block mb-4">فضای آگهی</span>';
+        echo '<p class="text-sm font-medium opacity-60">جهت درج رپورتاژ و بنر در نماد اقتصاد کلیک کنید</p>';
+        echo '</div>';
+        echo '</aside>';
+    }
+
+    public function form($instance) {
+        $height_class = !empty($instance['height_class']) ? $instance['height_class'] : 'h-[900px]';
+        ?>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('height_class')); ?>">کلاس ارتفاع (Tailwind):</label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('height_class')); ?>" name="<?php echo esc_attr($this->get_field_name('height_class')); ?>" type="text" value="<?php echo esc_attr($height_class); ?>" placeholder="مثلاً h-[500px] یا h-full">
+            <small>برای پر کردن فضا می‌توانید از h-full استفاده کنید (اگر والد فلکس باشد) یا ارتفاع ثابت بدهید.</small>
+        </p>
+        <?php
+    }
+
+    public function update($new_instance, $old_instance) {
+        $instance = [];
+        $instance['height_class'] = (!empty($new_instance['height_class'])) ? strip_tags($new_instance['height_class']) : 'h-[900px]';
         return $instance;
     }
 }

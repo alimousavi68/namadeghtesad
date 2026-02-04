@@ -1,0 +1,48 @@
+.hasht-metabox-wrapper {
+    padding: 10px;
+}
+
+.hasht-field-row {
+    margin-bottom: 15px;
+}
+
+.hasht-field-row label {
+    display: inline-block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.hasht-field-row .widefat {
+    max-width: 100%;
+}
+
+.hasht-field-row .ltr-input {
+    direction: ltr;
+    text-align: left;
+}
+
+.hasht-conditional-section {
+    display: none; /* Hidden by default, JS handles visibility */
+    background: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.hasht-sub-conditional {
+    display: none;
+    margin-top: 10px;
+    padding-left: 15px;
+    border-left: 3px solid #007cba;
+}
+
+.flex-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.hidden {
+    display: none !important;
+}

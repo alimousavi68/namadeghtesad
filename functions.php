@@ -99,6 +99,11 @@ if (defined('WP_CLI') && WP_CLI && file_exists(__DIR__ . '/inc/cli.php')) {
     require_once __DIR__ . '/inc/cli.php';
 }
 
+// Load Custom Metaboxes
+if (file_exists(__DIR__ . '/inc/metaboxes.php')) {
+    require_once __DIR__ . '/inc/metaboxes.php';
+}
+
 class Hasht_Header_Walker extends Walker_Nav_Menu
 {
     public function start_lvl(&$output, $depth = 0, $args = null)

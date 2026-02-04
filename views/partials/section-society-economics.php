@@ -1,6 +1,6 @@
 <?php
 // Retrieve settings
-$title    = get_theme_mod('hasht_home_society_title', 'جامعه و اقتصاد');
+$title    = get_theme_mod('hasht_home_society_title', '');
 $cat_slug = get_theme_mod('hasht_home_society_cat', '');
 $count    = get_theme_mod('hasht_home_society_count', 4);
 

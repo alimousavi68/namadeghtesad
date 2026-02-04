@@ -1,7 +1,7 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
     <!-- Industry & Mining -->
     <?php
-    $ind_title    = get_theme_mod('hasht_home_industry_title', 'صنعت و معدن');
+    $ind_title    = get_theme_mod('hasht_home_industry_title', '');
     $ind_cat_slug = get_theme_mod('hasht_home_industry_cat', '');
     $ind_count    = get_theme_mod('hasht_home_industry_count', 5);
 
@@ -96,7 +96,7 @@
 
     <!-- Energy -->
     <?php
-    $en_title    = get_theme_mod('hasht_home_energy_title', 'انرژی');
+    $en_title    = get_theme_mod('hasht_home_energy_title', '');
     $en_cat_slug = get_theme_mod('hasht_home_energy_cat', '');
     $en_count    = get_theme_mod('hasht_home_energy_count', 1);
 

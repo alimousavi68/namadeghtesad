@@ -5,12 +5,56 @@
 core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سناریوهای تورمی و رشد اقتصادی - نماد اقتصاد<?php core_end_section(); ?>
 
 <?php core_start_section('content'); ?>
+<?php
+$post_id = get_the_ID();
+
+// 1. Fetch Metadata
+$content_type = get_post_meta($post_id, '_news_content_type', true);
+if (empty($content_type)) $content_type = 'standard';
+
+// Author / Interviewee
+$custom_author_name = get_post_meta($post_id, '_news_author_name', true);
+$custom_author_role = get_post_meta($post_id, '_news_author_position', true);
+
+$interviewee_name = get_post_meta($post_id, '_news_interviewee_name', true);
+$interviewee_role = get_post_meta($post_id, '_news_interviewee_position', true);
+
+// Source
+$source_name = get_post_meta($post_id, '_news_source_name', true);
+$source_link = get_post_meta($post_id, '_news_source_link', true);
+
+// Author Box Logic (Always WP Author)
+$author_id = get_post_field('post_author', $post_id);
+$box_display_name = get_the_author_meta('display_name', $author_id);
+if (empty($box_display_name)) {
+    $box_display_name = get_the_author_meta('user_login', $author_id);
+}
+$box_avatar = get_avatar($author_id, 64, '', 'Author', ['class' => 'w-full h-full object-cover']);
+$box_link = get_author_posts_url($author_id);
+$box_description = get_the_author_meta('description', $author_id);
+
+// Header Logic: Note > Interview > Standard
+if ($content_type === 'note' && !empty($custom_author_name)) {
+    $display_name = $custom_author_name;
+    $display_role = $custom_author_role;
+} elseif ($content_type === 'interview' && !empty($interviewee_name)) {
+    $display_name = $interviewee_name;
+    $display_role = $interviewee_role;
+} else {
+    // For Standard/Video/Photo/Publication: Show WP Author in Header too
+    $display_name = $box_display_name;
+    $display_role = ''; 
+}
+
+// Image
+$thumb_url = get_the_post_thumbnail_url($post_id, 'full');
+?>
 <!-- Print Header (Visible only in print) -->
     <div class="hidden print:flex flex-col items-center mb-8 pt-8">
         <img src="logona (1) copy.webp" alt="نماد اقتصاد" class="h-20 w-auto object-contain mb-4 grayscale" />
         <div class="flex items-center justify-between w-full text-xs text-black font-bold mb-2">
-            <span>تاریخ انتشار: ۱۴ بهمن ۱۴۰۳</span>
-            <span>نماد اقتصاد - رسانه تخصصی اقتصاد ایران</span>
+            <span>تاریخ انتشار: <?php echo get_the_date('j F Y'); ?></span>
+            <span><?php bloginfo('name'); ?> - <?php bloginfo('description'); ?></span>
         </div>
         <div class="w-full h-px bg-black mb-4"></div>
     </div>
@@ -32,7 +76,14 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                         <nav class="flex items-center gap-2 text-sm text-slate-500 dark:text-text-light">
                             <a href="<?php echo home_url('/'); ?>" class="hover:text-primary transition-colors">خانه</a>
                             <i data-lucide="chevron-left" width="14"></i>
-                            <a href="#" class="hover:text-primary transition-colors">اقتصاد کلان</a>
+                            <?php 
+                                $categories = get_the_category();
+                                if (!empty($categories)) {
+                                    echo '<a href="' . esc_url(get_category_link($categories[0]->term_id)) . '" class="hover:text-primary transition-colors">' . esc_html($categories[0]->name) . '</a>';
+                                } else {
+                                    echo '<a href="#" class="hover:text-primary transition-colors">اخبار</a>';
+                                }
+                            ?>
                         </nav>
 
                         <!-- Author & Date (Moved here) -->
@@ -40,11 +91,11 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                             <!-- News ID (Moved here) -->
                             <div class="flex items-center gap-2">
                                 <span class="">کد خبر:</span>
-                                <span class="">۲۵۴۸۹</span>
+                                <span class=""><?php the_ID(); ?></span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="calendar" width="14"></i>
-                                <span>۱۴ بهمن ۱۴۰۳</span>
+                                <span><?php echo get_the_date('j F Y'); ?></span>
                             </div>
                         </div>
                     </div>
@@ -54,14 +105,17 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                         <!-- Category Badge Removed -->
 
                         <h1 class="text-2xl md:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white leading-tight mb-6">
-                            تحلیل جامع بودجه ۱۴۰۴: سناریوهای تورمی و رشد اقتصادی در سایه تحریم‌ها
+                            <?php the_title(); ?>
                         </h1>
 
                         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-6 mb-6 print:border-black">
                             <!-- Author Name (Replaced News ID) -->
                             <div class="flex items-center gap-2 text-sm text-slate-500 dark:text-text-light print:text-black">
                                 <i data-lucide="user" width="16" class="text-primary"></i>
-                                <span class="font-bold text-text-main dark:text-slate-200">دکتر علیرضا افشار</span>
+                                <?php if ($content_type === 'interview'): ?>
+                                    <span class="text-xs text-slate-400">گفت‌وگو با:</span>
+                                <?php endif; ?>
+                                <span class="font-bold text-text-main dark:text-slate-200"><?php echo esc_html($display_name); ?></span>
                             </div>
 
                             <!-- Tools (Print, Share) - Hidden in Print -->
@@ -90,85 +144,64 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
 
                         <!-- Lead (Border moved to right) -->
                         <p class="text-lg md:text-xl font-bold text-slate-600 dark:text-slate-300 leading-relaxed text-justify border-r-4 border-primary pr-4 mb-8 print:text-black print:border-r-0 print:pr-0">
-                            لایحه بودجه سال آینده در حالی به مجلس ارائه شده است که کارشناسان اقتصادی نظرات متفاوتی درباره میزان تحقق درآمدهای نفتی و مالیاتی آن دارند. آیا این بودجه می‌تواند تورم را مهار کند؟
+                            <?php echo get_the_excerpt(); ?>
                         </p>
 
+                        <?php if (has_post_thumbnail()): ?>
                         <figure class="rounded-2xl overflow-hidden mb-10 print:shadow-none">
-                            <img src="https://picsum.photos/seed/hero_lead/1200/600" alt="بودجه 1404" class="w-full h-auto object-cover">
+                            <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-auto object-cover">
                         </figure>
+                        <?php endif; ?>
                     </header>
 
                     <!-- Article Body -->
                     <div class="single-content print:text-black">
-                        <p>
-                            به گزارش پایگاه خبری نماد اقتصاد، لایحه بودجه سال ۱۴۰۴ کل کشور که هفته گذشته توسط رئیس‌جمهور به مجلس شورای اسلامی تقدیم شد، واکنش‌های متفاوتی را در محافل اقتصادی و سیاسی برانگیخته است. این لایحه که بر مبنای نرخ رشد اقتصادی ۸ درصدی و تورم هدف‌گذاری شده ۲۰ درصدی تنظیم شده است، با چالش‌های جدی در بخش منابع و مصارف روبروست.
-                        </p>
-
-                        <h2>منابع درآمدی؛ خوش‌بینی یا واقع‌گرایی؟</h2>
-                        <p>
-                            یکی از مهم‌ترین بخش‌های بودجه، پیش‌بینی درآمدهای نفتی است. دولت در این لایحه قیمت نفت را بشکه‌ای ۶۵ دلار در نظر گرفته است که با توجه به نوسانات بازارهای جهانی و تداوم تحریم‌ها، برخی کارشناسان آن را خوش‌بینانه ارزیابی می‌کنند.
-                        </p>
-                        <blockquote>
-                            دکتر محمدی، استاد اقتصاد دانشگاه تهران معتقد است: «وابستگی بودجه به درآمدهای ناپایدار نفتی، پاشنه آشیل اقتصاد ایران است. اگر قیمت نفت کاهش یابد یا صادرات طبق برنامه پیش نرود، کسری بودجه اجتناب‌ناپذیر خواهد بود که نتیجه مستقیم آن، چاپ پول و تورم است.»
-                        </blockquote>
-
-
-                        <p>
-                            از سوی دیگر، افزایش ۵۰ درصدی درآمدهای مالیاتی نیز فشار مضاعفی را بر بخش تولید و اصناف وارد خواهد کرد. فعالان بخش خصوصی بر این باورند که در شرایط رکود تورمی، افزایش مالیات می‌تواند منجر به تعطیلی بنگاه‌های کوچک و متوسط شود.
-                        </p>
-
-                        <!-- Inline Related News -->
-                        <div class="my-8 bg-rose-50 dark:bg-slate-800/50 border-r-4 border-primary p-5 rounded-l-xl print:hidden flex flex-col gap-2">
-                            <span class="text-xs font-black text-primary flex items-center gap-2">
-                                <i data-lucide="link" width="14"></i>
-                                بیشتر بخوانید:
-                            </span>
-                            <a href="#" class="text-sm md:text-base font-bold text-slate-800 dark:text-slate-200 hover:text-primary transition-colors leading-relaxed">
-                                پیش‌بینی قیمت طلا و سکه در هفته آینده؛ آیا روند صعودی ادامه خواهد داشت؟
-                            </a>
-                        </div>
-
-
-                        <h2>مصارف و هزینه‌ها؛ انقباضی یا انبساطی؟</h2>
-                        <p>
-                            در بخش مصارف، دولت تلاش کرده است تا هزینه‌های جاری را کنترل کند، اما افزایش حقوق کارکنان دولت به میزان ۲۰ درصد، همچنان بخش عمده‌ای از بودجه را می‌بلعد. این در حالی است که تورم نقطه به نقطه در حال حاضر بالای ۴۰ درصد است و این افزایش حقوق عملاً قدرت خرید کارمندان را حفظ نمی‌کند.
-                        </p>
-
-                        <h3>راهکارهای پیشنهادی</h3>
-                        <ul>
-                            <li>کاهش هزینه‌های غیرضروری دستگاه‌های اجرایی</li>
-                            <li>مولدسازی دارایی‌های دولت با شفافیت کامل</li>
-                            <li>اصلاح نظام مالیاتی به نفع تولیدکنندگان و جلوگیری از فرار مالیاتی</li>
-                            <li>تقویت دیپلماسی اقتصادی برای افزایش صادرات غیرنفتی</li>
-                        </ul>
-
-                        <p>
-                            در نهایت، موفقیت این بودجه در گرو انضباط مالی سخت‌گیرانه دولت و همکاری مجلس برای اصلاح ساختار معیوب بودجه‌ریزی است. باید دید در کمیسیون تلفیق چه تغییراتی در ارقام پیشنهادی دولت اعمال خواهد شد.
-                        </p>
+                        <?php the_content(); ?>
+                        
+                        <?php if (!empty($source_name)): ?>
+                            <div class="mt-8 pt-4 border-t border-slate-100 dark:border-slate-800 text-sm text-slate-500 dark:text-slate-400">
+                                <strong>منبع:</strong> 
+                                <?php if (!empty($source_link)): ?>
+                                    <a href="<?php echo esc_url($source_link); ?>" target="_blank" rel="nofollow noopener" class="text-primary hover:underline">
+                                        <?php echo esc_html($source_name); ?>
+                                    </a>
+                                <?php else: ?>
+                                    <?php echo esc_html($source_name); ?>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
 
                     <!-- Tags -->
+                    <?php 
+                        $tags = get_the_tags(); 
+                        if ($tags): 
+                    ?>
                     <div class="flex flex-wrap items-center gap-2 mt-10 pt-6 border-t border-slate-100 dark:border-slate-800 print:hidden">
                         <span class="text-sm font-bold text-slate-500 ml-2">برچسب‌ها:</span>
-                        <a href="#" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs text-slate-600 dark:text-slate-300 hover:bg-primary hover:text-white transition-colors">بودجه ۱۴۰۴</a>
-                        <a href="#" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs text-slate-600 dark:text-slate-300 hover:bg-primary hover:text-white transition-colors">اقتصاد ایران</a>
-                        <a href="#" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs text-slate-600 dark:text-slate-300 hover:bg-primary hover:text-white transition-colors">تورم</a>
-                        <a href="#" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs text-slate-600 dark:text-slate-300 hover:bg-primary hover:text-white transition-colors">مجلس شورای اسلامی</a>
+                        <?php foreach($tags as $tag): ?>
+                            <a href="<?php echo esc_url(get_tag_link($tag->term_id)); ?>" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs text-slate-600 dark:text-slate-300 hover:bg-primary hover:text-white transition-colors">
+                                <?php echo esc_html($tag->name); ?>
+                            </a>
+                        <?php endforeach; ?>
                     </div>
+                    <?php endif; ?>
 
                     <!-- Author & Short Link Grid -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 print:hidden">
                         <!-- Author Box -->
                         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 flex items-center gap-4 shadow-sm h-full">
                             <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-slate-100 dark:border-slate-700 shrink-0">
-                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/janansefat-3.jpg" alt="Author" class="w-full h-full object-cover">
+                                <?php echo $box_avatar; ?>
                             </div>
                             <div class="flex-1">
-                                <h4 class="text-base font-black text-slate-800 dark:text-slate-100 mb-1">دکتر علیرضا افشار</h4>
-                                <p class="text-xs text-slate-500 dark:text-text-light leading-relaxed mb-2 line-clamp-2">
-                                    دکترای اقتصاد بین‌الملل و تحلیل‌گر ارشد بازارهای مالی.
-                                </p>
-                                <a href="#" class="text-primary text-xs font-bold hover:underline">مشاهده دیگر مطالب</a>
+                                <h4 class="text-base font-black text-slate-800 dark:text-slate-100 mb-1"><?php echo esc_html($box_display_name); ?></h4>
+                                <?php if (!empty($box_description)): ?>
+                                    <p class="text-xs text-slate-500 dark:text-text-light leading-relaxed mb-2 line-clamp-2">
+                                        <?php echo esc_html($box_description); ?>
+                                    </p>
+                                <?php endif; ?>
+                                <a href="<?php echo esc_url($box_link); ?>" class="text-primary text-xs font-bold hover:underline">مشاهده دیگر مطالب</a>
                             </div>
                         </div>
 
@@ -179,7 +212,7 @@ core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سنار
                                 <span class="text-sm font-bold">لینک کوتاه مطلب:</span>
                             </div>
                             <div class="flex items-center gap-2 w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2">
-                                <span id="short-link-text" class="text-xs font-mono text-slate-600 dark:text-slate-300 dir-ltr select-all truncate">https://namad.ir/n/25489</span>
+                                <span id="short-link-text" class="text-xs font-mono text-slate-600 dark:text-slate-300 dir-ltr select-all truncate"><?php echo wp_get_shortlink(); ?></span>
                                 <button id="copy-link-btn" class="text-text-light hover:text-primary transition-colors shrink-0" title="کپی لینک">
                                     <i data-lucide="copy" width="16"></i>
                                 </button>

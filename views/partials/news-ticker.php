@@ -2,7 +2,7 @@
 $enable = get_theme_mod('hasht_home_ticker_enable', true);
 if (!$enable) return;
 
-$title = get_theme_mod('hasht_home_ticker_title', 'اخبار فوری');
+$title = get_theme_mod('hasht_home_ticker_title', '');
 $cat   = get_theme_mod('hasht_home_ticker_cat', '');
 $count = get_theme_mod('hasht_home_ticker_count', 5);
 $speed = 300; // Hardcoded reasonable speed (seconds)

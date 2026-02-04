@@ -23,7 +23,7 @@ $settings = [
             
             // News Ticker Settings
             'hasht_home_ticker_sec' => [
-                'title' => 'خبرخوان متحرک (News Ticker)',
+                'title' => 'خبرخوان متحرک',
                 'fields' => [
                     'hasht_home_ticker_enable' => [
                         'label'   => 'فعال‌سازی خبرخوان',
@@ -33,7 +33,7 @@ $settings = [
                     'hasht_home_ticker_title' => [
                         'label'   => 'عنوان خبرخوان',
                         'type'    => 'text',
-                        'default' => 'اخبار فوری',
+                        'default' => '',
                     ],
                     'hasht_home_ticker_cat' => [
                         'label'   => 'دسته‌بندی مطالب',
@@ -82,7 +82,7 @@ $settings = [
                     'hasht_home_grid_title' => [
                         'label'   => 'عنوان بخش',
                         'type'    => 'text',
-                        'default' => 'اقتصاد کلان',
+                        'default' => '',
                     ],
                     'hasht_home_grid_cat' => [
                         'label'   => 'دسته‌بندی',
@@ -105,7 +105,7 @@ $settings = [
                     'hasht_home_society_title' => [
                         'label'   => 'عنوان بخش',
                         'type'    => 'text',
-                        'default' => 'جامعه و اقتصاد',
+                        'default' => '',
                     ],
                     'hasht_home_society_cat' => [
                         'label'   => 'دسته‌بندی',
@@ -128,7 +128,7 @@ $settings = [
                     'hasht_home_industry_title' => [
                         'label'   => 'عنوان بخش',
                         'type'    => 'text',
-                        'default' => 'صنعت و معدن',
+                        'default' => '',
                     ],
                     'hasht_home_industry_cat' => [
                         'label'   => 'دسته‌بندی',
@@ -151,7 +151,7 @@ $settings = [
                     'hasht_home_energy_title' => [
                         'label'   => 'عنوان بخش',
                         'type'    => 'text',
-                        'default' => 'انرژی',
+                        'default' => '',
                     ],
                     'hasht_home_energy_cat' => [
                         'label'   => 'دسته‌بندی',
@@ -174,12 +174,12 @@ $settings = [
                     'hasht_home_multimedia_title' => [
                         'label'   => 'عنوان بخش',
                         'type'    => 'text',
-                        'default' => 'چندرسانه‌ای',
+                        'default' => '',
                     ],
                     'hasht_home_multimedia_subtitle' => [
                         'label'   => 'زیرعنوان بخش',
                         'type'    => 'text',
-                        'default' => 'تازه‌ترین گفتگوهای اختصاصی',
+                        'default' => '',
                     ],
                     'hasht_home_multimedia_cat' => [
                         'label'   => 'دسته‌بندی',
@@ -202,12 +202,12 @@ $settings = [
                     'hasht_home_publications_title' => [
                         'label'   => 'عنوان بخش',
                         'type'    => 'text',
-                        'default' => 'نشریات تخصصی نماد اقتصاد',
+                        'default' => '',
                     ],
                     'hasht_home_publications_subtitle' => [
                         'label'   => 'زیرعنوان',
                         'type'    => 'text',
-                        'default' => 'آرشیو جامع مجلات، هفته‌نامه‌ها، فصلنامه‌ها و سالنامه‌های آماری',
+                        'default' => '',
                     ],
                     'hasht_home_publications_cat' => [
                         'label'   => 'دسته‌بندی',
@@ -236,7 +236,7 @@ $settings = [
                     'hasht_home_bottom_cat1_title' => [
                         'label'   => 'عنوان ستون اول',
                         'type'    => 'text',
-                        'default' => 'بانک و بیمه',
+                        'default' => '',
                     ],
                     'hasht_home_bottom_cat1_slug' => [
                         'label'   => 'دسته‌بندی ستون اول',
@@ -258,7 +258,7 @@ $settings = [
                     'hasht_home_bottom_cat2_title' => [
                         'label'   => 'عنوان ستون دوم',
                         'type'    => 'text',
-                        'default' => 'بورس',
+                        'default' => '',
                     ],
                     'hasht_home_bottom_cat2_slug' => [
                         'label'   => 'دسته‌بندی ستون دوم',
@@ -280,7 +280,7 @@ $settings = [
                     'hasht_home_bottom_cat3_title' => [
                         'label'   => 'عنوان ستون سوم',
                         'type'    => 'text',
-                        'default' => 'طلا و ارز',
+                        'default' => '',
                     ],
                     'hasht_home_bottom_cat3_slug' => [
                         'label'   => 'دسته‌بندی ستون سوم',
@@ -302,7 +302,7 @@ $settings = [
                     'hasht_home_bottom_cat4_title' => [
                         'label'   => 'عنوان ستون چهارم',
                         'type'    => 'text',
-                        'default' => 'خودرو',
+                        'default' => '',
                     ],
                     'hasht_home_bottom_cat4_slug' => [
                         'label'   => 'دسته‌بندی ستون چهارم',

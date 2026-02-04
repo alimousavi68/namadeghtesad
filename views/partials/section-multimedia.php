@@ -41,7 +41,7 @@ if ($cat_slug) {
                 </div>
                 <?php echo esc_html($title); ?>
             </h3>
-            <p class="text-text-light text-lg font-medium"><?php echo esc_html($subtitle); ?></p>
+            <p class="text-slate-400 text-lg font-medium"><?php echo esc_html($subtitle); ?></p>
         </div>
         <a href="<?php echo esc_url($cat_link); ?>"
             class="flex items-center gap-1 text-[11px] font-medium text-white/70 hover:text-primary transition-all">

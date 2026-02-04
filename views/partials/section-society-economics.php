@@ -38,7 +38,7 @@ if ($cat_slug) {
             <?php echo esc_html($title); ?>
         </h3>
         <a href="<?php echo esc_url($cat_link); ?>"
-            class="flex items-center gap-1 text-[11px] font-medium text-text-light dark:text-slate-500 hover:text-primary transition-all">
+            class="link-more">
             مشاهده بیشتر <i data-lucide="arrow-left" width="12"></i>
         </a>
     </div>
@@ -46,12 +46,12 @@ if ($cat_slug) {
         <?php while ($query->have_posts()) : $query->the_post(); 
              $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'medium');
         ?>
-        <article class="news-card-v">
-            <div class="news-card-v-img-wrapper">
+        <article class="news-card-v group">
+            <div class="news-card-v-img-wrapper rounded-xl overflow-hidden aspect-[16/10]">
                 <a href="<?php the_permalink(); ?>" class="block w-full h-full">
                     <?php if ($thumb_url): ?>
                         <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>"
-                            class="news-card-v-img">
+                            class="news-card-v-img w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     <?php else: ?>
                         <div class="w-full h-full bg-slate-200"></div>
                     <?php endif; ?>
@@ -61,7 +61,7 @@ if ($cat_slug) {
                 <h3 class="news-card-v-title">
                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                 </h3>
-                <span class="meta-text mt-auto block pt-1"><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?></span>
+                <span class="meta-text mt-auto block pt-1 text-[10px] font-normal text-slate-400 dark:text-slate-500"><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?></span>
             </div>
         </article>
         <?php endwhile; wp_reset_postdata(); ?>

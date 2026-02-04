@@ -35,7 +35,7 @@
                 <?php echo esc_html($ind_title); ?>
             </h3>
             <a href="<?php echo esc_url($ind_link); ?>"
-                class="flex items-center gap-1 text-[11px] font-medium text-text-light dark:text-slate-500 hover:text-primary transition-all">
+                class="link-more">
                 مشاهده بیشتر <i data-lucide="arrow-left" width="12"></i>
             </a>
         </div>
@@ -51,15 +51,15 @@
         ?>
         <!-- Main Feature Item -->
         <article class="news-card-overlay group">
-            <div class="news-card-overlay-img-wrapper">
+            <div class="news-card-overlay-img-wrapper rounded-xl overflow-hidden aspect-[16/10] relative">
                 <a href="<?php the_permalink(); ?>" class="block w-full h-full">
                     <?php if ($thumb_url): ?>
-                        <img src="<?php echo esc_url($thumb_url); ?>" class="news-card-overlay-img" alt="<?php the_title_attribute(); ?>">
+                        <img src="<?php echo esc_url($thumb_url); ?>" class="news-card-overlay-img w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="<?php the_title_attribute(); ?>">
                     <?php else: ?>
                         <div class="w-full h-full bg-slate-200"></div>
                     <?php endif; ?>
-                    <div class="news-card-overlay-content">
-                        <h4 class="news-card-overlay-title">
+                    <div class="news-card-overlay-content absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                        <h4 class="news-card-overlay-title text-white font-bold text-lg">
                             <?php the_title(); ?>
                         </h4>
                     </div>
@@ -130,7 +130,7 @@
                 <?php echo esc_html($en_title); ?>
             </h3>
             <a href="<?php echo esc_url($en_link); ?>"
-                class="flex items-center gap-1 text-[11px] font-medium text-text-light dark:text-slate-500 hover:text-primary transition-all">
+                class="link-more">
                 مشاهده بیشتر <i data-lucide="arrow-left" width="12"></i>
             </a>
         </div>
@@ -146,15 +146,15 @@
         ?>
         <!-- Main Feature Item -->
         <article class="news-card-overlay group">
-            <div class="news-card-overlay-img-wrapper">
+            <div class="news-card-overlay-img-wrapper rounded-xl overflow-hidden aspect-[16/10] relative">
                 <a href="<?php the_permalink(); ?>" class="block w-full h-full">
                     <?php if ($thumb_url): ?>
-                        <img src="<?php echo esc_url($thumb_url); ?>" class="news-card-overlay-img" alt="<?php the_title_attribute(); ?>">
+                        <img src="<?php echo esc_url($thumb_url); ?>" class="news-card-overlay-img w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="<?php the_title_attribute(); ?>">
                     <?php else: ?>
                         <div class="w-full h-full bg-slate-200"></div>
                     <?php endif; ?>
-                    <div class="news-card-overlay-content">
-                        <h4 class="news-card-overlay-title">
+                    <div class="news-card-overlay-content absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                        <h4 class="news-card-overlay-title text-white font-bold text-lg">
                             <?php the_title(); ?>
                         </h4>
                     </div>

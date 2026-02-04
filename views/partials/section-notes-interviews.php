@@ -7,7 +7,7 @@
             </div>
             یادداشت و مصاحبه
         </h3>
-        <a href="#" class="flex items-center gap-1 text-[11px] font-medium text-text-light dark:text-slate-500 hover:text-primary transition-all">
+        <a href="#" class="link-more">
             مشاهده بیشتر <i data-lucide="arrow-left" width="12"></i>
         </a>
     </div>
@@ -26,7 +26,7 @@
                 <span
                     class="text-sm font-black text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">دکتر
                     علیرضا افشار</span>
-                <span class="text-[10px] text-text-light font-bold mt-0.5">شورای
+                <span class="text-[10px] text-slate-400 font-bold mt-0.5">شورای
                     سردبیری</span>
             </div>
         </div>
@@ -56,7 +56,7 @@
                 <span
                     class="text-sm font-black text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">مهندس
                     سهراب سپهری</span>
-                <span class="text-[10px] text-text-light font-bold mt-0.5">شورای
+                <span class="text-[10px] text-slate-400 font-bold mt-0.5">شورای
                     سردبیری</span>
             </div>
         </div>
@@ -86,7 +86,7 @@
                 <span
                     class="text-sm font-black text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">خانم
                     دکتر مریم ایمانی</span>
-                <span class="text-[10px] text-text-light font-bold mt-0.5">شورای
+                <span class="text-[10px] text-slate-400 font-bold mt-0.5">شورای
                     سردبیری</span>
             </div>
         </div>

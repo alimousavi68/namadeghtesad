@@ -102,4 +102,84 @@ jQuery(document).ready(function($) {
         toggleRemoveButton();
     });
 
+    // Gallery Logic
+    var galleryFrame;
+    var $galleryBtn = $('#hasht_add_gallery_btn');
+    var $galleryInput = $('#hasht_gallery_images');
+    var $galleryPreview = $('#hasht_gallery_preview');
+
+    $galleryBtn.on('click', function(e) {
+        e.preventDefault();
+
+        // If the media frame already exists, reopen it.
+        if (galleryFrame) {
+            galleryFrame.open();
+            return;
+        }
+
+        // Create a new media frame
+        galleryFrame = wp.media({
+            title: 'انتخاب تصاویر گالری',
+            button: {
+                text: 'افزودن به گالری'
+            },
+            library: {
+                type: 'image'
+            },
+            multiple: true
+        });
+
+        // Pre-select existing images
+        galleryFrame.on('open', function() {
+            var selection = galleryFrame.state().get('selection');
+            var ids = $galleryInput.val().split(',');
+            ids.forEach(function(id) {
+                if(id) {
+                    var attachment = wp.media.attachment(id);
+                    attachment.fetch();
+                    selection.add( attachment ? [ attachment ] : [] );
+                }
+            });
+        });
+
+        // When images are selected...
+        galleryFrame.on('select', function() {
+            var selection = galleryFrame.state().get('selection');
+            var ids = [];
+            $galleryPreview.empty();
+
+            selection.map(function(attachment) {
+                attachment = attachment.toJSON();
+                ids.push(attachment.id);
+                
+                // Add to preview
+                var imgUrl = attachment.sizes && attachment.sizes.thumbnail ? attachment.sizes.thumbnail.url : attachment.url;
+                var item = $('<div class="hasht-gallery-item" data-id="' + attachment.id + '" style="position: relative; width: 80px; height: 80px;">' +
+                             '<img src="' + imgUrl + '" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">' +
+                             '<span class="remove-image" style="position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; width: 18px; height: 18px; text-align: center; line-height: 16px; cursor: pointer; font-size: 12px;">×</span>' +
+                             '</div>');
+                $galleryPreview.append(item);
+            });
+
+            $galleryInput.val(ids.join(','));
+        });
+
+        galleryFrame.open();
+    });
+
+    // Remove Image Logic
+    $galleryPreview.on('click', '.remove-image', function() {
+        var item = $(this).parent();
+        var idToRemove = item.data('id');
+        var currentIds = $galleryInput.val().split(',');
+        
+        // Remove id
+        currentIds = currentIds.filter(function(id) {
+            return id != idToRemove;
+        });
+        
+        $galleryInput.val(currentIds.join(','));
+        item.remove();
+    });
+
 });

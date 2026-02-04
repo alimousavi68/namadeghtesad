@@ -176,4 +176,122 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Lightbox Logic
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    if (galleryItems.length > 0) {
+        // Create Lightbox DOM
+        const lightbox = document.createElement('div');
+        lightbox.id = 'lightbox-modal';
+        lightbox.className = 'fixed inset-0 z-[60] bg-black/90 hidden flex items-center justify-center opacity-0 transition-opacity duration-300';
+        lightbox.innerHTML = `
+            <button id="lightbox-close" class="absolute top-4 left-4 text-white hover:text-primary transition-colors z-[70]">
+                <i data-lucide="x" width="32"></i>
+            </button>
+            <button id="lightbox-prev" class="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-primary transition-colors z-[70] hidden md:block">
+                <i data-lucide="chevron-right" width="48"></i>
+            </button>
+            <button id="lightbox-next" class="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-primary transition-colors z-[70] hidden md:block">
+                <i data-lucide="chevron-left" width="48"></i>
+            </button>
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white bg-black/50 px-3 py-1 rounded-full text-sm font-bold z-[70]" id="lightbox-counter"></div>
+            <div class="relative max-w-[90vw] max-h-[90vh]">
+                <img id="lightbox-img" src="" alt="Full Image" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl transition-opacity duration-300">
+            </div>
+        `;
+        document.body.appendChild(lightbox);
+
+        // Re-init icons for the new lightbox elements
+        if (window.lucide) lucide.createIcons();
+
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.getElementById('lightbox-close');
+        const prevBtn = document.getElementById('lightbox-prev');
+        const nextBtn = document.getElementById('lightbox-next');
+        const counter = document.getElementById('lightbox-counter');
+        
+        let currentIndex = 0;
+        const totalItems = galleryItems.length;
+
+        function updateCounter() {
+            if (counter) {
+                counter.textContent = `${currentIndex + 1} / ${totalItems}`;
+            }
+        }
+
+        function openLightbox(index) {
+            currentIndex = index;
+            const src = galleryItems[index].getAttribute('href');
+            lightboxImg.src = src;
+            updateCounter();
+            lightbox.classList.remove('hidden');
+            // Small delay to allow display:block to apply before opacity transition
+            setTimeout(() => {
+                lightbox.classList.remove('opacity-0');
+            }, 10);
+            document.body.style.overflow = 'hidden'; // Disable scroll
+        }
+
+        function closeLightbox() {
+            lightbox.classList.add('opacity-0');
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+                lightboxImg.src = '';
+            }, 300);
+            document.body.style.overflow = ''; // Enable scroll
+        }
+
+        function showNext() {
+            // Fade out
+            lightboxImg.classList.add('opacity-0');
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % totalItems;
+                const src = galleryItems[currentIndex].getAttribute('href');
+                lightboxImg.src = src;
+                updateCounter();
+                // Fade in
+                lightboxImg.classList.remove('opacity-0');
+            }, 300);
+        }
+
+        function showPrev() {
+            // Fade out
+            lightboxImg.classList.add('opacity-0');
+            setTimeout(() => {
+                currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+                const src = galleryItems[currentIndex].getAttribute('href');
+                lightboxImg.src = src;
+                updateCounter();
+                // Fade in
+                lightboxImg.classList.remove('opacity-0');
+            }, 300);
+        }
+
+        // Event Listeners
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                openLightbox(index);
+            });
+        });
+
+        closeBtn.addEventListener('click', closeLightbox);
+        nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showNext(); });
+        prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showPrev(); });
+
+        // Click outside to close
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('hidden')) return;
+            
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') showNext(); // RTL: Left is Next
+            if (e.key === 'ArrowRight') showPrev(); // RTL: Right is Prev
+        });
+    }
+
 });

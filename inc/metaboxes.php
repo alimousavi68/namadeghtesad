@@ -90,6 +90,7 @@ class Hasht_News_Meta_Box {
 
         // Photo Report Fields
         $photographer_name = get_post_meta($post->ID, '_news_photographer_name', true);
+        $gallery_images = get_post_meta($post->ID, '_news_gallery_images', true);
 
         // Publication Fields
         $pub_type = get_post_meta($post->ID, '_news_publication_type', true);
@@ -184,6 +185,30 @@ class Hasht_News_Meta_Box {
                 <div class="hasht-field-row">
                     <label for="hasht_photographer_name">نام عکاس (اجباری):</label>
                     <input type="text" name="_news_photographer_name" id="hasht_photographer_name" value="<?php echo esc_attr($photographer_name); ?>" class="widefat" maxlength="120">
+                </div>
+                
+                <div class="hasht-field-row">
+                    <label>تصاویر گالری:</label>
+                    <div class="hasht-gallery-wrapper">
+                        <input type="hidden" name="_news_gallery_images" id="hasht_gallery_images" value="<?php echo esc_attr($gallery_images); ?>">
+                        <div id="hasht_gallery_preview" class="hasht-gallery-preview" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
+                            <?php 
+                            if (!empty($gallery_images)) {
+                                $ids = explode(',', $gallery_images);
+                                foreach ($ids as $id) {
+                                    $img = wp_get_attachment_image_src($id, 'thumbnail');
+                                    if ($img) {
+                                        echo '<div class="hasht-gallery-item" data-id="' . $id . '" style="position: relative; width: 80px; height: 80px;">
+                                                <img src="' . $img[0] . '" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+                                                <span class="remove-image" style="position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; width: 18px; height: 18px; text-align: center; line-height: 16px; cursor: pointer; font-size: 12px;">×</span>
+                                              </div>';
+                                    }
+                                }
+                            }
+                            ?>
+                        </div>
+                        <button type="button" class="button" id="hasht_add_gallery_btn">افزودن / ویرایش تصاویر</button>
+                    </div>
                 </div>
             </div>
 
@@ -322,6 +347,9 @@ class Hasht_News_Meta_Box {
         // 5. Photo Report
         if (isset($_POST['_news_photographer_name'])) {
             update_post_meta($post_id, '_news_photographer_name', sanitize_text_field($_POST['_news_photographer_name']));
+        }
+        if (isset($_POST['_news_gallery_images'])) {
+            update_post_meta($post_id, '_news_gallery_images', sanitize_text_field($_POST['_news_gallery_images']));
         }
 
         // 6. Publication

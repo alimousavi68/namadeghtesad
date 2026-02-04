@@ -23,6 +23,25 @@ $interviewee_role = get_post_meta($post_id, '_news_interviewee_position', true);
 $source_name = get_post_meta($post_id, '_news_source_name', true);
 $source_link = get_post_meta($post_id, '_news_source_link', true);
 
+// Video Fields
+$video_duration = get_post_meta($post_id, '_news_video_duration', true);
+$video_source_type = get_post_meta($post_id, '_news_video_source_type', true);
+$video_hq = get_post_meta($post_id, '_news_video_hq_link', true);
+$video_lq = get_post_meta($post_id, '_news_video_lq_link', true);
+$video_embed = get_post_meta($post_id, '_news_video_embed_code', true);
+
+// Photo Report Fields
+$photographer_name = get_post_meta($post_id, '_news_photographer_name', true);
+$gallery_images = get_post_meta($post_id, '_news_gallery_images', true);
+
+// Publication Fields
+$pub_type = get_post_meta($post_id, '_news_publication_type', true);
+$pub_file_id = get_post_meta($post_id, '_news_publication_file_id', true);
+$pub_file_url = '';
+if ($pub_file_id) {
+    $pub_file_url = wp_get_attachment_url($pub_file_id);
+}
+
 // Author Box Logic (Always WP Author)
 $author_id = get_post_field('post_author', $post_id);
 $box_display_name = get_the_author_meta('display_name', $author_id);
@@ -40,6 +59,9 @@ if ($content_type === 'note' && !empty($custom_author_name)) {
 } elseif ($content_type === 'interview' && !empty($interviewee_name)) {
     $display_name = $interviewee_name;
     $display_role = $interviewee_role;
+} elseif ($content_type === 'photo_report' && !empty($photographer_name)) {
+    $display_name = $photographer_name;
+    $display_role = 'عکاس';
 } else {
     // For Standard/Video/Photo/Publication: Show WP Author in Header too
     $display_name = $box_display_name;
@@ -97,6 +119,12 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                                 <i data-lucide="calendar" width="14"></i>
                                 <span><?php echo get_the_date('j F Y'); ?></span>
                             </div>
+                            <?php if ($content_type === 'video' && !empty($video_duration)): ?>
+                                <div class="flex items-center gap-1.5 text-rose-500">
+                                    <i data-lucide="clock" width="14"></i>
+                                    <span><?php echo esc_html($video_duration); ?></span>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
 
@@ -111,9 +139,16 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-6 mb-6 print:border-black">
                             <!-- Author Name (Replaced News ID) -->
                             <div class="flex items-center gap-2 text-sm text-slate-500 dark:text-text-light print:text-black">
-                                <i data-lucide="user" width="16" class="text-primary"></i>
+                                <?php if ($content_type === 'photo_report'): ?>
+                                    <i data-lucide="camera" width="16" class="text-primary"></i>
+                                <?php else: ?>
+                                    <i data-lucide="user" width="16" class="text-primary"></i>
+                                <?php endif; ?>
+
                                 <?php if ($content_type === 'interview'): ?>
                                     <span class="text-xs text-slate-400">گفت‌وگو با:</span>
+                                <?php elseif ($content_type === 'photo_report'): ?>
+                                    <span class="text-xs text-slate-400">عکاس:</span>
                                 <?php endif; ?>
                                 <span class="font-bold text-text-main dark:text-slate-200"><?php echo esc_html($display_name); ?></span>
                             </div>
@@ -147,10 +182,108 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                             <?php echo get_the_excerpt(); ?>
                         </p>
 
-                        <?php if (has_post_thumbnail()): ?>
-                        <figure class="rounded-2xl overflow-hidden mb-10 print:shadow-none">
-                            <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-auto object-cover">
-                        </figure>
+                        <?php if ($content_type === 'video'): ?>
+                            <!-- Video Player -->
+                            <div class="mb-10">
+                                <?php if (!empty($video_embed)): ?>
+                                    <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg bg-black">
+                                        <?php echo $video_embed; ?>
+                                    </div>
+                                <?php elseif (!empty($video_hq) || !empty($video_lq)): ?>
+                                    <video controls poster="<?php echo esc_url($thumb_url); ?>" class="w-full rounded-2xl shadow-lg bg-black aspect-video">
+                                        <?php if (!empty($video_hq)): ?>
+                                            <source src="<?php echo esc_url($video_hq); ?>" type="video/mp4">
+                                        <?php endif; ?>
+                                        <?php if (!empty($video_lq)): ?>
+                                            <source src="<?php echo esc_url($video_lq); ?>" type="video/mp4">
+                                        <?php endif; ?>
+                                        مرورگر شما از پخش ویدئو پشتیبانی نمی‌کند.
+                                    </video>
+                                <?php endif; ?>
+
+                                <!-- Download Buttons -->
+                                <?php if (!empty($video_hq) || !empty($video_lq)): ?>
+                                    <div class="flex items-center gap-4 mt-6 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                        <span class="text-sm font-bold text-slate-700 flex items-center gap-2">
+                                            <i data-lucide="download" width="16"></i>
+                                            دانلود ویدئو:
+                                        </span>
+                                        <div class="flex gap-2">
+                                            <?php if (!empty($video_hq)): ?>
+                                                <a href="<?php echo esc_url($video_hq); ?>" download class="px-4 py-2 bg-primary text-white text-xs font-bold rounded-lg hover:bg-rose-700 transition-colors">
+                                                    کیفیت بالا
+                                                </a>
+                                            <?php endif; ?>
+                                            <?php if (!empty($video_lq)): ?>
+                                                <a href="<?php echo esc_url($video_lq); ?>" download class="px-4 py-2 bg-slate-200 text-slate-700 text-xs font-bold rounded-lg hover:bg-slate-300 transition-colors">
+                                                    کیفیت پایین
+                                                </a>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        <?php elseif ($content_type === 'photo_report' && !empty($gallery_images)): ?>
+                            <!-- Photo Gallery -->
+                            <div class="mb-10">
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="gallery-grid">
+                                    <?php 
+                                    $gallery_ids = explode(',', $gallery_images);
+                                    foreach ($gallery_ids as $index => $img_id):
+                                        $img_full = wp_get_attachment_image_src($img_id, 'full');
+                                        $img_thumb = wp_get_attachment_image_src($img_id, 'large');
+                                        if ($img_full):
+                                    ?>
+                                        <a href="<?php echo esc_url($img_full[0]); ?>" class="gallery-item block rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow relative group aspect-[4/3] bg-slate-100" data-index="<?php echo $index; ?>">
+                                            <img src="<?php echo esc_url($img_thumb[0] ?? $img_full[0]); ?>" alt="Gallery Image" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                <i data-lucide="zoom-in" class="text-white" width="24"></i>
+                                            </div>
+                                        </a>
+                                    <?php 
+                                        endif;
+                                    endforeach; 
+                                    ?>
+                                </div>
+                            </div>
+                        <?php elseif ($content_type === 'publication' && !empty($pub_file_url)): ?>
+                            <!-- Publication -->
+                            <div class="mb-10">
+                                <figure class="rounded-2xl overflow-hidden mb-8 shadow-md border border-slate-100">
+                                    <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-auto object-cover">
+                                </figure>
+                                
+                                <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-12 h-12 bg-rose-100 text-primary rounded-full flex items-center justify-center shrink-0">
+                                            <i data-lucide="file-text" width="24"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-base font-bold text-slate-800 mb-1">دانلود فایل نشریه</h4>
+                                            <p class="text-xs text-slate-500">
+                                                فرمت: PDF | نوع: 
+                                                <?php 
+                                                    $pub_labels = [
+                                                        'weekly' => 'هفته‌نامه',
+                                                        'monthly' => 'ماهنامه',
+                                                        'quarterly' => 'فصلنامه',
+                                                        'yearbook' => 'سالنامه'
+                                                    ];
+                                                    echo $pub_labels[$pub_type] ?? 'نشریه';
+                                                ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <a href="<?php echo esc_url($pub_file_url); ?>" target="_blank" class="w-full md:w-auto px-6 py-3 bg-primary text-white text-sm font-bold rounded-xl hover:bg-rose-700 transition-colors flex items-center justify-center gap-2 shadow-lg shadow-rose-200">
+                                        <i data-lucide="download" width="18"></i>
+                                        دانلود نسخه کامل
+                                    </a>
+                                </div>
+                            </div>
+                        <?php elseif (has_post_thumbnail()): ?>
+                            <figure class="rounded-2xl overflow-hidden mb-10 print:shadow-none">
+                                <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-auto object-cover">
+                            </figure>
                         <?php endif; ?>
                     </header>
 

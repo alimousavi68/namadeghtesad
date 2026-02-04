@@ -1,20 +1,19 @@
         <?php
 // Retrieve Customizer Settings
 $cat_slug   = get_theme_mod('hasht_home_hero_cat', '');
-$count      = get_theme_mod('hasht_home_hero_count', 9);
+$count      = get_theme_mod('hasht_home_hero_count', 4);
 
 // Build Query Arguments
 $args = [
-    'post_type'           => ['post', 'aggregated_news'], // Fixed to standard types
+    'post_type'           => ['post'], // Fixed to standard types
     'posts_per_page'      => $count,
-    'ignore_sticky_posts' => true,
     'post_status'         => 'publish',
     'orderby'             => 'date',
     'order'               => 'DESC',
 ];
 
 if (!empty($cat_slug)) {
-    $args['category_name'] = $cat_slug;
+    $args['cat'] = $cat_slug;
 }
 
 $hero_query = new WP_Query($args);

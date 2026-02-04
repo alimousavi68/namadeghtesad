@@ -77,7 +77,7 @@ $settings = [
 
             // Section 1: Dynamic Grid (ex: Macro Economics)
             'hasht_home_grid_sec' => [
-                'title' => 'بخش شبکه‌ای ۱ (مثلاً اقتصاد کلان)',
+                'title' => 'بخش شبکه‌ای ۱',
                 'fields' => [
                     'hasht_home_grid_title' => [
                         'label'   => 'عنوان بخش',
@@ -100,7 +100,7 @@ $settings = [
 
             // Section 2: Society & Economy (Grid 2x2)
             'hasht_home_society_sec' => [
-                'title' => 'بخش شبکه‌ای ۲ (مثلاً جامعه و اقتصاد)',
+                'title' => 'بخش شبکه‌ای ۲',
                 'fields' => [
                     'hasht_home_society_title' => [
                         'label'   => 'عنوان بخش',
@@ -123,7 +123,7 @@ $settings = [
 
             // Section 3: Industry (Feature + List)
             'hasht_home_industry_sec' => [
-                'title' => 'بخش ترکیبی ۱ (مثلاً صنعت و معدن)',
+                'title' => 'بخش ترکیبی ۱',
                 'fields' => [
                     'hasht_home_industry_title' => [
                         'label'   => 'عنوان بخش',
@@ -146,7 +146,7 @@ $settings = [
 
             // Section 4: Energy (Feature)
             'hasht_home_energy_sec' => [
-                'title' => 'بخش ترکیبی ۲ (مثلاً انرژی)',
+                'title' => 'بخش ترکیبی ۲',
                 'fields' => [
                     'hasht_home_energy_title' => [
                         'label'   => 'عنوان بخش',
@@ -191,6 +191,134 @@ $settings = [
                         'label'   => 'تعداد پست',
                         'type'    => 'number',
                         'default' => 3,
+                    ],
+                ]
+            ],
+
+            // Section 6: Publications
+            'hasht_home_publications_sec' => [
+                'title' => 'بخش نشریات',
+                'fields' => [
+                    'hasht_home_publications_title' => [
+                        'label'   => 'عنوان بخش',
+                        'type'    => 'text',
+                        'default' => 'نشریات تخصصی نماد اقتصاد',
+                    ],
+                    'hasht_home_publications_subtitle' => [
+                        'label'   => 'زیرعنوان',
+                        'type'    => 'text',
+                        'default' => 'آرشیو جامع مجلات، هفته‌نامه‌ها، فصلنامه‌ها و سالنامه‌های آماری',
+                    ],
+                    'hasht_home_publications_cat' => [
+                        'label'   => 'دسته‌بندی',
+                        'type'    => 'select',
+                        'choices' => $cats_options,
+                        'default' => '',
+                    ],
+                    'hasht_home_publications_count' => [
+                        'label'   => 'تعداد نمایش',
+                        'type'    => 'number',
+                        'default' => 10,
+                        'input_attrs' => [
+                            'min' => 5,
+                            'max' => 50,
+                            'step' => 1,
+                        ],
+                    ],
+                ]
+            ],
+
+            // Section 7: Bottom Categories (Bank & Bourse)
+            'hasht_home_bottom_sec' => [
+                'title' => 'بخش دسته‌های پایانی (بانک و بورس)',
+                'fields' => [
+                    // Column 1
+                    'hasht_home_bottom_cat1_title' => [
+                        'label'   => 'عنوان ستون اول',
+                        'type'    => 'text',
+                        'default' => 'بانک و بیمه',
+                    ],
+                    'hasht_home_bottom_cat1_slug' => [
+                        'label'   => 'دسته‌بندی ستون اول',
+                        'type'    => 'select',
+                        'choices' => $cats_options,
+                        'default' => '',
+                    ],
+                    'hasht_home_bottom_cat1_count' => [
+                        'label'   => 'تعداد پست ستون اول',
+                        'type'    => 'number',
+                        'default' => 10,
+                        'input_attrs' => [
+                            'min' => 5,
+                            'max' => 50,
+                            'step' => 1,
+                        ],
+                    ],
+                    // Column 2
+                    'hasht_home_bottom_cat2_title' => [
+                        'label'   => 'عنوان ستون دوم',
+                        'type'    => 'text',
+                        'default' => 'بورس',
+                    ],
+                    'hasht_home_bottom_cat2_slug' => [
+                        'label'   => 'دسته‌بندی ستون دوم',
+                        'type'    => 'select',
+                        'choices' => $cats_options,
+                        'default' => '',
+                    ],
+                    'hasht_home_bottom_cat2_count' => [
+                        'label'   => 'تعداد پست ستون دوم',
+                        'type'    => 'number',
+                        'default' => 10,
+                        'input_attrs' => [
+                            'min' => 5,
+                            'max' => 50,
+                            'step' => 1,
+                        ],
+                    ],
+                    // Column 3
+                    'hasht_home_bottom_cat3_title' => [
+                        'label'   => 'عنوان ستون سوم',
+                        'type'    => 'text',
+                        'default' => 'طلا و ارز',
+                    ],
+                    'hasht_home_bottom_cat3_slug' => [
+                        'label'   => 'دسته‌بندی ستون سوم',
+                        'type'    => 'select',
+                        'choices' => $cats_options,
+                        'default' => '',
+                    ],
+                    'hasht_home_bottom_cat3_count' => [
+                        'label'   => 'تعداد پست ستون سوم',
+                        'type'    => 'number',
+                        'default' => 10,
+                        'input_attrs' => [
+                            'min' => 5,
+                            'max' => 50,
+                            'step' => 1,
+                        ],
+                    ],
+                    // Column 4
+                    'hasht_home_bottom_cat4_title' => [
+                        'label'   => 'عنوان ستون چهارم',
+                        'type'    => 'text',
+                        'default' => 'خودرو',
+                    ],
+                    'hasht_home_bottom_cat4_slug' => [
+                        'label'   => 'دسته‌بندی ستون چهارم',
+                        'type'    => 'select',
+                        'choices' => $cats_options,
+                        'default' => '',
+                    ],
+                    'hasht_home_bottom_cat4_count' => [
+                        'label'   => 'تعداد پست ستون چهارم',
+                        'type'    => 'number',
+                        'default' => 10,
+                        'input_attrs' => [
+                            'min' => 5,
+                            'max' => 50,
+                            'step' => 1,
+                        ],
                     ],
                 ]
             ],

@@ -39,6 +39,37 @@ add_theme_support('custom-logo', [
     'flex-width'  => true,
 ]);
 
+// Register Custom Image Sizes
+add_action('after_setup_theme', function () {
+    // 1. Standard Landscape (Workhorse for grids)
+    add_image_size('hasht-medium', 450, 280, true); 
+
+    // 2. Feature Landscape (Hero slider, Large features)
+    add_image_size('hasht-large', 850, 530, true);
+
+    // 3. Rectangular Thumbnail (Sidebars, Lists)
+    add_image_size('hasht-small-rect', 220, 150, true);
+
+    // 4. Portrait (Publications/Magazines)
+    add_image_size('hasht-portrait', 300, 400, true);
+    
+    // Note: 'thumbnail' (150x150) is kept for avatars/circles
+});
+
+// Optimize: Disable generation of unneeded default sizes
+add_filter('intermediate_image_sizes_advanced', function ($sizes) {
+    // Remove default sizes we don't strictly need if our custom sizes cover them
+    unset($sizes['medium_large']); // 768px width (often unused if we have 850px)
+    unset($sizes['1536x1536']);    // WP 5.3+ default 2x large
+    unset($sizes['2048x2048']);    // WP 5.3+ default 2x large
+    
+    // Optional: You can unset 'medium' and 'large' if you are 100% sure you won't use them in post content
+    // unset($sizes['medium']); 
+    unset($sizes['large']);
+
+    return $sizes;
+});
+
 add_action('after_setup_theme', function () {
     register_nav_menus([
         'primary' => 'منوی اصلی',
@@ -61,6 +92,11 @@ if (file_exists(__DIR__ . '/inc/news-aggregator.php')) {
 // Load Custom Widgets
 if (file_exists(__DIR__ . '/inc/widgets.php')) {
     require_once __DIR__ . '/inc/widgets.php';
+}
+
+// Load CLI Commands
+if (defined('WP_CLI') && WP_CLI && file_exists(__DIR__ . '/inc/cli.php')) {
+    require_once __DIR__ . '/inc/cli.php';
 }
 
 class Hasht_Header_Walker extends Walker_Nav_Menu

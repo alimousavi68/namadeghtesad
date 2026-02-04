@@ -153,7 +153,7 @@ class Hasht_Selected_News_Widget extends WP_Widget {
                 $i = 1;
                 while ($query->have_posts()) {
                     $query->the_post();
-                    $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'medium');
+                    $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'hasht-small-rect');
                     ?>
                     <a href="<?php the_permalink(); ?>" class="group flex gap-3 items-start">
                         <div class="w-24 h-20 rounded-lg overflow-visible shrink-0 relative shadow-sm">

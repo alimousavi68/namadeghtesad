@@ -44,7 +44,7 @@ if ($cat_slug) {
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
         <?php while ($query->have_posts()) : $query->the_post(); 
-            $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'medium_large');
+            $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'hasht-medium');
         ?>
         <article class="news-card-v group">
             <div class="news-card-v-img-wrapper rounded-xl overflow-hidden aspect-[16/10]">

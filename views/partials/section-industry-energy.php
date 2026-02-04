@@ -47,7 +47,7 @@
             
             // Main Post
             $post = $main_post; setup_postdata($post);
-            $thumb_url = get_the_post_thumbnail_url($post, 'medium_large');
+            $thumb_url = get_the_post_thumbnail_url($post, 'hasht-large');
         ?>
         <!-- Main Feature Item -->
         <article class="news-card-overlay group">
@@ -71,7 +71,7 @@
         <!-- List Items -->
         <div class="space-y-4 mt-4">
             <?php foreach ($list_posts as $post): setup_postdata($post); 
-                $thumb_url = get_the_post_thumbnail_url($post, 'thumbnail');
+                $thumb_url = get_the_post_thumbnail_url($post, 'hasht-small-rect');
             ?>
             <article class="news-card-h group">
                 <div class="w-16 h-12 rounded-md overflow-hidden shrink-0">
@@ -166,7 +166,7 @@
         <!-- List Items -->
         <div class="space-y-4 mt-4">
             <?php foreach ($list_posts as $post): setup_postdata($post); 
-                $thumb_url = get_the_post_thumbnail_url($post, 'thumbnail');
+                $thumb_url = get_the_post_thumbnail_url($post, 'hasht-small-rect');
             ?>
             <article class="news-card-h group">
                 <div class="w-16 h-12 rounded-md overflow-hidden shrink-0">

@@ -2,7 +2,7 @@
 /**
  * page.php view
  */
-core_start_section('title'); ?>صفحه نمونه - نماد اقتصاد<?php core_end_section(); ?>
+?>
 
 <?php core_start_section('content'); ?>
 <!-- Header Container -->

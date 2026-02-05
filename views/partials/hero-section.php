@@ -43,9 +43,9 @@ if ($hero_query->have_posts()) :
                 ?>
                 <div class="relative group cursor-pointer w-full">
                     <div class="w-full h-[400px] lg:h-[430px] relative overflow-hidden rounded-xl shadow-xl bg-slate-900">
-                        <a href="<?php the_permalink(); ?>" class="block w-full h-full">
+                        <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
                             <?php if ($thumb_url): ?>
-                                <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>"
+                                <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr(get_the_title($post)); ?>"
                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 opacity-90 group-hover:opacity-100">
                             <?php else: ?>
                                 <div class="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">بدون تصویر</div>
@@ -55,12 +55,12 @@ if ($hero_query->have_posts()) :
                     <div class="absolute -bottom-8 lg:-bottom-12 left-1/2 -translate-x-1/2 w-[90%] bg-white dark:bg-slate-900 p-4 lg:p-7 transition-transform duration-500 group-hover:-translate-y-2 z-20 border border-slate-100 dark:border-slate-800 rounded-t-xl">
                         <div class="pt-2 pb-2">
                             <h2 class="text-lg lg:text-2xl font-black text-slate-900 dark:text-white leading-tight group-hover:text-primary dark:group-hover:text-primary transition-colors">
-                                <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                                <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                             </h2>
                             <div class="mt-3 flex items-center text-slate-400 text-[10px] lg:text-xs font-bold gap-3">
-                                <span><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?></span>
+                                <span><?php echo human_time_diff(get_the_time('U', $post), current_time('timestamp')) . ' پیش'; ?></span>
                                 <span class="w-1 h-1 rounded-full bg-slate-200 dark:bg-slate-800"></span>
-                                <a href="<?php the_permalink(); ?>" class="text-primary">مشاهده کامل گزارش</a>
+                                <a href="<?php echo get_permalink($post); ?>" class="text-primary">مشاهده کامل گزارش</a>
                             </div>
                         </div>
                         <div class="absolute bottom-0 left-0 right-0 h-1.5 flex overflow-hidden">
@@ -84,9 +84,9 @@ if ($hero_query->have_posts()) :
                 <div class="h-auto">
                     <div class="group cursor-pointer flex flex-row lg:flex-col gap-4 lg:gap-0 h-full items-center lg:items-start">
                         <div class="w-20 lg:w-full aspect-[3/2] lg:aspect-[16/10] overflow-hidden rounded-xl mb-0 lg:mb-2 shrink-0 shadow-md">
-                            <a href="<?php the_permalink(); ?>" class="block w-full h-full">
+                            <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
                                 <?php if ($thumb_url): ?>
-                                    <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>"
+                                    <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr(get_the_title($post)); ?>"
                                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                                 <?php else: ?>
                                     <div class="w-full h-full bg-slate-200"></div>
@@ -98,9 +98,9 @@ if ($hero_query->have_posts()) :
                                 <span class="text-[10px] font-black text-primary mb-1 hidden lg:block uppercase"><?php echo esc_html($cat_name); ?></span>
                             <?php endif; ?>
                             <h3 class="text-sm lg:text-base font-black text-slate-800 dark:text-slate-100 leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                                <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                                <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                             </h3>
-                            <span class="text-[10px] text-slate-400 mt-auto block pt-1"><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?></span>
+                            <span class="text-[10px] text-slate-400 mt-auto block pt-1"><?php echo human_time_diff(get_the_time('U', $post), current_time('timestamp')) . ' پیش'; ?></span>
                         </div>
                     </div>
                 </div>
@@ -113,9 +113,9 @@ if ($hero_query->have_posts()) :
                     ?>
                     <div class="flex items-center gap-3 py-1 group cursor-pointer border-b border-slate-100 dark:border-slate-800 last:border-none">
                         <div class="w-20 aspect-[3/2] lg:w-28 shrink-0 overflow-hidden rounded-lg shadow-sm">
-                            <a href="<?php the_permalink(); ?>" class="block w-full h-full">
+                            <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
                                 <?php if ($thumb_url): ?>
-                                    <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="<?php the_title_attribute(); ?>">
+                                    <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="<?php echo esc_attr(get_the_title($post)); ?>">
                                 <?php else: ?>
                                     <div class="w-full h-full bg-slate-200"></div>
                                 <?php endif; ?>
@@ -123,18 +123,25 @@ if ($hero_query->have_posts()) :
                         </div>
                         <div class="flex flex-col justify-center">
                             <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 line-clamp-2 leading-snug group-hover:text-primary transition-colors">
-                                <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                                <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                             </h4>
-                            <span class="text-[10px] font-black text-slate-400 mt-1"><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?></span>
+                            <span class="text-[10px] font-black text-slate-400 mt-1"><?php echo human_time_diff(get_the_time('U', $post), current_time('timestamp')) . ' پیش'; ?></span>
                         </div>
                     </div>
                     <?php endforeach; wp_reset_postdata(); ?>
                 </div>
             </div>
 
-            <!-- Selected News (Left Column) replaced by Market Widget -->
+            <!-- Hero Sidebar (Left Column) -->
             <aside class="lg:col-span-3 px-4 lg:px-0 mt-8 lg:mt-0">
-                <?php core_view('partials/widget-market'); ?>
+                <?php if (is_active_sidebar('hero-sidebar')) : ?>
+                    <?php dynamic_sidebar('hero-sidebar'); ?>
+                <?php else: ?>
+                     <div class="bg-slate-50 dark:bg-slate-800/40 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl p-8 text-center">
+                        <p class="text-slate-400 text-sm font-bold mb-2">سایدبار هیرو</p>
+                        <p class="text-xs text-slate-500">لطفاً از بخش ابزارک‌ها، ویجت دلخواه (مثلاً پیشخوان بازار) را به "سایدبار هیرو" اضافه کنید.</p>
+                    </div>
+                <?php endif; ?>
             </aside>
 
         </div>

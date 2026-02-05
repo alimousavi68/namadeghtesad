@@ -16,6 +16,26 @@ function hasht_widgets_init() {
         'after_title'   => '</h3>',
     ]);
 
+    register_sidebar([
+        'name'          => 'سایدبار اصلی (صفحات داخلی)',
+        'id'            => 'main-sidebar',
+        'description'   => 'ویجت‌های سایدبار صفحات داخلی (نوشته‌ها، برگه‌ها و آرشیو) را اینجا قرار دهید.',
+        'before_widget' => '<div id="%1$s" class="widget %2$s mb-6">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="section-title flex items-center gap-4 mb-4 text-xl font-black"><div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0"><div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div></div>',
+        'after_title'   => '</h3>',
+    ]);
+
+    register_sidebar([
+        'name'          => 'سایدبار هیرو (ستون کناری)',
+        'id'            => 'hero-sidebar',
+        'description'   => 'این سایدبار در بخش هیرو (بالای صفحه اصلی) نمایش داده می‌شود. می‌توانید ویجت پیشخوان بازار یا لیست اخبار را اینجا قرار دهید.',
+        'before_widget' => '<div id="%1$s" class="widget %2$s mb-6">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="section-title flex items-center gap-4 mb-4 text-xl font-black"><div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0"><div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div></div>',
+        'after_title'   => '</h3>',
+    ]);
+
     register_widget('Hasht_Selected_News_Widget');
     register_widget('Hasht_Market_Widget');
     register_widget('Hasht_Advertisement_Widget');
@@ -305,41 +325,48 @@ class Hasht_Selected_News_Widget extends WP_Widget {
 }
 
 /**
- * Widget: Market Dashboard (Hardcoded static content for now, but wrapper as widget)
+ * Widget: Market Dashboard (Dynamic)
  */
 class Hasht_Market_Widget extends WP_Widget {
     public function __construct() {
         parent::__construct(
             'hasht_market_widget',
             'نماد اقتصاد: پیشخوان بازار',
-            ['description' => 'نمایش قیمت‌های بازار (استاتیک)']
+            ['description' => 'نمایش باکس‌های دسترسی سریع (روزنامه، ارز، بورس و...) با قابلیت ویرایش']
         );
     }
 
     public function widget($args, $instance) {
-        // Output exactly what was in the partial
+        // Defaults
+        $defaults = [
+            1 => ['label' => 'روزنامه‌ها', 'icon' => 'newspaper', 'link' => '#'],
+            2 => ['label' => 'ارز', 'icon' => 'dollar-sign', 'link' => '#'],
+            3 => ['label' => 'طلا و سکه', 'icon' => 'coins', 'link' => '#'],
+            4 => ['label' => 'بورس', 'icon' => 'bar-chart-3', 'link' => '#'],
+            5 => ['label' => 'ارز دیجیتال', 'icon' => 'bitcoin', 'link' => '#'],
+            6 => ['label' => 'خودرو', 'icon' => 'car', 'link' => '#'],
+        ];
+
+        // Title
+        $title = !empty($instance['title']) ? $instance['title'] : 'پیشخوان بازار';
+
         echo '<section class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-colors mb-6" aria-label="Market Widget">';
         echo '<h3 class="section-title flex items-center gap-4 mb-4 text-xl font-black">';
         echo '<div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0"><div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div></div>';
-        echo 'پیشخوان بازار';
+        echo esc_html($title);
         echo '</h3>';
         echo '<div class="grid grid-cols-3 gap-3">';
-        
-        $items = [
-            ['icon' => 'newspaper', 'label' => 'روزنامه‌ها'],
-            ['icon' => 'dollar-sign', 'label' => 'ارز'],
-            ['icon' => 'coins', 'label' => 'طلا و سکه'],
-            ['icon' => 'bar-chart-3', 'label' => 'بورس'],
-            ['icon' => 'bitcoin', 'label' => 'ارز دیجیتال'],
-            ['icon' => 'car', 'label' => 'خودرو'],
-        ];
 
-        foreach ($items as $item) {
-            echo '<a href="#" class="flex flex-col items-center gap-2 group transition-all">';
+        for ($i = 1; $i <= 6; $i++) {
+            $label = !empty($instance["item_{$i}_label"]) ? $instance["item_{$i}_label"] : $defaults[$i]['label'];
+            $icon  = !empty($instance["item_{$i}_icon"]) ? $instance["item_{$i}_icon"] : $defaults[$i]['icon'];
+            $link  = !empty($instance["item_{$i}_link"]) ? $instance["item_{$i}_link"] : $defaults[$i]['link'];
+
+            echo '<a href="' . esc_url($link) . '" class="flex flex-col items-center gap-2 group transition-all">';
             echo '<div class="w-full aspect-square flex items-center justify-center bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 rounded-xl group-hover:border-primary group-hover:bg-white dark:group-hover:bg-slate-800 transition-all text-slate-500 dark:text-text-light group-hover:text-primary shadow-sm">';
-            echo '<i data-lucide="' . esc_attr($item['icon']) . '" width="56" stroke-width="1.2"></i>';
+            echo '<i data-lucide="' . esc_attr($icon) . '" width="56" stroke-width="1.2"></i>';
             echo '</div>';
-            echo '<span class="text-sm font-black text-text-main dark:text-slate-300 group-hover:text-primary text-center leading-tight">' . esc_html($item['label']) . '</span>';
+            echo '<span class="text-sm font-black text-text-main dark:text-slate-300 group-hover:text-primary text-center leading-tight">' . esc_html($label) . '</span>';
             echo '</a>';
         }
 
@@ -348,10 +375,55 @@ class Hasht_Market_Widget extends WP_Widget {
     }
 
     public function form($instance) {
-        echo '<p>این ابزارک تنظیمات خاصی ندارد.</p>';
+        $title = !empty($instance['title']) ? $instance['title'] : 'پیشخوان بازار';
+        ?>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>">عنوان ویجت:</label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text" value="<?php echo esc_attr($title); ?>">
+        </p>
+        <hr>
+        <?php
+        $defaults = [
+            1 => ['label' => 'روزنامه‌ها', 'icon' => 'newspaper'],
+            2 => ['label' => 'ارز', 'icon' => 'dollar-sign'],
+            3 => ['label' => 'طلا و سکه', 'icon' => 'coins'],
+            4 => ['label' => 'بورس', 'icon' => 'bar-chart-3'],
+            5 => ['label' => 'ارز دیجیتال', 'icon' => 'bitcoin'],
+            6 => ['label' => 'خودرو', 'icon' => 'car'],
+        ];
+
+        for ($i = 1; $i <= 6; $i++) {
+            $label = !empty($instance["item_{$i}_label"]) ? $instance["item_{$i}_label"] : $defaults[$i]['label'];
+            $icon  = !empty($instance["item_{$i}_icon"]) ? $instance["item_{$i}_icon"] : $defaults[$i]['icon'];
+            $link  = !empty($instance["item_{$i}_link"]) ? $instance["item_{$i}_link"] : '';
+            ?>
+            <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; background: #fafafa;">
+                <strong>آیتم شماره <?php echo $i; ?></strong>
+                <p>
+                    <label for="<?php echo esc_attr($this->get_field_id("item_{$i}_label")); ?>">عنوان:</label>
+                    <input class="widefat" id="<?php echo esc_attr($this->get_field_id("item_{$i}_label")); ?>" name="<?php echo esc_attr($this->get_field_name("item_{$i}_label")); ?>" type="text" value="<?php echo esc_attr($label); ?>">
+                </p>
+                <p>
+                    <label for="<?php echo esc_attr($this->get_field_id("item_{$i}_link")); ?>">لینک:</label>
+                    <input class="widefat" id="<?php echo esc_attr($this->get_field_id("item_{$i}_link")); ?>" name="<?php echo esc_attr($this->get_field_name("item_{$i}_link")); ?>" type="text" value="<?php echo esc_attr($link); ?>" placeholder="https://...">
+                </p>
+                <p>
+                    <label for="<?php echo esc_attr($this->get_field_id("item_{$i}_icon")); ?>">نام آیکون (Lucide):</label>
+                    <input class="widefat" id="<?php echo esc_attr($this->get_field_id("item_{$i}_icon")); ?>" name="<?php echo esc_attr($this->get_field_name("item_{$i}_icon")); ?>" type="text" value="<?php echo esc_attr($icon); ?>">
+                </p>
+            </div>
+            <?php
+        }
     }
 
     public function update($new_instance, $old_instance) {
+        $instance = [];
+        $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
+        for ($i = 1; $i <= 6; $i++) {
+            $instance["item_{$i}_label"] = (!empty($new_instance["item_{$i}_label"])) ? strip_tags($new_instance["item_{$i}_label"]) : '';
+            $instance["item_{$i}_link"]  = (!empty($new_instance["item_{$i}_link"])) ? esc_url_raw($new_instance["item_{$i}_link"]) : '';
+            $instance["item_{$i}_icon"]  = (!empty($new_instance["item_{$i}_icon"])) ? sanitize_key($new_instance["item_{$i}_icon"]) : '';
+        }
         return $instance;
     }
 }

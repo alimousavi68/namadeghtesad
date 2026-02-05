@@ -2,7 +2,7 @@
 /**
  * search.php view
  */
-core_start_section('title'); ?>جستجو برای: <?php echo get_search_query(); ?> - نماد اقتصاد<?php core_end_section(); ?>
+?>
 
 <?php core_start_section('content'); ?>
 <!-- Header Container -->

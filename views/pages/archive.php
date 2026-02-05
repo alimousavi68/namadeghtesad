@@ -2,7 +2,7 @@
 /**
  * archive.php view
  */
-core_start_section('title'); ?>آرشیو مطالب - نماد اقتصاد<?php core_end_section(); ?>
+?>
 
 <?php core_start_section('content'); ?>
 <!-- Header Container -->

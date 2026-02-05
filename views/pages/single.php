@@ -2,7 +2,7 @@
 /**
  * single.php view
  */
-core_start_section('title'); ?>تحلیل جامع بودجه ۱۴۰۴: سناریوهای تورمی و رشد اقتصادی - نماد اقتصاد<?php core_end_section(); ?>
+?>
 
 <?php core_start_section('content'); ?>
 <?php

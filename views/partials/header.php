@@ -1,6 +1,6 @@
 <!-- Header -->
 <header id="main-header"
-    class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-all duration-300 z-50 w-full sticky top-0">
+    class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-all duration-300 z-50 w-full relative">
     <!-- Utility Bar -->
     <div
         class="bg-slate-50 dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800 py-1.5 hidden md:block">

@@ -2,7 +2,7 @@
 /**
  * Home page view
  */
-core_start_section('title'); ?>نماد اقتصاد - پایگاه خبری تحلیلی<?php core_end_section(); ?>
+?>
 
 <?php core_start_section('head'); ?>
 <!-- Custom styles for Home Page -->

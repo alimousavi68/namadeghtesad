@@ -360,6 +360,51 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                     </div>
 
                     <!-- Related News -->
+                    <?php 
+                    $show_related = get_theme_mod('hasht_single_related_enable', true);
+                    if ($show_related):
+                        $related_title = get_theme_mod('hasht_single_related_title', 'اخبار مرتبط');
+                        $related_count = get_theme_mod('hasht_single_related_count', 4);
+                        $related_query_type = get_theme_mod('hasht_single_related_query', 'category');
+                        $related_layout = get_theme_mod('hasht_single_related_layout', 'grid-2');
+
+                        $args = [
+                            'post_type' => 'post',
+                            'posts_per_page' => $related_count,
+                            'post_status' => 'publish',
+                            'post__not_in' => [get_the_ID()],
+                            'ignore_sticky_posts' => 1,
+                        ];
+
+                        if ($related_query_type === 'category') {
+                            $categories = get_the_category();
+                            if ($categories) {
+                                $cat_ids = array_column($categories, 'term_id');
+                                $args['category__in'] = $cat_ids;
+                            }
+                        } elseif ($related_query_type === 'tag') {
+                            $tags = get_the_tags();
+                            if ($tags) {
+                                $tag_ids = array_column($tags, 'term_id');
+                                $args['tag__in'] = $tag_ids;
+                            }
+                        } elseif ($related_query_type === 'author') {
+                            $args['author'] = get_the_author_meta('ID');
+                        } elseif ($related_query_type === 'random') {
+                            $args['orderby'] = 'rand';
+                        }
+
+                        $related_query = new WP_Query($args);
+
+                        if ($related_query->have_posts()):
+                            // Layout Classes
+                            $grid_class = 'grid-cols-1 md:grid-cols-2';
+                            if ($related_layout === 'grid-3') {
+                                $grid_class = 'grid-cols-1 md:grid-cols-3';
+                            } elseif ($related_layout === 'list') {
+                                $grid_class = 'grid-cols-1';
+                            }
+                    ?>
                     <section class="mt-12 print:hidden">
                         <!-- Separator -->
                         <div class="w-full h-px bg-slate-200 dark:bg-slate-700 mb-12"></div>
@@ -369,71 +414,34 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                                 <div class="h-1/3 bg-slate-400"></div>
                                 <div class="h-2/3 bg-primary"></div>
                             </div>
-                            <h3 class="text-xl font-black text-slate-800 dark:text-white">اخبار مرتبط</h3>
+                            <h3 class="text-xl font-black text-slate-800 dark:text-white"><?php echo esc_html($related_title); ?></h3>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Related Item 1 -->
-                            <a href="#" class="group flex items-start gap-4 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-rose-200 dark:hover:border-rose-900/50 transition-all">
-                                <div class="w-24 h-24 rounded-lg overflow-hidden shrink-0">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/apartoman.jpg" alt="Related" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 leading-relaxed group-hover:text-primary transition-colors mb-2">
-                                        تاثیر نوسانات ارزی بر بازار مسکن؛ آیا زمان خرید فرا رسیده است؟
-                                    </h4>
-                                    <div class="flex items-center gap-2 text-xs text-text-light">
-                                        <i data-lucide="clock" width="12"></i>
-                                        <span>۲ ساعت پیش</span>
+                        <div class="grid <?php echo esc_attr($grid_class); ?> gap-6">
+                            <?php while ($related_query->have_posts()): $related_query->the_post(); ?>
+                                <a href="<?php the_permalink(); ?>" class="group flex items-start gap-4 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-rose-200 dark:hover:border-rose-900/50 transition-all">
+                                    <div class="w-24 h-24 rounded-lg overflow-hidden shrink-0">
+                                        <?php if (has_post_thumbnail()): ?>
+                                            <img src="<?php the_post_thumbnail_url('hasht-small-rect'); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                        <?php else: ?>
+                                            <div class="w-full h-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
+                                                <i data-lucide="image" class="text-slate-400" width="24"></i>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
-                                </div>
-                            </a>
-                            <!-- Related Item 2 -->
-                            <a href="#" class="group flex items-start gap-4 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-rose-200 dark:hover:border-rose-900/50 transition-all">
-                                <div class="w-24 h-24 rounded-lg overflow-hidden shrink-0">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gold-05.jpg" alt="Related" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 leading-relaxed group-hover:text-primary transition-colors mb-2">
-                                        جزئیات جدید از طرح مالیات بر عایدی سرمایه و طلا
-                                    </h4>
-                                    <div class="flex items-center gap-2 text-xs text-text-light">
-                                        <i data-lucide="clock" width="12"></i>
-                                        <span>۵ ساعت پیش</span>
+                                    <div class="flex-1">
+                                        <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 leading-relaxed group-hover:text-primary transition-colors mb-2 line-clamp-2">
+                                            <?php the_title(); ?>
+                                        </h4>
+                                        <div class="flex items-center gap-2 text-xs text-text-light">
+                                            <i data-lucide="clock" width="12"></i>
+                                            <span><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?></span>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                            <!-- Related Item 3 -->
-                            <a href="#" class="group flex items-start gap-4 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-rose-200 dark:hover:border-rose-900/50 transition-all">
-                                <div class="w-24 h-24 rounded-lg overflow-hidden shrink-0">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/bit-usa.jpg" alt="Related" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 leading-relaxed group-hover:text-primary transition-colors mb-2">
-                                        سقوط آزاد بیت‌کوین؛ تحلیل تکنیکال روند بازار کریپتو
-                                    </h4>
-                                    <div class="flex items-center gap-2 text-xs text-text-light">
-                                        <i data-lucide="clock" width="12"></i>
-                                        <span>دیروز</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <!-- Related Item 4 -->
-                            <a href="#" class="group flex items-start gap-4 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-rose-200 dark:hover:border-rose-900/50 transition-all">
-                                <div class="w-24 h-24 rounded-lg overflow-hidden shrink-0">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/bours-26.jpg" alt="Related" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 leading-relaxed group-hover:text-primary transition-colors mb-2">
-                                        آینده بورس تهران در نیمه دوم سال چگونه خواهد بود؟
-                                    </h4>
-                                    <div class="flex items-center gap-2 text-xs text-text-light">
-                                        <i data-lucide="clock" width="12"></i>
-                                        <span>۲ روز پیش</span>
-                                    </div>
-                                </div>
-                            </a>
+                                </a>
+                            <?php endwhile; wp_reset_postdata(); ?>
                         </div>
                     </section>
+                    <?php endif; endif; ?>
 
                     <!-- Comments Section -->
                     <section class="mt-12 print:hidden" id="comments">

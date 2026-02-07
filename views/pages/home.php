@@ -49,7 +49,13 @@
                     <aside class="xl:col-span-4">
                         <?php 
                         if (get_theme_mod('hasht_home_notes_enable', true)) {
-                            core_view('partials/section-notes-interviews');
+                            // Display the dedicated widget area instead of the hardcoded view
+                            if (is_active_sidebar('home-notes-sidebar')) {
+                                dynamic_sidebar('home-notes-sidebar');
+                            } else {
+                                // Fallback or placeholder if needed, though usually empty is fine
+                                // echo '<div class="bg-slate-100 p-4 rounded text-center text-slate-500">ابزارک یادداشت و مصاحبه را اینجا قرار دهید</div>';
+                            }
                         }
                         ?>
                     </aside>

@@ -289,35 +289,7 @@ function hasht_run_seeder() {
                 ],
             ]
         ],
-        'notes-interviews' => [
-            'name' => 'یادداشت و مصاحبه',
-            'posts' => [
-                [
-                    'title' => 'بازگشت به ریل توسعه؛ نقشه راه میان‌مدت اقتصاد',
-                    'img' => 'janansefat-3.jpg',
-                    'meta' => [
-                        'author_name' => 'دکتر علیرضا افشار',
-                        'author_role' => 'شورای سردبیری',
-                    ]
-                ],
-                [
-                    'title' => 'گفت‌وگو با مدیرعامل بورس تهران درباره نوسانات اخیر',
-                    'img' => 'hoseini-hi.jpg',
-                    'meta' => [
-                        'author_name' => 'مهندس سهراب سپهری',
-                        'author_role' => 'شورای سردبیری',
-                    ]
-                ],
-                [
-                    'title' => 'سیاست‌های ارزی جدید و تاثیر آن بر صادرات غیرنفتی',
-                    'img' => 'download (3).jpeg',
-                    'meta' => [
-                        'author_name' => 'خانم دکتر مریم ایمانی',
-                        'author_role' => 'شورای سردبیری',
-                    ]
-                ],
-            ]
-        ],
+
          'companies' => [
             'name' => 'شرکت‌ها',
             'posts' => [

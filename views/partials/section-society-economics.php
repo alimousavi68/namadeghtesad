@@ -6,7 +6,7 @@ $count    = get_theme_mod('hasht_home_society_count', 4);
 
 // Query
 $args = [
-    'post_type'      => ['post', 'aggregated_news'],
+    'post_type'      => ['post'],
     'posts_per_page' => $count,
     'post_status'    => 'publish',
     'orderby'        => 'date',
@@ -43,14 +43,14 @@ if ($cat_slug) {
         </a>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-        <?php while ($query->have_posts()) : $query->the_post(); 
-             $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'hasht-medium');
+        <?php foreach ($query->posts as $post) : setup_postdata($post); 
+             $thumb_url = get_the_post_thumbnail_url($post, 'hasht-medium');
         ?>
         <article class="news-card-v group">
             <div class="news-card-v-img-wrapper rounded-xl overflow-hidden aspect-[16/10]">
-                <a href="<?php the_permalink(); ?>" class="block w-full h-full">
+                <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
                     <?php if ($thumb_url): ?>
-                        <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>"
+                        <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr(get_the_title($post)); ?>"
                             class="news-card-v-img w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     <?php else: ?>
                         <div class="w-full h-full bg-slate-200"></div>
@@ -59,12 +59,12 @@ if ($cat_slug) {
             </div>
             <div class="news-card-v-content">
                 <h3 class="news-card-v-title">
-                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                    <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                 </h3>
-                <span class="meta-text mt-auto block pt-1 text-[10px] font-normal text-slate-400 dark:text-slate-500"><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?></span>
+                <span class="meta-text mt-auto block pt-1 text-[10px] font-normal text-slate-400 dark:text-slate-500"><?php echo human_time_diff(get_the_time('U', $post), current_time('timestamp')) . ' پیش'; ?></span>
             </div>
         </article>
-        <?php endwhile; wp_reset_postdata(); ?>
+        <?php endforeach; wp_reset_postdata(); ?>
     </div>
 </section>
 <?php endif; ?>

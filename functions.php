@@ -84,11 +84,6 @@ if (file_exists(__DIR__ . '/inc/seeder.php')) {
     require_once __DIR__ . '/inc/seeder.php';
 }
 
-// Load News Aggregator Logic (CPT & Architecture)
-if (file_exists(__DIR__ . '/inc/news-aggregator.php')) {
-    require_once __DIR__ . '/inc/news-aggregator.php';
-}
-
 // Load Custom Widgets
 if (file_exists(__DIR__ . '/inc/widgets.php')) {
     require_once __DIR__ . '/inc/widgets.php';
@@ -223,14 +218,14 @@ add_action('pre_get_posts', function ($q) {
         return;
     }
     if ($q->is_category()) {
-        $q->set('post_type', ['post', 'aggregated_news']);
+        $q->set('post_type', ['post']);
     }
     if ($q->is_search()) {
         $type = isset($_GET['type']) ? sanitize_text_field($_GET['type']) : '';
-        if ($type === 'post' || $type === 'aggregated_news') {
+        if ($type === 'post') {
             $q->set('post_type', [$type]);
         } else {
-            $q->set('post_type', ['post', 'aggregated_news']);
+            $q->set('post_type', ['post']);
         }
         $cat = isset($_GET['cat']) ? absint($_GET['cat']) : 0;
         if ($cat) {
@@ -250,34 +245,8 @@ add_action('pre_get_posts', function ($q) {
             $q->set('date_query', [$dq]);
         }
     }
-    if ($q->is_post_type_archive('aggregated_news')) {
-        $src_name = isset($_GET['source_name']) ? sanitize_text_field($_GET['source_name']) : '';
-        if ($src_name !== '') {
-            $q->set('meta_query', [
-                [
-                    'key'   => 'i8_hrm_source_name',
-                    'value' => $src_name,
-                    'compare' => '=',
-                ],
-            ]);
-        }
-    }
 });
 
-add_action('init', function () {
-    register_post_meta('aggregated_news', 'i8_hrm_source_name', [
-        'type'              => 'string',
-        'single'            => true,
-        'show_in_rest'      => true,
-        'sanitize_callback' => 'sanitize_text_field',
-    ]);
-    register_post_meta('aggregated_news', 'i8_hrm_source_link', [
-        'type'              => 'string',
-        'single'            => true,
-        'show_in_rest'      => true,
-        'sanitize_callback' => 'esc_url_raw',
-    ]);
-});
 
 if (!function_exists('hasht_get_thumbnail')) {
     function hasht_get_thumbnail($size = 'medium', $attrs = [])

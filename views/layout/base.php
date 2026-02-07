@@ -11,7 +11,7 @@
     <?php wp_head(); ?>
 </head>
 
-<body <?php body_class('transition-colors duration-300'); ?>>
+<body <?php body_class('bg-gray-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 font-sans min-h-screen flex flex-col'); ?>>
     
     <?php 
     // نمایش منوی موبایل

@@ -3,7 +3,7 @@ $enable = get_theme_mod('hasht_home_ticker_enable', true);
 if (!$enable) return;
 
 $title = get_theme_mod('hasht_home_ticker_title', '');
-$cat   = get_theme_mod('hasht_home_ticker_cat', '');
+$cat_id = get_theme_mod('hasht_home_ticker_cat', '');
 $count = get_theme_mod('hasht_home_ticker_count', 5);
 $speed = 300; // Hardcoded reasonable speed (seconds)
 
@@ -12,8 +12,8 @@ $args = [
     'posts_per_page' => $count,
     'post_status'    => 'publish',
 ];
-if ($cat) {
-    $args['category_name'] = $cat;
+if ($cat_id) {
+    $args['cat'] = $cat_id;
 }
 $ticker_query = new WP_Query($args);
 

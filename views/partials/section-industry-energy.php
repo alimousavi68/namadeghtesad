@@ -1,28 +1,26 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
     <!-- Industry & Mining -->
+    <?php if (get_theme_mod('hasht_home_industry_enable', true)): ?>
     <?php
     $ind_title    = get_theme_mod('hasht_home_industry_title', '');
-    $ind_cat_slug = get_theme_mod('hasht_home_industry_cat', '');
+    $ind_cat_id   = get_theme_mod('hasht_home_industry_cat', ''); // Changed to ID
     $ind_count    = get_theme_mod('hasht_home_industry_count', 5);
 
     $ind_args = [
-        'post_type'      => ['post', 'aggregated_news'],
+        'post_type'      => ['post'],
         'posts_per_page' => $ind_count,
         'post_status'    => 'publish',
         'orderby'        => 'date',
         'order'          => 'DESC',
     ];
-    if ($ind_cat_slug) {
-        $ind_args['category_name'] = $ind_cat_slug;
+    if ($ind_cat_id) {
+        $ind_args['cat'] = $ind_cat_id;
     }
     $ind_query = new WP_Query($ind_args);
     
     $ind_link = '#';
-    if ($ind_cat_slug) {
-        $cat_obj = get_category_by_slug($ind_cat_slug);
-        if ($cat_obj) {
-            $ind_link = get_category_link($cat_obj->term_id);
-        }
+    if ($ind_cat_id) {
+        $ind_link = get_category_link($ind_cat_id);
     }
     ?>
     <section class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-100 dark:border-slate-800 shadow-sm">
@@ -46,21 +44,24 @@
             $list_posts = array_slice($posts, 1);
             
             // Main Post
-            $post = $main_post; setup_postdata($post);
+            // We use a separate variable to ensure we are referencing the correct post object
+            // and explicitly calling setup_postdata on it.
+            $post = $main_post; 
+            setup_postdata($post);
             $thumb_url = get_the_post_thumbnail_url($post, 'hasht-large');
         ?>
         <!-- Main Feature Item -->
         <article class="news-card-overlay group">
             <div class="news-card-overlay-img-wrapper rounded-xl overflow-hidden aspect-[16/10] relative">
-                <a href="<?php the_permalink(); ?>" class="block w-full h-full">
+                <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
                     <?php if ($thumb_url): ?>
-                        <img src="<?php echo esc_url($thumb_url); ?>" class="news-card-overlay-img w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="<?php the_title_attribute(); ?>">
+                        <img src="<?php echo esc_url($thumb_url); ?>" class="news-card-overlay-img w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="<?php echo esc_attr(get_the_title($post)); ?>">
                     <?php else: ?>
                         <div class="w-full h-full bg-slate-200"></div>
                     <?php endif; ?>
                     <div class="news-card-overlay-content absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
                         <h4 class="news-card-overlay-title text-white font-bold text-lg">
-                            <?php the_title(); ?>
+                            <?php echo get_the_title($post); ?>
                         </h4>
                     </div>
                 </a>
@@ -75,16 +76,16 @@
             ?>
             <article class="news-card-h group">
                 <div class="w-16 h-12 rounded-md overflow-hidden shrink-0">
-                    <a href="<?php the_permalink(); ?>" class="block w-full h-full">
+                    <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
                         <?php if ($thumb_url): ?>
-                            <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover" alt="<?php the_title_attribute(); ?>">
+                            <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover" alt="<?php echo esc_attr(get_the_title($post)); ?>">
                         <?php else: ?>
                             <div class="w-full h-full bg-slate-200"></div>
                         <?php endif; ?>
                     </a>
                 </div>
                 <h5 class="news-card-h-title">
-                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                    <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                 </h5>
             </article>
             <?php endforeach; wp_reset_postdata(); ?>
@@ -93,15 +94,17 @@
             <p class="text-slate-500 text-sm">مطلبی یافت نشد.</p>
         <?php endif; ?>
     </section>
+    <?php endif; ?>
 
     <!-- Energy -->
+    <?php if (get_theme_mod('hasht_home_energy_enable', true)): ?>
     <?php
     $en_title    = get_theme_mod('hasht_home_energy_title', '');
     $en_cat_slug = get_theme_mod('hasht_home_energy_cat', '');
     $en_count    = get_theme_mod('hasht_home_energy_count', 1);
 
     $en_args = [
-        'post_type'      => ['post', 'aggregated_news'],
+        'post_type'      => ['post'],
         'posts_per_page' => $en_count,
         'post_status'    => 'publish',
         'orderby'        => 'date',
@@ -142,20 +145,20 @@
             
             // Main Post
             $post = $main_post; setup_postdata($post);
-            $thumb_url = get_the_post_thumbnail_url($post, 'medium_large');
+            $thumb_url = get_the_post_thumbnail_url($post, 'hasht-large');
         ?>
         <!-- Main Feature Item -->
         <article class="news-card-overlay group">
             <div class="news-card-overlay-img-wrapper rounded-xl overflow-hidden aspect-[16/10] relative">
-                <a href="<?php the_permalink(); ?>" class="block w-full h-full">
+                <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
                     <?php if ($thumb_url): ?>
-                        <img src="<?php echo esc_url($thumb_url); ?>" class="news-card-overlay-img w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="<?php the_title_attribute(); ?>">
+                        <img src="<?php echo esc_url($thumb_url); ?>" class="news-card-overlay-img w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="<?php echo esc_attr(get_the_title($post)); ?>">
                     <?php else: ?>
                         <div class="w-full h-full bg-slate-200"></div>
                     <?php endif; ?>
                     <div class="news-card-overlay-content absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
                         <h4 class="news-card-overlay-title text-white font-bold text-lg">
-                            <?php the_title(); ?>
+                            <?php echo get_the_title($post); ?>
                         </h4>
                     </div>
                 </a>
@@ -170,16 +173,16 @@
             ?>
             <article class="news-card-h group">
                 <div class="w-16 h-12 rounded-md overflow-hidden shrink-0">
-                    <a href="<?php the_permalink(); ?>" class="block w-full h-full">
+                    <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
                         <?php if ($thumb_url): ?>
-                            <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover" alt="<?php the_title_attribute(); ?>">
+                            <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover" alt="<?php echo esc_attr(get_the_title($post)); ?>">
                         <?php else: ?>
                             <div class="w-full h-full bg-slate-200"></div>
                         <?php endif; ?>
                     </a>
                 </div>
                 <h5 class="news-card-h-title">
-                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                    <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                 </h5>
             </article>
             <?php endforeach; wp_reset_postdata(); ?>
@@ -188,4 +191,5 @@
             <p class="text-slate-500 text-sm">مطلبی یافت نشد.</p>
         <?php endif; ?>
     </section>
+    <?php endif; ?>
 </div>

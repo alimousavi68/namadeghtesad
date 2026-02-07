@@ -55,13 +55,13 @@ foreach ($configs as $key => $conf) {
             <a href="#" class="link-more">مشاهده بیشتر <i data-lucide="arrow-left" width="12"></i></a>
         </div>
         <div class="space-y-4">
-            <?php if ($query->have_posts()) : while ($query->have_posts()) : $query->the_post(); 
-                $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'hasht-medium');
+            <?php if ($query->have_posts()) : foreach ($query->posts as $post) : setup_postdata($post); 
+                $thumb_url = get_the_post_thumbnail_url($post, 'hasht-medium');
             ?>
             <article class="group cursor-pointer flex flex-col h-full">
                 <div class="aspect-[16/10] overflow-hidden rounded-xl mb-4 shrink-0 shadow-md">
                     <?php if ($thumb_url) : ?>
-                        <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr(get_the_title($post)); ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                     <?php else: ?>
                         <div class="w-full h-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
                             <span class="text-slate-400 text-xs">بدون تصویر</span>
@@ -70,12 +70,12 @@ foreach ($configs as $key => $conf) {
                 </div>
                 <div class="flex flex-col flex-1">
                     <h3 class="text-base font-black text-slate-800 dark:text-slate-100 leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                        <?php the_title(); ?>
+                        <?php echo get_the_title($post); ?>
                     </h3>
-                    <span class="text-[10px] font-normal text-slate-400 mt-auto block pt-1"><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?></span>
+                    <span class="text-[10px] font-normal text-slate-400 mt-auto block pt-1"><?php echo human_time_diff(get_the_time('U', $post), current_time('timestamp')) . ' پیش'; ?></span>
                 </div>
             </article>
-            <?php endwhile; wp_reset_postdata(); else: ?>
+            <?php endforeach; wp_reset_postdata(); else: ?>
                 <p class="text-slate-500 text-sm">مطلبی یافت نشد.</p>
             <?php endif; ?>
         </div>

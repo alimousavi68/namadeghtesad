@@ -39,8 +39,218 @@ function hasht_widgets_init() {
     register_widget('Hasht_Selected_News_Widget');
     register_widget('Hasht_Market_Widget');
     register_widget('Hasht_Advertisement_Widget');
+    register_widget('Hasht_Pro_Ad_Widget');
 }
 add_action('widgets_init', 'hasht_widgets_init');
+
+/**
+ * Widget: Pro Advanced Advertisement
+ * Supports Images (JPG, PNG, WebP, GIF) and Videos (MP4, WebM, MOV)
+ * Features: Lazy Loading, Progressive Loading, Custom Sizes
+ */
+class Hasht_Pro_Ad_Widget extends WP_Widget {
+
+    public function __construct() {
+        parent::__construct(
+            'hasht_pro_ad_widget',
+            'نماد اقتصاد: تبلیغات حرفه‌ای (بنر/ویدیو)',
+            ['description' => 'نمایش بنرهای تبلیغاتی (تصویر/ویدیو) با قابلیت بارگذاری تنبل و تنظیمات پیشرفته']
+        );
+    }
+
+    public function widget($args, $instance) {
+        // 1. Get Settings
+        $title = !empty($instance['title']) ? $instance['title'] : '';
+        $media_type = !empty($instance['media_type']) ? $instance['media_type'] : 'image';
+        $media_url = !empty($instance['media_url']) ? $instance['media_url'] : '';
+        $poster_url = !empty($instance['poster_url']) ? $instance['poster_url'] : ''; // For video poster or LQIP
+        $link_url = !empty($instance['link_url']) ? $instance['link_url'] : '';
+        $link_target = !empty($instance['link_target']) ? $instance['link_target'] : '_self';
+        $loading_strategy = !empty($instance['loading_strategy']) ? $instance['loading_strategy'] : 'lazy';
+        $size_strategy = !empty($instance['size_strategy']) ? $instance['size_strategy'] : 'responsive';
+        $width = !empty($instance['width']) ? $instance['width'] : '';
+        $height = !empty($instance['height']) ? $instance['height'] : '';
+
+        // If no media, return
+        if (empty($media_url)) return;
+
+        // Container Styles
+        $container_style = '';
+        if ($size_strategy === 'custom' && !empty($width) && !empty($height)) {
+            $container_style = "width: {$width}px; height: {$height}px;";
+        } elseif ($size_strategy === 'standard_300_250') {
+            $container_style = "width: 300px; height: 250px;";
+        } elseif ($size_strategy === 'standard_728_90') {
+            $container_style = "width: 728px; height: 90px;";
+        } elseif ($size_strategy === 'standard_300_600') {
+            $container_style = "width: 300px; height: 600px;";
+        } else {
+            // Responsive
+            $container_style = "width: 100%; height: auto;";
+        }
+
+        echo $args['before_widget'];
+
+        if (!empty($title)) {
+            echo $args['before_title'] . esc_html($title) . $args['after_title'];
+        }
+
+        // Wrapper
+        echo '<div class="hasht-ad-wrapper relative rounded-xl overflow-hidden group shadow-sm hover:shadow-md transition-shadow duration-300 bg-slate-50 dark:bg-slate-800" style="' . esc_attr($container_style) . '">';
+        
+        // Link Wrapper Start
+        if (!empty($link_url)) {
+            echo '<a href="' . esc_url($link_url) . '" target="' . esc_attr($link_target) . '" class="block w-full h-full relative" rel="nofollow sponsored">';
+        }
+
+        // Media Output
+        if ($media_type === 'video') {
+            // Video
+            $preload = ($loading_strategy === 'eager') ? 'auto' : 'none';
+            $poster_attr = !empty($poster_url) ? 'poster="' . esc_url($poster_url) . '"' : '';
+            
+            echo '<video class="w-full h-full object-cover" muted loop autoplay playsinline ' . $poster_attr . ' preload="' . esc_attr($preload) . '">';
+            echo '<source src="' . esc_url($media_url) . '" type="video/mp4">'; // Assuming MP4 mostly, browser handles rest if supported source
+            echo 'مرورگر شما پشتیبانی نمی‌کند.';
+            echo '</video>';
+
+        } else {
+            // Image
+            $img_loading = ($loading_strategy === 'eager') ? 'eager' : 'lazy';
+            $img_class = 'w-full h-full object-cover transition-opacity duration-500';
+            
+            // Progressive Loading Logic
+            if ($loading_strategy === 'progressive' && !empty($poster_url)) {
+                // Blur Up Technique
+                echo '<div class="progressive-media relative w-full h-full">';
+                // LQIP (Low Quality)
+                echo '<img src="' . esc_url($poster_url) . '" class="absolute inset-0 w-full h-full object-cover blur-sm scale-105" aria-hidden="true">';
+                // Real Image
+                echo '<img src="' . esc_url($media_url) . '" loading="lazy" class="relative z-10 w-full h-full object-cover opacity-0 transition-opacity duration-700" onload="this.classList.remove(\'opacity-0\')">';
+                echo '</div>';
+            } else {
+                // Standard Image
+                echo '<img src="' . esc_url($media_url) . '" loading="' . esc_attr($img_loading) . '" class="' . esc_attr($img_class) . '" alt="Advertisement">';
+            }
+        }
+
+        // Ad Badge
+        echo '<span class="absolute top-2 left-2 bg-black/50 text-white text-[10px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity z-20">آگهی</span>';
+
+        // Link Wrapper End
+        if (!empty($link_url)) {
+            echo '</a>';
+        }
+
+        echo '</div>'; // End Wrapper
+
+        echo $args['after_widget'];
+    }
+
+    public function form($instance) {
+        $title = !empty($instance['title']) ? $instance['title'] : '';
+        $media_type = !empty($instance['media_type']) ? $instance['media_type'] : 'image';
+        $media_url = !empty($instance['media_url']) ? $instance['media_url'] : '';
+        $poster_url = !empty($instance['poster_url']) ? $instance['poster_url'] : '';
+        $link_url = !empty($instance['link_url']) ? $instance['link_url'] : '';
+        $link_target = !empty($instance['link_target']) ? $instance['link_target'] : '_blank';
+        $loading_strategy = !empty($instance['loading_strategy']) ? $instance['loading_strategy'] : 'lazy';
+        $size_strategy = !empty($instance['size_strategy']) ? $instance['size_strategy'] : 'responsive';
+        $width = !empty($instance['width']) ? $instance['width'] : '';
+        $height = !empty($instance['height']) ? $instance['height'] : '';
+        ?>
+        <div class="hasht-ad-widget-form">
+            <p>
+                <label for="<?php echo $this->get_field_id('title'); ?>">عنوان (اختیاری):</label>
+                <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>">
+            </p>
+
+            <div style="background: #f0f0f1; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+                <strong>رسانه</strong>
+                <p>
+                    <label for="<?php echo $this->get_field_id('media_type'); ?>">نوع رسانه:</label>
+                    <select class="widefat" id="<?php echo $this->get_field_id('media_type'); ?>" name="<?php echo $this->get_field_name('media_type'); ?>">
+                        <option value="image" <?php selected($media_type, 'image'); ?>>تصویر (JPG, PNG, GIF, WebP)</option>
+                        <option value="video" <?php selected($media_type, 'video'); ?>>ویدیو (MP4, WebM)</option>
+                    </select>
+                </p>
+                <p>
+                    <label for="<?php echo $this->get_field_id('media_url'); ?>">لینک فایل اصلی (URL):</label>
+                    <input class="widefat" id="<?php echo $this->get_field_id('media_url'); ?>" name="<?php echo $this->get_field_name('media_url'); ?>" type="text" value="<?php echo esc_attr($media_url); ?>" placeholder="https://...">
+                    <small>آدرس تصویر یا ویدیو را وارد کنید.</small>
+                </p>
+                <p>
+                    <label for="<?php echo $this->get_field_id('poster_url'); ?>">لینک تصویر جایگزین / پوستر:</label>
+                    <input class="widefat" id="<?php echo $this->get_field_id('poster_url'); ?>" name="<?php echo $this->get_field_name('poster_url'); ?>" type="text" value="<?php echo esc_attr($poster_url); ?>" placeholder="https://...">
+                    <small>برای ویدیو (Poster) یا برای بارگذاری تدریجی (تصویر کم‌حجم LQIP) استفاده می‌شود.</small>
+                </p>
+            </div>
+
+            <div style="background: #f0f0f1; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+                <strong>تنظیمات نمایش</strong>
+                <p>
+                    <label for="<?php echo $this->get_field_id('loading_strategy'); ?>">استراتژی بارگذاری:</label>
+                    <select class="widefat" id="<?php echo $this->get_field_id('loading_strategy'); ?>" name="<?php echo $this->get_field_name('loading_strategy'); ?>">
+                        <option value="lazy" <?php selected($loading_strategy, 'lazy'); ?>>تنبلی (Lazy Loading) - پیشنهادی</option>
+                        <option value="eager" <?php selected($loading_strategy, 'eager'); ?>>فوری (Eager) - برای بالای صفحه</option>
+                        <option value="progressive" <?php selected($loading_strategy, 'progressive'); ?>>تدریجی (Blur Up) - نیازمند تصویر جایگزین</option>
+                    </select>
+                </p>
+                <p>
+                    <label for="<?php echo $this->get_field_id('size_strategy'); ?>">ابعاد:</label>
+                    <select class="widefat" id="<?php echo $this->get_field_id('size_strategy'); ?>" name="<?php echo $this->get_field_name('size_strategy'); ?>">
+                        <option value="responsive" <?php selected($size_strategy, 'responsive'); ?>>واکنش‌گرا (عرض ۱۰۰٪ خودکار)</option>
+                        <option value="standard_300_250" <?php selected($size_strategy, 'standard_300_250'); ?>>مستطیل متوسط (300x250)</option>
+                        <option value="standard_728_90" <?php selected($size_strategy, 'standard_728_90'); ?>>لیدربرد (728x90)</option>
+                        <option value="standard_300_600" <?php selected($size_strategy, 'standard_300_600'); ?>>نیم‌صفحه (300x600)</option>
+                        <option value="custom" <?php selected($size_strategy, 'custom'); ?>>ابعاد سفارشی</option>
+                    </select>
+                </p>
+                <div class="custom-sizes" style="<?php echo ($size_strategy !== 'custom') ? 'display:none;' : ''; ?>">
+                    <p>
+                        <label for="<?php echo $this->get_field_id('width'); ?>">عرض (پیکسل):</label>
+                        <input class="tiny-text" id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="number" value="<?php echo esc_attr($width); ?>">
+                    </p>
+                    <p>
+                        <label for="<?php echo $this->get_field_id('height'); ?>">ارتفاع (پیکسل):</label>
+                        <input class="tiny-text" id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="number" value="<?php echo esc_attr($height); ?>">
+                    </p>
+                </div>
+            </div>
+
+            <div style="background: #f0f0f1; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+                <strong>لینک مقصد</strong>
+                <p>
+                    <label for="<?php echo $this->get_field_id('link_url'); ?>">آدرس لینک:</label>
+                    <input class="widefat" id="<?php echo $this->get_field_id('link_url'); ?>" name="<?php echo $this->get_field_name('link_url'); ?>" type="text" value="<?php echo esc_attr($link_url); ?>">
+                </p>
+                <p>
+                    <label for="<?php echo $this->get_field_id('link_target'); ?>">نحوه باز شدن:</label>
+                    <select class="widefat" id="<?php echo $this->get_field_id('link_target'); ?>" name="<?php echo $this->get_field_name('link_target'); ?>">
+                        <option value="_blank" <?php selected($link_target, '_blank'); ?>>تب جدید (_blank)</option>
+                        <option value="_self" <?php selected($link_target, '_self'); ?>>همان صفحه (_self)</option>
+                    </select>
+                </p>
+            </div>
+        </div>
+        <?php
+    }
+
+    public function update($new_instance, $old_instance) {
+        $instance = [];
+        $instance['title'] = strip_tags($new_instance['title']);
+        $instance['media_type'] = sanitize_key($new_instance['media_type']);
+        $instance['media_url'] = esc_url_raw($new_instance['media_url']);
+        $instance['poster_url'] = esc_url_raw($new_instance['poster_url']);
+        $instance['link_url'] = esc_url_raw($new_instance['link_url']);
+        $instance['link_target'] = sanitize_key($new_instance['link_target']);
+        $instance['loading_strategy'] = sanitize_key($new_instance['loading_strategy']);
+        $instance['size_strategy'] = sanitize_key($new_instance['size_strategy']);
+        $instance['width'] = absint($new_instance['width']);
+        $instance['height'] = absint($new_instance['height']);
+        return $instance;
+    }
+}
 
 /**
  * Widget: Posts List (multi-style)

@@ -231,7 +231,7 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                                     $gallery_ids = explode(',', $gallery_images);
                                     foreach ($gallery_ids as $index => $img_id):
                                         $img_full = wp_get_attachment_image_src($img_id, 'full');
-                                        $img_thumb = wp_get_attachment_image_src($img_id, 'large');
+                                        $img_thumb = wp_get_attachment_image_src($img_id, 'hasht-medium');
                                         if ($img_full):
                                     ?>
                                         <a href="<?php echo esc_url($img_full[0]); ?>" class="gallery-item block rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow relative group aspect-[4/3] bg-slate-100" data-index="<?php echo $index; ?>">
@@ -372,7 +372,7 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                             'post_type' => 'post',
                             'posts_per_page' => $related_count,
                             'post_status' => 'publish',
-                            'post__not_in' => [get_the_ID()],
+                            'post__not_in' => [$post_id],
                             'ignore_sticky_posts' => 1,
                         ];
 

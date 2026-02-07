@@ -62,7 +62,7 @@
                                     <figure class="w-full md:w-64 aspect-[16/10] md:aspect-[4/3] rounded-xl overflow-hidden shrink-0 relative">
                                         <a href="<?php the_permalink(); ?>" class="block w-full h-full">
                                             <?php if (has_post_thumbnail()) : ?>
-                                                <img src="<?php the_post_thumbnail_url('medium_large'); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover transition-transform duration-700">
+                                                <img src="<?php the_post_thumbnail_url('hasht-medium'); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover transition-transform duration-700">
                                             <?php else: ?>
                                                 <div class="w-full h-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
                                                     <i data-lucide="image" class="w-10 h-10 text-slate-400"></i>

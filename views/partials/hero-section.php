@@ -1,7 +1,7 @@
         <?php
 // Retrieve Customizer Settings
-$cat_slug   = get_theme_mod('hasht_home_hero_cat', '');
-$count      = get_theme_mod('hasht_home_hero_count', 4);
+$cat_id = get_theme_mod('hasht_home_hero_cat', '');
+$count  = get_theme_mod('hasht_home_hero_count', 4);
 
 // Build Query Arguments
 $args = [
@@ -12,8 +12,8 @@ $args = [
     'order'               => 'DESC',
 ];
 
-if (!empty($cat_slug)) {
-    $args['cat'] = $cat_slug;
+if (!empty($cat_id)) {
+    $args['cat'] = $cat_id;
 }
 
 $hero_query = new WP_Query($args);
@@ -36,7 +36,7 @@ if ($hero_query->have_posts()) :
             <div class="lg:col-span-6 lg:border-l lg:border-slate-100 lg:dark:border-slate-800 lg:pl-4 relative mb-8 lg:mb-0 px-4 lg:px-0">
                 <?php if ($lead_post): 
                     $post = $lead_post; setup_postdata($post);
-                    $thumb_url = get_the_post_thumbnail_url($post, 'large'); // Use large size
+                    $thumb_url = get_the_post_thumbnail_url($post, 'hasht-large'); // Use correct size
                     $category = get_the_category($post->ID);
                     $cat_name = !empty($category) ? $category[0]->name : '';
                     $cat_link = !empty($category) ? get_category_link($category[0]->term_id) : '#';
@@ -77,7 +77,7 @@ if ($hero_query->have_posts()) :
                 <!-- Vertical Card -->
                 <?php if ($middle_vert): 
                     $post = $middle_vert; setup_postdata($post);
-                    $thumb_url = get_the_post_thumbnail_url($post, 'medium_large');
+                    $thumb_url = get_the_post_thumbnail_url($post, 'hasht-medium');
                     $category = get_the_category($post->ID);
                     $cat_name = !empty($category) ? $category[0]->name : '';
                 ?>

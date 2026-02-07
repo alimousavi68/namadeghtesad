@@ -35,40 +35,40 @@ $query = new WP_Query($args);
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <?php if ($query->have_posts()) : ?>
-                <?php while ($query->have_posts()) : $query->the_post(); 
-                    $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'hasht-portrait');
-                    // Fallback image if no thumbnail
-                    if (!$thumb_url) {
-                        $thumb_url = get_template_directory_uri() . '/assets/images/391-FelezatOnline-Final-scaled.jpg'; // Placeholder
-                    }
+                <?php foreach ($query->posts as $post) : setup_postdata($post); 
+                    $thumb_url = get_the_post_thumbnail_url($post, 'hasht-portrait');
+                   
                 ?>
                 <article class="group bg-white dark:bg-slate-900 p-5 rounded-xl flex flex-col shadow-sm hover:shadow-xl transition-all cursor-pointer border border-slate-100 dark:border-slate-800 relative">
                     <div class="aspect-[3/4] rounded-xl overflow-hidden mb-6 shadow-2xl transition-transform group-hover:-translate-y-2">
-                        <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover">
+                        <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
+                            <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr(get_the_title($post)); ?>" class="w-full h-full object-cover">
+                        </a>
                     </div>
                     <div class="flex flex-col flex-1">
                         <div class="mb-4">
-                            <!-- Label/Tag (Static for now or first category) -->
                              <?php
-                                $categories = get_the_category();
-                                if ( ! empty( $categories ) ) {
-                                    echo '<span class="inline-block px-3 py-1 rounded-full bg-rose-50 dark:bg-rose-900/30 text-primary dark:text-rose-400 text-[11px] font-black mb-3">' . esc_html( $categories[0]->name ) . '</span>';
+                                $pub_type = get_post_meta($post->ID, '_news_publication_type', true);
+                                if ( $pub_type ) {
+                                    echo '<span class="inline-block px-3 py-1 rounded-full bg-rose-50 dark:bg-rose-900/30 text-primary dark:text-rose-400 text-[11px] font-black mb-3">' . esc_html( $pub_type ) . '</span>';
                                 }
                             ?>
                             <h4 class="text-lg font-black text-slate-800 dark:text-slate-100 leading-tight mb-3 group-hover:text-primary transition-colors">
-                                <?php the_title(); ?>
+                                <a href="<?php echo get_permalink($post); ?>">
+                                    <?php echo get_the_title($post); ?>
+                                </a>
                             </h4>
                             <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-3 leading-relaxed">
-                                <?php echo get_the_excerpt(); ?>
+                                <?php echo get_the_excerpt($post); ?>
                             </p>
                         </div>
                         <div class="mt-auto pt-4 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
-                            <span class="text-[10px] font-normal text-slate-400"><?php echo get_the_date('F Y'); ?></span>
+                            <span class="text-[10px] font-normal text-slate-400"><?php echo get_the_date('F Y', $post); ?></span>
                             <button class="text-[11px] font-black text-primary flex items-center gap-1">دریافت PDF</button>
                         </div>
                     </div>
                 </article>
-                <?php endwhile; wp_reset_postdata(); ?>
+                <?php endforeach; wp_reset_postdata(); ?>
             <?php else : ?>
                 <p class="text-center w-full col-span-4 text-slate-500">مطلبی یافت نشد.</p>
             <?php endif; ?>

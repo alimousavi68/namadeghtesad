@@ -10,7 +10,7 @@ $categories = get_categories(['hide_empty' => false]);
 $cats_options = ['' => '-- همه دسته‌ها --'];
 if (!is_wp_error($categories)) {
     foreach ($categories as $category) {
-        $cats_options[$category->slug] = $category->name;
+        $cats_options[$category->term_id] = $category->name;
     }
 }
 
@@ -59,6 +59,11 @@ $settings = [
             'hasht_home_hero_sec' => [
                 'title' => 'بخش هیرو (Hero)',
                 'fields' => [
+                    'hasht_home_hero_enable' => [
+                        'label'   => 'فعال‌سازی بخش هیرو',
+                        'type'    => 'checkbox',
+                        'default' => true,
+                    ],
                     'hasht_home_hero_cat' => [
                         'label'   => 'دسته‌بندی مطالب هیرو',
                         'description' => 'اگر خالی باشد، آخرین مطالب سایت نمایش داده می‌شود.',
@@ -77,8 +82,13 @@ $settings = [
 
             // Section 1: Dynamic Grid (ex: Macro Economics)
             'hasht_home_grid_sec' => [
-                'title' => 'بخش شبکه‌ای ۱',
+                'title' => 'بخش شبکه‌ای ۱ (اقتصاد کلان)',
                 'fields' => [
+                    'hasht_home_grid_enable' => [
+                        'label'   => 'فعال‌سازی این بخش',
+                        'type'    => 'checkbox',
+                        'default' => true,
+                    ],
                     'hasht_home_grid_title' => [
                         'label'   => 'عنوان بخش',
                         'type'    => 'text',
@@ -98,10 +108,33 @@ $settings = [
                 ]
             ],
 
+            // Section: Company Stories
+            'hasht_home_stories_sec' => [
+                'title' => 'بخش پیشخوان شرکت‌ها',
+                'fields' => [
+                    'hasht_home_stories_enable' => [
+                        'label'   => 'فعال‌سازی این بخش',
+                        'type'    => 'checkbox',
+                        'default' => true,
+                    ],
+                    'hasht_home_stories_title' => [
+                        'label'   => 'عنوان بخش',
+                        'type'    => 'text',
+                        'default' => 'پیشخوان شرکت‌ها',
+                    ],
+                    // Assuming this section might need categories later, but for now just enable/title
+                ]
+            ],
+
             // Section 2: Society & Economy (Grid 2x2)
             'hasht_home_society_sec' => [
-                'title' => 'بخش شبکه‌ای ۲',
+                'title' => 'بخش شبکه‌ای ۲ (صنعت و معدن)',
                 'fields' => [
+                    'hasht_home_society_enable' => [
+                        'label'   => 'فعال‌سازی این بخش',
+                        'type'    => 'checkbox',
+                        'default' => true,
+                    ],
                     'hasht_home_society_title' => [
                         'label'   => 'عنوان بخش',
                         'type'    => 'text',
@@ -121,10 +154,32 @@ $settings = [
                 ]
             ],
 
+            // Section: Sidebar Notes & Interviews
+            'hasht_home_notes_sec' => [
+                'title' => 'سایدبار (یادداشت و مصاحبه)',
+                'fields' => [
+                    'hasht_home_notes_enable' => [
+                        'label'   => 'فعال‌سازی سایدبار',
+                        'type'    => 'checkbox',
+                        'default' => true,
+                    ],
+                    'hasht_home_notes_title' => [
+                        'label'   => 'عنوان سایدبار',
+                        'type'    => 'text',
+                        'default' => 'یادداشت و مصاحبه',
+                    ],
+                ]
+            ],
+
             // Section 3: Industry (Feature + List)
             'hasht_home_industry_sec' => [
-                'title' => 'بخش ترکیبی ۱',
+                'title' => 'بخش ترکیبی ۱ (صنعت)',
                 'fields' => [
+                    'hasht_home_industry_enable' => [
+                        'label'   => 'فعال‌سازی این بخش',
+                        'type'    => 'checkbox',
+                        'default' => true,
+                    ],
                     'hasht_home_industry_title' => [
                         'label'   => 'عنوان بخش',
                         'type'    => 'text',
@@ -146,8 +201,13 @@ $settings = [
 
             // Section 4: Energy (Feature)
             'hasht_home_energy_sec' => [
-                'title' => 'بخش ترکیبی ۲',
+                'title' => 'بخش ترکیبی ۲ (انرژی)',
                 'fields' => [
+                    'hasht_home_energy_enable' => [
+                        'label'   => 'فعال‌سازی این بخش',
+                        'type'    => 'checkbox',
+                        'default' => true,
+                    ],
                     'hasht_home_energy_title' => [
                         'label'   => 'عنوان بخش',
                         'type'    => 'text',
@@ -171,6 +231,11 @@ $settings = [
             'hasht_home_multimedia_sec' => [
                 'title' => 'بخش چندرسانه‌ای',
                 'fields' => [
+                    'hasht_home_multimedia_enable' => [
+                        'label'   => 'فعال‌سازی این بخش',
+                        'type'    => 'checkbox',
+                        'default' => true,
+                    ],
                     'hasht_home_multimedia_title' => [
                         'label'   => 'عنوان بخش',
                         'type'    => 'text',
@@ -195,35 +260,14 @@ $settings = [
                 ]
             ],
 
-            // Section 6: Publications
-            'hasht_home_publications_sec' => [
-                'title' => 'بخش نشریات',
+            // Section: Home Sidebar
+            'hasht_home_sidebar_sec' => [
+                'title' => 'سایدبار اصلی صفحه اصلی',
                 'fields' => [
-                    'hasht_home_publications_title' => [
-                        'label'   => 'عنوان بخش',
-                        'type'    => 'text',
-                        'default' => '',
-                    ],
-                    'hasht_home_publications_subtitle' => [
-                        'label'   => 'زیرعنوان',
-                        'type'    => 'text',
-                        'default' => '',
-                    ],
-                    'hasht_home_publications_cat' => [
-                        'label'   => 'دسته‌بندی',
-                        'type'    => 'select',
-                        'choices' => $cats_options,
-                        'default' => '',
-                    ],
-                    'hasht_home_publications_count' => [
-                        'label'   => 'تعداد نمایش',
-                        'type'    => 'number',
-                        'default' => 10,
-                        'input_attrs' => [
-                            'min' => 5,
-                            'max' => 50,
-                            'step' => 1,
-                        ],
+                    'hasht_home_sidebar_enable' => [
+                        'label'   => 'فعال‌سازی سایدبار اصلی',
+                        'type'    => 'checkbox',
+                        'default' => true,
                     ],
                 ]
             ],
@@ -232,6 +276,11 @@ $settings = [
             'hasht_home_bottom_sec' => [
                 'title' => 'بخش دسته‌های پایانی (بانک و بورس)',
                 'fields' => [
+                    'hasht_home_bottom_enable' => [
+                        'label'   => 'فعال‌سازی این بخش',
+                        'type'    => 'checkbox',
+                        'default' => true,
+                    ],
                     // Column 1
                     'hasht_home_bottom_cat1_title' => [
                         'label'   => 'عنوان ستون اول',
@@ -312,6 +361,44 @@ $settings = [
                     ],
                     'hasht_home_bottom_cat4_count' => [
                         'label'   => 'تعداد پست ستون چهارم',
+                        'type'    => 'number',
+                        'default' => 10,
+                        'input_attrs' => [
+                            'min' => 5,
+                            'max' => 50,
+                            'step' => 1,
+                        ],
+                    ],
+                ]
+            ],
+
+            // Section 6: Publications
+            'hasht_home_publications_sec' => [
+                'title' => 'بخش نشریات',
+                'fields' => [
+                    'hasht_home_publications_enable' => [
+                        'label'   => 'فعال‌سازی این بخش',
+                        'type'    => 'checkbox',
+                        'default' => true,
+                    ],
+                    'hasht_home_publications_title' => [
+                        'label'   => 'عنوان بخش',
+                        'type'    => 'text',
+                        'default' => '',
+                    ],
+                    'hasht_home_publications_subtitle' => [
+                        'label'   => 'زیرعنوان',
+                        'type'    => 'text',
+                        'default' => '',
+                    ],
+                    'hasht_home_publications_cat' => [
+                        'label'   => 'دسته‌بندی',
+                        'type'    => 'select',
+                        'choices' => $cats_options,
+                        'default' => '',
+                    ],
+                    'hasht_home_publications_count' => [
+                        'label'   => 'تعداد نمایش',
                         'type'    => 'number',
                         'default' => 10,
                         'input_attrs' => [

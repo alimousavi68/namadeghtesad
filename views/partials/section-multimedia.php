@@ -7,7 +7,7 @@ $count    = get_theme_mod('hasht_home_multimedia_count', 3);
 
 // Query
 $args = [
-    'post_type'      => ['post', 'aggregated_news'],
+    'post_type'      => ['post'],
     'posts_per_page' => $count,
     'post_status'    => 'publish',
     'orderby'        => 'date',
@@ -49,15 +49,15 @@ if ($cat_slug) {
         </a>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
-        <?php while ($query->have_posts()) : $query->the_post(); 
-             $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'medium_large');
+        <?php foreach ($query->posts as $post) : setup_postdata($post); 
+             $thumb_url = get_the_post_thumbnail_url($post, 'hasht-medium');
         ?>
         <!-- Video Item -->
         <div class="group/item cursor-pointer">
             <div class="relative aspect-video rounded-3xl overflow-hidden mb-8 bg-slate-800 shadow-2xl ring-1 ring-white/10">
-                <a href="<?php the_permalink(); ?>" class="block w-full h-full">
+                <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
                     <?php if ($thumb_url): ?>
-                        <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover opacity-60 group-hover/item:scale-110 group-hover/item:opacity-90 transition-all duration-1000" alt="<?php the_title_attribute(); ?>">
+                        <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover opacity-60 group-hover/item:scale-110 group-hover/item:opacity-90 transition-all duration-1000" alt="<?php echo esc_attr(get_the_title($post)); ?>">
                     <?php else: ?>
                         <div class="w-full h-full bg-slate-700 opacity-60"></div>
                     <?php endif; ?>
@@ -69,10 +69,10 @@ if ($cat_slug) {
                 </a>
             </div>
             <h4 class="font-black text-lg leading-relaxed line-clamp-2 group-hover/item:text-rose-400 transition-colors">
-                <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
             </h4>
         </div>
-        <?php endwhile; wp_reset_postdata(); ?>
+        <?php endforeach; wp_reset_postdata(); ?>
     </div>
 </section>
 <?php endif; ?>

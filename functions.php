@@ -74,7 +74,8 @@ add_action('after_setup_theme', function () {
     register_nav_menus([
         'primary' => 'منوی اصلی',
         'mobile'  => 'منوی موبایل',
-        'footer'  => 'منوی فوتر',
+        'footer_quick'  => 'منوی دسترسی سریع (فوتر)',
+        'footer_help'   => 'منوی خدمات مخاطبان (فوتر)',
         'top_bar' => 'منوی نوار بالا',
     ]);
 });

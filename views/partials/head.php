@@ -9,7 +9,7 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['IRANSansX', 'IRANYekanX', 'Vazirmatn', 'sans-serif'],
+                        sans: ['IRANYekanX', 'Vazirmatn', 'sans-serif'],
                     },
                     colors: {
                         primary: 'var(--color-primary)',
@@ -58,12 +58,12 @@
 <!-- Standard CSS (Fonts & Scrollbars & Print) -->
 <style>
     /* =========================================
-       Font Configuration (IRANSansX Variable)
+       Font Configuration (IRANYekanX Variable)
        ========================================= */
     @font-face {
-        font-family: 'IRANSansX';
-        src: url('<?php echo get_template_directory_uri(); ?>/assets/fonts/IRANSansXV.woff2') format('woff2-variations'),
-             url('<?php echo get_template_directory_uri(); ?>/assets/fonts/IRANSansXV.woff2') format('woff2');
+        font-family: 'IRANYekanX';
+        src: url('<?php echo get_template_directory_uri(); ?>/assets/fonts/IRANYekanX/IRANYekanXVF.woff2') format('woff2-variations'),
+             url('<?php echo get_template_directory_uri(); ?>/assets/fonts/IRANYekanX/IRANYekanXVF.woff2') format('woff2');
         font-weight: 100 1000;
         font-style: normal;
         font-display: swap;

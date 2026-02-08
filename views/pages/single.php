@@ -248,20 +248,20 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                             </div>
                         <?php elseif ($content_type === 'publication' && !empty($pub_file_url)): ?>
                             <!-- Publication -->
-                            <div class="mb-10">
-                                <figure class="rounded-2xl overflow-hidden mb-8 shadow-md border border-slate-100">
-                                    <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-auto object-cover">
-                                </figure>
-                                
-                                <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-12 h-12 bg-rose-100 text-primary rounded-full flex items-center justify-center shrink-0">
-                                            <i data-lucide="file-text" width="24"></i>
+                            <div class="mb-12 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 md:p-8 shadow-sm mt-8">
+                                <div class="flex flex-col md:flex-row gap-8 lg:gap-12 items-center md:items-start">
+                                    
+                                    <!-- Cover Image -->
+                                    <div class="w-48 md:w-56 lg:w-64 shrink-0 shadow-2xl rounded-lg overflow-hidden border border-slate-100 dark:border-slate-700 md:-mt-4 md:-ml-4 rotate-0 md:rotate-2 hover:rotate-0 transition-transform duration-500 bg-slate-200">
+                                        <div class="aspect-[3/4] relative">
+                                             <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover">
                                         </div>
-                                        <div>
-                                            <h4 class="text-base font-bold text-slate-800 mb-1">دانلود فایل نشریه</h4>
-                                            <p class="text-xs text-slate-500">
-                                                فرمت: PDF | نوع: 
+                                    </div>
+
+                                    <!-- Info & Actions -->
+                                    <div class="flex-1 w-full text-center md:text-right pt-4">
+                                        <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-4">
+                                            <span class="px-3 py-1 rounded-full bg-rose-50 dark:bg-rose-900/30 text-primary dark:text-rose-400 text-xs font-bold">
                                                 <?php 
                                                     $pub_labels = [
                                                         'weekly' => 'هفته‌نامه',
@@ -271,13 +271,30 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                                                     ];
                                                     echo $pub_labels[$pub_type] ?? 'نشریه';
                                                 ?>
-                                            </p>
+                                            </span>
+                                            <span class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-xs font-bold">PDF</span>
+                                        </div>
+
+                                        <h2 class="text-xl md:text-2xl font-black text-slate-800 dark:text-slate-100 mb-4 leading-tight">
+                                            دانلود نسخه دیجیتال <?php the_title(); ?>
+                                        </h2>
+                                        
+                                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-7 mb-8 text-justify">
+                                            برای مشاهده متن کامل این شماره، می‌توانید نسخه الکترونیکی (PDF) را دریافت کنید. این فایل شامل تمام صفحات، تصاویر و گزارش‌های اختصاصی می‌باشد.
+                                        </p>
+
+                                        <div class="flex flex-col sm:flex-row items-center gap-4">
+                                            <a href="<?php echo esc_url($pub_file_url); ?>" target="_blank" class="w-full sm:w-auto px-8 py-3.5 bg-primary text-white text-sm font-bold rounded-xl hover:bg-rose-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-rose-200 dark:shadow-none hover:-translate-y-1">
+                                                <i data-lucide="download" width="20"></i>
+                                                دانلود فایل کامل
+                                            </a>
+                                            <div class="text-xs text-slate-400 font-medium flex items-center gap-1">
+                                                <i data-lucide="file-check" width="14"></i>
+                                                <span>نسخه نهایی و تایید شده</span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <a href="<?php echo esc_url($pub_file_url); ?>" target="_blank" class="w-full md:w-auto px-6 py-3 bg-primary text-white text-sm font-bold rounded-xl hover:bg-rose-700 transition-colors flex items-center justify-center gap-2 shadow-lg shadow-rose-200">
-                                        <i data-lucide="download" width="18"></i>
-                                        دانلود نسخه کامل
-                                    </a>
+
                                 </div>
                             </div>
                         <?php elseif (has_post_thumbnail()): ?>

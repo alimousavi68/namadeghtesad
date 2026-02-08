@@ -33,7 +33,7 @@
                     class="w-24 h-24 md:w-32 md:h-32 rounded-full p-1 border-2 border-primary group-hover:border-slate-800 dark:group-hover:border-slate-200 transition-all">
                     <div
                         class="w-full h-full rounded-full overflow-hidden bg-white shadow-sm flex items-center justify-center">
-                        <img src="https://picsum.photos/seed/comp1/100/100" alt="Iran Khodro"
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.webp" alt="Iran Khodro"
                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all">
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                     class="w-24 h-24 md:w-32 md:h-32 rounded-full p-1 border-2 border-primary group-hover:border-slate-800 dark:group-hover:border-slate-200 transition-all">
                     <div
                         class="w-full h-full rounded-full overflow-hidden bg-white shadow-sm flex items-center justify-center">
-                        <img src="https://picsum.photos/seed/comp2/100/100" alt="Saipa"
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.webp" alt="Saipa"
                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all">
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                     class="w-24 h-24 md:w-32 md:h-32 rounded-full p-1 border-2 border-primary group-hover:border-slate-800 dark:group-hover:border-slate-200 transition-all">
                     <div
                         class="w-full h-full rounded-full overflow-hidden bg-white shadow-sm flex items-center justify-center">
-                        <img src="https://picsum.photos/seed/comp3/100/100" alt="Central Bank"
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.webp" alt="Central Bank"
                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all">
                     </div>
                 </div>

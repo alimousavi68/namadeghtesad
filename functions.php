@@ -10,23 +10,14 @@ if (file_exists(__DIR__ . '/_hasht_core/bootstrap.php')) {
     require_once __DIR__ . '/_hasht_core/bootstrap.php';
 }
 
+// Include Custom Comment Walker
+if (file_exists(__DIR__ . '/inc/classes/class-hasht-comment-walker.php')) {
+    require_once __DIR__ . '/inc/classes/class-hasht-comment-walker.php';
+}
 
 
-// add_action('wp_enqueue_scripts', function () {
-//     //1. Enqueue the lucide.js script
-//     wp_enqueue_script(
-//         'lucide',
-//         'https://unpkg.com/lucide@latest',
-//         [],
-//         '1.0',
-//         false
-//     );
- 
-// });
 
 
-// add_action('wp_head', function () {
-// });
 
 
 // theme support
@@ -38,6 +29,17 @@ add_theme_support('custom-logo', [
     'flex-height' => true,
     'flex-width'  => true,
 ]);
+
+// Add HTML5 support
+add_theme_support( 'html5', array(
+    'comment-list', 
+    'comment-form', 
+    'search-form', 
+    'gallery', 
+    'caption', 
+    'style', 
+    'script' 
+) );
 
 // Register Custom Image Sizes
 add_action('after_setup_theme', function () {
@@ -80,6 +82,36 @@ add_action('after_setup_theme', function () {
     ]);
 });
 
+// Enqueue Scripts
+add_action('wp_enqueue_scripts', function () {
+    if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+        wp_enqueue_script( 'comment-reply' );
+    }
+
+    // Enqueue Lucide Icons
+    wp_enqueue_script(
+        'lucide',
+        get_template_directory_uri() . '/assets/js/lucide.js',
+        [],
+        '1.0.0',
+        false // Load in head to be available early, or footer? Usually footer is fine if we init on DOMContentLoaded.
+    );
+
+    if ( is_singular() ) {
+        wp_enqueue_script(
+            'hasht-comments',
+            get_template_directory_uri() . '/assets/js/comments.js',
+            [],
+            '1.0.0',
+            true
+        );
+
+        wp_localize_script( 'hasht-comments', 'hasht_vars', [
+            'ajax_url' => admin_url( 'admin-ajax.php' )
+        ]);
+    }
+});
+
 // Load Seeder (Only for development)
 if (file_exists(__DIR__ . '/inc/seeder.php')) {
     require_once __DIR__ . '/inc/seeder.php';
@@ -98,6 +130,11 @@ if (defined('WP_CLI') && WP_CLI && file_exists(__DIR__ . '/inc/cli.php')) {
 // Load Custom Metaboxes
 if (file_exists(__DIR__ . '/inc/metaboxes.php')) {
     require_once __DIR__ . '/inc/metaboxes.php';
+}
+
+// Load AJAX Handler
+if (file_exists(__DIR__ . '/inc/ajax.php')) {
+    require_once __DIR__ . '/inc/ajax.php';
 }
 
 class Hasht_Header_Walker extends Walker_Nav_Menu

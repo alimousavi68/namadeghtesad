@@ -461,113 +461,12 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                     <?php endif; endif; ?>
 
                     <!-- Comments Section -->
-                    <section class="mt-12 print:hidden" id="comments">
-                        <!-- Separator -->
-                        <div class="w-full h-px bg-slate-200 dark:bg-slate-700 mb-12"></div>
-
-                        <div class="flex items-center gap-3 mb-6">
-                            <div class="w-1.5 h-8 flex flex-col  rounded-full overflow-hidden shrink-0">
-                                <div class="h-1/3 bg-slate-400"></div>
-                                <div class="h-2/3 bg-primary"></div>
-                            </div>
-                            <h3 class="text-xl font-black text-slate-800 dark:text-white">دیدگاه‌ها</h3>
-                        </div>
-
-                        <!-- Compact Comment Form -->
-                        <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 mb-8">
-                            <form action="#" class="relative" id="comment-form">
-                                <!-- Top Row: Textarea + Send Button -->
-                                <div class="flex items-start gap-3">
-                                    <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center shrink-0">
-                                        <i data-lucide="user" class="text-text-light" width="20"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <textarea
-                                            id="comment-textarea"
-                                            rows="1"
-                                            placeholder="دیدگاه خود را بنویسید..."
-                                            class="w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-primary dark:focus:border-primary transition-all text-sm resize-none overflow-hidden min-h-[44px]"
-                                            oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
-
-                                        <!-- Hidden Fields (Toggle on focus) -->
-                                        <div id="comment-details" class="hidden mt-3 grid grid-cols-1 md:grid-cols-2 gap-3 animate-fade-in">
-                                            <input type="text" placeholder="نام و نام خانوادگی" class="w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-primary dark:focus:border-primary transition-colors text-sm">
-                                            <input type="email" placeholder="ایمیل (نمایش داده نمی‌شود)" class="w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-primary dark:focus:border-primary transition-colors text-sm">
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="shrink-0 bg-primary hover:bg-primary text-white w-11 h-11 rounded-xl flex items-center justify-center transition-colors shadow-md hover:shadow-lg">
-                                        <i data-lucide="send" width="18"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-
-                        <!-- Comments List -->
-                        <div class="space-y-6">
-                            <!-- Comment 1 -->
-                            <div class="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-5">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-9 h-9 rounded-full bg-rose-50 dark:bg-rose-900/20 flex items-center justify-center text-primary dark:text-rose-400 font-bold text-sm">
-                                            م
-                                        </div>
-                                        <div>
-                                            <h5 class="text-sm font-bold text-slate-800 dark:text-slate-200">محمد رضایی</h5>
-                                            <span class="text-[10px] text-text-light">۱۴ بهمن ۱۴۰۳ - ۱۰:۳۰</span>
-                                        </div>
-                                    </div>
-                                    <button class="text-xs text-text-light hover:text-primary font-medium transition-colors flex items-center gap-1">
-                                        <i data-lucide="reply" width="14"></i> پاسخ
-                                    </button>
-                                </div>
-                                <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-justify pr-12">
-                                    تحلیل بسیار دقیقی بود. به نظر من هم اگر دولت نتواند هزینه‌های جاری را کنترل کند، تورم در سال آینده همچنان صعودی خواهد بود. ممنون از مقاله خوبتون.
-                                </p>
-
-                                <!-- Nested Comment (Reply) -->
-                                <div class="mt-4 mr-8 md:mr-12 bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 border-r-2 border-rose-200 dark:border-rose-900">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <div class="flex items-center gap-2">
-                                            <div class="w-7 h-7 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 text-xs font-bold">
-                                                ادمین
-                                            </div>
-                                            <div>
-                                                <h5 class="text-xs font-bold text-text-main dark:text-slate-300">پاسخ ادمین</h5>
-                                                <span class="text-[10px] text-text-light">۱۰ دقیقه پیش</span>
-                                            </div>
-                                        </div>
-                                        <button class="text-[10px] text-text-light hover:text-primary font-medium transition-colors flex items-center gap-1">
-                                            <i data-lucide="reply" width="12"></i> پاسخ
-                                        </button>
-                                    </div>
-                                    <p class="text-xs text-slate-500 dark:text-text-light leading-relaxed">
-                                        سلام محمد عزیز، ممنون از نظر لطف شما. امیدواریم سیاست‌گذار به این نکات توجه کند.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Comment 2 -->
-                            <div class="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-5">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-9 h-9 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm">
-                                            س
-                                        </div>
-                                        <div>
-                                            <h5 class="text-sm font-bold text-slate-800 dark:text-slate-200">سارا احمدی</h5>
-                                            <span class="text-[10px] text-text-light">۱۴ بهمن ۱۴۰۳ - ۱۱:۱۵</span>
-                                        </div>
-                                    </div>
-                                    <button class="text-xs text-text-light hover:text-primary font-medium transition-colors flex items-center gap-1">
-                                        <i data-lucide="reply" width="14"></i> پاسخ
-                                    </button>
-                                </div>
-                                <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-justify pr-12">
-                                    در مورد درآمدهای نفتی کمی بدبینانه نگاه کردید. با توجه به تحولات منطقه احتمال افزایش قیمت نفت وجود دارد که می‌تواند کسری بودجه را جبران کند.
-                                </p>
-                            </div>
-                        </div>
-                    </section>
+                    <?php 
+                        // If comments are open or we have at least one comment, load up the comment template.
+                        if ( comments_open() || get_comments_number() ) :
+                            comments_template();
+                        endif;
+                    ?>
 
                 </article>
 
@@ -588,73 +487,6 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
 
 <?php core_start_section('scripts'); ?>
 <script src="<?php echo get_template_directory_uri(); ?>/assets/js/main.js" defer></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Comment Form Toggle
-            const commentTextarea = document.getElementById('comment-textarea');
-            const commentDetails = document.getElementById('comment-details');
-
-            if (commentTextarea && commentDetails) {
-                commentTextarea.addEventListener('focus', () => {
-                    commentDetails.classList.remove('hidden');
-                });
-            }
-
-            // Smooth Scroll for Buttons
-            const scrollToCommentsBtn = document.getElementById('scroll-to-comments');
-            const commentsSection = document.getElementById('comments');
-
-            if (scrollToCommentsBtn && commentsSection) {
-                scrollToCommentsBtn.addEventListener('click', () => {
-                    commentsSection.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            }
-
-            const scrollToShortLinkBtn = document.getElementById('scroll-to-shortlink');
-            const shortLinkSection = document.getElementById('short-link-text'); // Scroll to the text element or its container
-
-            if (scrollToShortLinkBtn && shortLinkSection) {
-                scrollToShortLinkBtn.addEventListener('click', () => {
-                    // Find the container box for better visibility
-                    const container = shortLinkSection.closest('.bg-slate-50') || shortLinkSection;
-                    container.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-
-                    // Optional: Highlight effect
-                    container.classList.add('ring-2', 'ring-primary', 'transition-all', 'duration-500');
-                    setTimeout(() => {
-                        container.classList.remove('ring-2', 'ring-primary');
-                    }, 1500);
-                });
-            }
-
-            // Copy Link Functionality
-            const copyBtn = document.getElementById('copy-link-btn');
-            const linkText = document.getElementById('short-link-text');
-            const toast = document.getElementById('toast-notification');
-
-            if (copyBtn && linkText) {
-                copyBtn.addEventListener('click', () => {
-                    navigator.clipboard.writeText(linkText.textContent).then(() => {
-                        // Show Toast
-                        toast.classList.remove('translate-y-20', 'opacity-0');
-
-                        // Hide Toast after 3s
-                        setTimeout(() => {
-                            toast.classList.add('translate-y-20', 'opacity-0');
-                        }, 3000);
-                    }).catch(err => {
-                        console.error('Failed to copy: ', err);
-                    });
-                });
-            }
-        });
-    </script>
-
 <?php core_end_section(); ?>
 
 <?php core_view('layout/base'); ?>

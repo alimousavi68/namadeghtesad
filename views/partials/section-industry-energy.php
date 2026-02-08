@@ -100,7 +100,7 @@
     <?php if (get_theme_mod('hasht_home_energy_enable', true)): ?>
     <?php
     $en_title    = get_theme_mod('hasht_home_energy_title', '');
-    $en_cat_slug = get_theme_mod('hasht_home_energy_cat', '');
+    $en_cat_id   = get_theme_mod('hasht_home_energy_cat', '');
     $en_count    = get_theme_mod('hasht_home_energy_count', 1);
 
     $en_args = [
@@ -110,17 +110,14 @@
         'orderby'        => 'date',
         'order'          => 'DESC',
     ];
-    if ($en_cat_slug) {
-        $en_args['category_name'] = $en_cat_slug;
+    if ($en_cat_id) {
+        $en_args['cat'] = $en_cat_id;
     }
     $en_query = new WP_Query($en_args);
     
     $en_link = '#';
-    if ($en_cat_slug) {
-        $cat_obj = get_category_by_slug($en_cat_slug);
-        if ($cat_obj) {
-            $en_link = get_category_link($cat_obj->term_id);
-        }
+    if ($en_cat_id) {
+        $en_link = get_category_link($en_cat_id);
     }
     ?>
     <section class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-100 dark:border-slate-800 shadow-sm">

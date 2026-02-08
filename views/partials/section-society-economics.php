@@ -1,7 +1,7 @@
 <?php
 // Retrieve settings
 $title    = get_theme_mod('hasht_home_society_title', '');
-$cat_slug = get_theme_mod('hasht_home_society_cat', '');
+$cat_id   = get_theme_mod('hasht_home_society_cat', '');
 $count    = get_theme_mod('hasht_home_society_count', 4);
 
 // Query
@@ -12,18 +12,15 @@ $args = [
     'orderby'        => 'date',
     'order'          => 'DESC',
 ];
-if ($cat_slug) {
-    $args['category_name'] = $cat_slug;
+if ($cat_id) {
+    $args['cat'] = $cat_id;
 }
 $query = new WP_Query($args);
 
 // Link to category if selected
 $cat_link = '#';
-if ($cat_slug) {
-    $cat_obj = get_category_by_slug($cat_slug);
-    if ($cat_obj) {
-        $cat_link = get_category_link($cat_obj->term_id);
-    }
+if ($cat_id) {
+    $cat_link = get_category_link($cat_id);
 }
 ?>
 

@@ -128,7 +128,7 @@ $settings = [
 
             // Section 2: Society & Economy (Grid 2x2)
             'hasht_home_society_sec' => [
-                'title' => 'بخش شبکه‌ای ۲ (صنعت و معدن)',
+                'title' => 'بخش شبکه‌ای ۲ (جامعه و اقتصاد)',
                 'fields' => [
                     'hasht_home_society_enable' => [
                         'label'   => 'فعال‌سازی این بخش',

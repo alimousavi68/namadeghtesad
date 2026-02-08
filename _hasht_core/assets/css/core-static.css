@@ -1,0 +1,3 @@
+/* Core Static CSS */
+/* Basic Resets & Utilities that don't change */
+body { margin: 0; font-family: system-ui, sans-serif; }

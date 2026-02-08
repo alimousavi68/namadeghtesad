@@ -55,16 +55,6 @@ if (!function_exists('core_enqueue_assets')) {
         // 5. Theme Style.css
         wp_enqueue_style('theme-style', get_stylesheet_uri(), ['theme-main'], $version);
 
-        // 6. Theme Tables CSS
-        if (file_exists(get_template_directory() . '/assets/css/theme-tables.css')) {
-            wp_enqueue_style(
-                'theme-tables',
-                get_stylesheet_directory_uri() . '/assets/css/theme-tables.css',
-                ['theme-main'],
-                $version
-            );
-        }
-
 
         // --- JavaScript ---
 

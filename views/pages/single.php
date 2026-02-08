@@ -178,7 +178,7 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                         </div>
 
                         <!-- Lead (Border moved to right) -->
-                        <p class="text-base md:text-lg font-medium text-slate-600 dark:text-slate-300 leading-relaxed text-justify border-r-4 border-primary pr-4 mb-8 print:text-black print:border-r-0 print:pr-0">
+                        <p class="text-sm md:text-base font-medium text-slate-600 dark:text-slate-300 leading-relaxed text-justify border-r-4 border-primary pr-4 mb-8 print:text-black print:border-r-0 print:pr-0">
                             <?php echo get_the_excerpt(); ?>
                         </p>
 
@@ -299,7 +299,7 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                             </div>
                         <?php elseif (has_post_thumbnail()): ?>
                             <figure class="rounded-2xl overflow-hidden mb-10 print:shadow-none">
-                                <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-auto object-cover">
+                                <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-auto max-h-[650px] object-cover">
                             </figure>
                         <?php endif; ?>
                     </header>

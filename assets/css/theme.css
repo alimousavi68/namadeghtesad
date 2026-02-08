@@ -15,3 +15,75 @@
 .animate-fade-in {
   animation: fadeIn 0.3s ease-out forwards;
 }
+
+/* Table Styles for Single Content */
+.single-content table {
+    width: 100%;
+    border-collapse: separate; /* Changed for border-radius support if needed, but collapse is fine for standard grids. Keeping collapse for clean borders. */
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem; /* Slightly smaller text */
+    overflow: hidden;
+    border-radius: 0.75rem; /* Rounded corners for the whole table */
+    border-style: hidden; /* Hide outer border to prevent double borders with cells */
+    box-shadow: 0 0 0 1px #e2e8f0; /* Outer border simulation */
+}
+
+.single-content table th {
+    background-color: var(--color-primary); /* Primary Color Header */
+    color: #ffffff;
+    font-weight: 700;
+    padding: 0.85rem;
+    text-align: right;
+    border: 1px solid rgba(255,255,255,0.1); /* Subtle separator */
+    font-size: 0.95rem;
+}
+
+.single-content table td {
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0; /* slate-200 */
+    color: #475569; /* slate-600 */
+    transition: background-color 0.2s ease;
+}
+
+/* Zebra Striping - Very Subtle */
+.single-content table tr:nth-child(even) {
+    background-color: #f8fafc; /* slate-50 */
+}
+
+.single-content table tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* Hover Effect */
+.single-content table tr:hover td {
+    background-color: #f1f5f9; /* slate-100 */
+}
+
+/* Dark Mode Table Styles */
+.dark .single-content table {
+    box-shadow: 0 0 0 1px #334155; /* slate-700 */
+}
+
+.dark .single-content table th {
+    background-color: var(--color-primary); /* Keep primary or darken slightly */
+    color: #ffffff;
+    border-color: rgba(255,255,255,0.1);
+}
+
+.dark .single-content table td {
+    border-color: #334155; /* slate-700 */
+    color: #cbd5e1; /* slate-300 */
+}
+
+.dark .single-content table tr:nth-child(even) {
+    background-color: rgba(30, 41, 59, 0.4); /* slate-800/40 */
+}
+
+.dark .single-content table tr:nth-child(odd) {
+    background-color: transparent;
+}
+
+.dark .single-content table tr:hover td {
+    background-color: rgba(30, 41, 59, 0.8); /* slate-800/80 */
+}

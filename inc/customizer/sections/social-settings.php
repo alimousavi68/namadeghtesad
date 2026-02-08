@@ -57,6 +57,16 @@ return [
                 'type'    => 'text',
             ],
 
+            // WhatsApp
+            'hasht_social_whatsapp_enable' => [
+                'label'   => 'نمایش واتساپ',
+                'type'    => 'checkbox',
+            ],
+            'hasht_social_whatsapp_url' => [
+                'label'   => 'لینک واتساپ',
+                'type'    => 'text',
+            ],
+
             // Bale
             'hasht_social_bale_enable' => [
                 'label'   => 'نمایش بله',

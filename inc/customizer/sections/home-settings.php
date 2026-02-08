@@ -433,6 +433,9 @@ $settings = [
             'hasht_social_telegram_enable'  => [ 'label' => 'فعال‌سازی تلگرام', 'type' => 'checkbox', 'default' => false ],
             'hasht_social_telegram_url'     => [ 'label' => 'لینک تلگرام', 'type' => 'text', 'default' => '' ],
 
+            'hasht_social_whatsapp_enable'  => [ 'label' => 'فعال‌سازی واتساپ', 'type' => 'checkbox', 'default' => false ],
+            'hasht_social_whatsapp_url'     => [ 'label' => 'لینک واتساپ', 'type' => 'text', 'default' => '' ],
+
             // Iranian
             'hasht_social_bale_enable'      => [ 'label' => 'فعال‌سازی بله', 'type' => 'checkbox', 'default' => false ],
             'hasht_social_bale_url'         => [ 'label' => 'لینک بله', 'type' => 'text', 'default' => '' ],

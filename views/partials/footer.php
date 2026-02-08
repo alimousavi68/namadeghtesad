@@ -10,7 +10,7 @@
                         $custom_logo_id = get_theme_mod('custom_logo');
                         $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
                         if ($logo) {
-                            echo '<img src="' . esc_url($logo[0]) . '" alt="' . get_bloginfo('name') . '" class="h-12 w-auto brightness-0 invert">';
+                            echo '<img src="' . esc_url($logo[0]) . '" alt="' . get_bloginfo('name') . '" class="h-24 w-auto">';
                         }
                     } else {
                         echo 'نماد <span class="text-primary">اقتصاد</span>';
@@ -23,24 +23,29 @@
                 <div class="flex gap-3 flex-wrap justify-center w-full">
                     <?php
                     $socials = [
-                        'instagram' => 'instagram',
-                        'twitter'   => 'twitter',
-                        'linkedin'  => 'linkedin',
-                        'facebook'  => 'facebook',
-                        'telegram'  => 'send',
-                        'bale'      => 'message-circle',
-                        'eitaa'     => 'message-square',
-                        'rubika'    => 'box',
-                        'igap'      => 'message-circle',
+                        'instagram' => ['type' => 'lucide', 'icon' => 'instagram'],
+                        'twitter'   => ['type' => 'lucide', 'icon' => 'twitter'],
+                        'linkedin'  => ['type' => 'lucide', 'icon' => 'linkedin'],
+                        'facebook'  => ['type' => 'lucide', 'icon' => 'facebook'],
+                        'telegram'  => ['type' => 'lucide', 'icon' => 'send'],
+                        'whatsapp'  => ['type' => 'svg', 'content' => '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a2 2 0 0 0-2 2 6 6 0 0 0 6 6 2 2 0 0 0 2-2"/></svg>'], // Lucide Message Circle as base, modified
+                        'bale'      => ['type' => 'svg', 'content' => '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="m9 12 2 2 4-4"/></svg>'], // Chat bubble with check
+                        'eitaa'     => ['type' => 'svg', 'content' => '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m8 12 3 3 5-6"/></svg>'], // Square with check/shape
+                        'rubika'    => ['type' => 'svg', 'content' => '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.12 6.4-6.05-4.06a2 2 0 0 0-2.17-.05L2.95 8.41a2 2 0 0 0-.95 1.7v5.82a2 2 0 0 0 .88 1.66l6.05 4.07a2 2 0 0 0 2.17.05l9.95-6.12a2 2 0 0 0 .95-1.7V8.06a2 2 0 0 0-.88-1.66Z"/><path d="M10 22v-8L2.25 9.15"/><path d="m10 14 11.77-6.87"/></svg>'], // Cube
+                        'igap'      => ['type' => 'svg', 'content' => '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h8"/><path d="M8 8h8"/></svg>'], // Message circle with lines
                     ];
 
-                    foreach ($socials as $key => $icon) {
+                    foreach ($socials as $key => $data) {
                         $enable = get_theme_mod("hasht_social_{$key}_enable", false);
                         $url    = get_theme_mod("hasht_social_{$key}_url", '#');
 
                         if ($enable && !empty($url)) {
-                            echo '<a href="' . esc_url($url) . '" target="_blank" class="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center hover:bg-primary transition-colors">';
-                            echo '<i data-lucide="' . esc_attr($icon) . '" width="18"></i>';
+                            echo '<a href="' . esc_url($url) . '" target="_blank" class="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center hover:bg-primary transition-colors text-white">';
+                            if ($data['type'] === 'lucide') {
+                                echo '<i data-lucide="' . esc_attr($data['icon']) . '" width="18"></i>';
+                            } elseif ($data['type'] === 'svg') {
+                                echo $data['content'];
+                            }
                             echo '</a>';
                         }
                     }

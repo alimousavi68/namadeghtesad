@@ -178,7 +178,7 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                         </div>
 
                         <!-- Lead (Border moved to right) -->
-                        <p class="text-lg md:text-xl font-bold text-slate-600 dark:text-slate-300 leading-relaxed text-justify border-r-4 border-primary pr-4 mb-8 print:text-black print:border-r-0 print:pr-0">
+                        <p class="text-base md:text-lg font-medium text-slate-600 dark:text-slate-300 leading-relaxed text-justify border-r-4 border-primary pr-4 mb-8 print:text-black print:border-r-0 print:pr-0">
                             <?php echo get_the_excerpt(); ?>
                         </p>
 

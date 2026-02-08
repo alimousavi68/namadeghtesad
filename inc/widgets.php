@@ -657,33 +657,71 @@ class Hasht_Advertisement_Widget extends WP_Widget {
         parent::__construct(
             'hasht_advertisement_widget',
             'نماد اقتصاد: تبلیغات (متغیر)',
-            ['description' => 'باکس تبلیغاتی با قابلیت تنظیم ارتفاع']
+            ['description' => 'باکس تبلیغاتی با قابلیت تنظیم ارتفاع و حالت نمایش']
         );
     }
 
     public function widget($args, $instance) {
         $height_class = !empty($instance['height_class']) ? $instance['height_class'] : 'h-[900px]';
-        // Allow custom height class or style
+        $mode = !empty($instance['mode']) ? $instance['mode'] : 'vertical';
         
-        echo '<aside class="hidden md:flex w-full ' . esc_attr($height_class) . ' bg-slate-50 dark:bg-slate-800/40 rounded-xl flex-col items-center justify-center border-2 border-dashed border-slate-200 dark:border-slate-800 text-slate-400 cursor-pointer transition-all hover:bg-slate-100 dark:hover:bg-slate-800/60 group relative mb-6" aria-label="Advertisement">';
-        echo '<div class="absolute top-6 right-6 px-3 py-1 bg-slate-200 dark:bg-slate-700 rounded-lg text-xs font-black group-hover:bg-primary group-hover:text-white transition-colors">تبلیغات</div>';
-        echo '<div class="p-10 text-center">';
-        echo '<div class="w-20 h-20 bg-slate-200 dark:bg-slate-700 rounded-2xl mx-auto mb-8 flex items-center justify-center group-hover:rotate-12 transition-transform">';
-        echo '<i data-lucide="trending-up" width="40" class="text-slate-400 group-hover:text-primary transition-colors"></i>';
+        // Dynamic Classes based on mode
+        $container_classes = 'flex w-full ' . esc_attr($height_class) . ' bg-slate-50 dark:bg-slate-800/40 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-800 text-slate-400 cursor-pointer transition-all hover:bg-slate-100 dark:hover:bg-slate-800/60 group relative mb-6 overflow-hidden';
+        
+        if ($mode === 'horizontal') {
+            $container_classes .= ' flex-row items-center justify-between px-6';
+        } else {
+            $container_classes .= ' flex-col items-center justify-center';
+        }
+        
+        echo '<aside class="' . $container_classes . '" aria-label="Advertisement">';
+        
+        // Badge
+        $badge_class = ($mode === 'horizontal') ? 'static ml-4' : 'absolute top-6 right-6';
+        echo '<div class="' . $badge_class . ' px-3 py-1 bg-slate-200 dark:bg-slate-700 rounded-lg text-xs font-black group-hover:bg-primary group-hover:text-white transition-colors shrink-0">تبلیغات</div>';
+        
+        // Content Wrapper
+        $content_classes = ($mode === 'horizontal') ? 'flex items-center gap-4 text-right flex-1' : 'p-10 text-center';
+        echo '<div class="' . $content_classes . '">';
+        
+        // Icon
+        $icon_wrapper_classes = ($mode === 'horizontal') 
+            ? 'w-12 h-12 bg-slate-200 dark:bg-slate-700 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform shrink-0'
+            : 'w-20 h-20 bg-slate-200 dark:bg-slate-700 rounded-2xl mx-auto mb-8 flex items-center justify-center group-hover:rotate-12 transition-transform';
+            
+        echo '<div class="' . $icon_wrapper_classes . '">';
+        echo '<i data-lucide="trending-up" width="' . ($mode === 'horizontal' ? '24' : '40') . '" class="text-slate-400 group-hover:text-primary transition-colors"></i>';
         echo '</div>';
-        echo '<span class="text-2xl font-black block mb-4">فضای آگهی</span>';
-        echo '<p class="text-sm font-medium opacity-60">جهت درج رپورتاژ و بنر در نماد اقتصاد کلیک کنید</p>';
-        echo '</div>';
+        
+        // Text
+        echo '<div>';
+        $title_class = ($mode === 'horizontal') ? 'text-lg font-black block' : 'text-2xl font-black block mb-4';
+        echo '<span class="' . $title_class . '">فضای آگهی</span>';
+        
+        $desc_class = ($mode === 'horizontal') ? 'text-xs font-medium opacity-60 hidden sm:block' : 'text-sm font-medium opacity-60';
+        echo '<p class="' . $desc_class . '">جهت درج رپورتاژ و بنر کلیک کنید</p>';
+        echo '</div>'; // End Text Div
+        
+        echo '</div>'; // End Content Wrapper
         echo '</aside>';
     }
 
     public function form($instance) {
         $height_class = !empty($instance['height_class']) ? $instance['height_class'] : 'h-[900px]';
+        $mode = !empty($instance['mode']) ? $instance['mode'] : 'vertical';
         ?>
         <p>
             <label for="<?php echo esc_attr($this->get_field_id('height_class')); ?>">کلاس ارتفاع (Tailwind):</label>
             <input class="widefat" id="<?php echo esc_attr($this->get_field_id('height_class')); ?>" name="<?php echo esc_attr($this->get_field_name('height_class')); ?>" type="text" value="<?php echo esc_attr($height_class); ?>" placeholder="مثلاً h-[500px] یا h-full">
             <small>برای پر کردن فضا می‌توانید از h-full استفاده کنید (اگر والد فلکس باشد) یا ارتفاع ثابت بدهید.</small>
+        </p>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('mode')); ?>">حالت نمایش:</label>
+            <select class="widefat" id="<?php echo esc_attr($this->get_field_id('mode')); ?>" name="<?php echo esc_attr($this->get_field_name('mode')); ?>">
+                <option value="vertical" <?php selected($mode, 'vertical'); ?>>عمودی (پیش‌فرض)</option>
+                <option value="horizontal" <?php selected($mode, 'horizontal'); ?>>افقی (فشرده)</option>
+            </select>
+            <small>برای ارتفاع‌های کم (مثل ۸۰ پیکسل) از حالت افقی استفاده کنید.</small>
         </p>
         <?php
     }
@@ -691,6 +729,7 @@ class Hasht_Advertisement_Widget extends WP_Widget {
     public function update($new_instance, $old_instance) {
         $instance = [];
         $instance['height_class'] = (!empty($new_instance['height_class'])) ? strip_tags($new_instance['height_class']) : 'h-[900px]';
+        $instance['mode'] = (!empty($new_instance['mode'])) ? sanitize_key($new_instance['mode']) : 'vertical';
         return $instance;
     }
 }

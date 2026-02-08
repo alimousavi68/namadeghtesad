@@ -28,8 +28,7 @@ $configs = [
 foreach ($configs as $key => $conf) {
     $args = ['post_type' => 'post', 'posts_per_page' => $conf['count']];
     if ($conf['slug']) {
-        $cat_obj = get_category_by_slug($conf['slug']);
-        if ($cat_obj) $args['cat'] = $cat_obj->term_id;
+        $args['cat'] = $conf['slug'];
     }
     $queries[$key] = new WP_Query($args);
 }

@@ -80,7 +80,7 @@
             <!-- Desktop Nav -->
             <?php
             wp_nav_menu([
-                'theme_location' => 'header_main',
+                'theme_location' => 'primary',
                 'container'      => 'nav',
                 'container_class'=> 'hidden lg:block',
                 'menu_class'     => 'flex items-center',

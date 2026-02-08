@@ -11,10 +11,7 @@ $args = [
     'post_status'    => 'publish',
 ];
 if ($cat_slug) {
-    $cat_obj = get_category_by_slug($cat_slug);
-    if ($cat_obj) {
-        $args['cat'] = $cat_obj->term_id;
-    }
+    $args['cat'] = $cat_slug;
 }
 $query = new WP_Query($args);
 ?>

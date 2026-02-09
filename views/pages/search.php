@@ -80,7 +80,7 @@
                                             ?>
                                             <span class="text-[10px] text-text-light flex items-center gap-1">
                                                 <i data-lucide="clock" width="10"></i>
-                                                <?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?>
+                                                <?php echo hasht_time_ago(get_the_ID()); ?>
                                             </span>
                                         </div>
                                         <h2 class="news-title text-lg md:text-xl font-medium text-slate-800 dark:text-slate-100 leading-snug mb-3 transition-colors">

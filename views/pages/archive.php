@@ -71,7 +71,7 @@ if (is_category()) {
                                 }
                                 $categories = get_the_category();
                                 $first_cat = !empty($categories) ? $categories[0] : null;
-                                $time_diff = human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش';
+                                $time_diff = hasht_time_ago(get_the_ID());
                             ?>
                             
                             <article class="news-card-archive bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 md:p-5 flex flex-col md:flex-row gap-6 shadow-sm hover:shadow-md hover:border-rose-200 dark:hover:border-rose-900/30">

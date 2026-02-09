@@ -58,7 +58,7 @@ if ($cat_id) {
                 <h3 class="news-card-v-title">
                     <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                 </h3>
-                <span class="meta-text mt-auto block pt-1 text-[10px] font-normal text-slate-400 dark:text-slate-500"><?php echo human_time_diff(get_the_time('U', $post), current_time('timestamp')) . ' پیش'; ?></span>
+                <span class="meta-text mt-auto block pt-1 text-[10px] font-normal text-slate-400 dark:text-slate-500"><?php echo hasht_time_ago($post->ID); ?></span>
             </div>
         </article>
         <?php endforeach; wp_reset_postdata(); ?>

@@ -451,7 +451,7 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                                         </h4>
                                         <div class="flex items-center gap-2 text-xs text-text-light">
                                             <i data-lucide="clock" width="12"></i>
-                                            <span><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?></span>
+                                            <span><?php echo hasht_time_ago(get_the_ID()); ?></span>
                                         </div>
                                     </div>
                                 </a>

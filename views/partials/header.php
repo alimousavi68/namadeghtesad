@@ -160,7 +160,7 @@
             <i data-lucide="x" width="32"></i>
         </button>
         <div class="w-full max-w-2xl">
-            <h2 class="text-2xl md:text-3xl font-black text-white text-center mb-8">جستجو در نماد اقتصاد</h2>
+            <h2 class="text-2xl md:text-3xl font-medium text-white text-center mb-8">جستجو در نماد اقتصاد</h2>
             <form action="<?php echo home_url('/'); ?>" method="GET" class="relative mb-8">
                 <input type="text" name="s" placeholder="عبارت مورد نظر را بنویسید..." 
                     class="w-full h-16 pr-14 pl-6 bg-white/10 border border-white/20 rounded-2xl text-white placeholder:text-white/50 focus:outline-none focus:bg-white/20 focus:border-rose-500 transition-all text-lg">

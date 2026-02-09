@@ -92,7 +92,7 @@ if (is_category()) {
                                             <?php echo $time_diff; ?>
                                         </span>
                                     </div>
-                                    <h2 class="news-title text-lg md:text-xl font-black text-slate-800 dark:text-slate-100 leading-snug mb-3 transition-colors">
+                                    <h2 class="news-title text-lg md:text-xl font-medium text-slate-800 dark:text-slate-100 leading-snug mb-3 transition-colors">
                                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                     </h2>
                                     <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed text-justify mb-4 line-clamp-2 md:line-clamp-3">

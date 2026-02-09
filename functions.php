@@ -304,3 +304,23 @@ if (!function_exists('hasht_get_thumbnail')) {
         return '<img' . $attr_str . ' />';
     }
 }
+
+/**
+ * Helper: Safe Human Time Diff
+ * Calculates time difference using GMT timestamps to avoid Parsi Date conflict.
+ */
+if (!function_exists('hasht_time_ago')) {
+    function hasht_time_ago($post_id = null) {
+        $post = get_post($post_id);
+        if (!$post) return '';
+        
+        // Get GMT timestamp of the post
+        $post_time_gmt = get_post_time('U', true, $post);
+        
+        // Get current GMT timestamp
+        $current_time_gmt = time();
+        
+        // Calculate difference
+        return human_time_diff($post_time_gmt, $current_time_gmt) . ' پیش';
+    }
+}

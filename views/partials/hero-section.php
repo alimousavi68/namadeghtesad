@@ -54,11 +54,11 @@ if ($hero_query->have_posts()) :
                     </div>
                     <div class="absolute -bottom-8 lg:-bottom-12 left-1/2 -translate-x-1/2 w-[90%] bg-white dark:bg-slate-900 p-4 lg:p-7 transition-transform duration-500 group-hover:-translate-y-2 z-20 border border-slate-100 dark:border-slate-800 rounded-t-xl">
                         <div class="pt-2 pb-2">
-                            <h2 class="text-lg lg:text-2xl font-black text-slate-900 dark:text-white leading-tight group-hover:text-primary dark:group-hover:text-primary transition-colors">
+                            <h2 class="text-lg lg:text-2xl font-medium text-slate-900 dark:text-white leading-tight group-hover:text-primary dark:group-hover:text-primary transition-colors">
                                 <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                             </h2>
                             <div class="mt-3 flex items-center text-slate-400 text-[10px] lg:text-xs font-bold gap-3">
-                                <span><?php echo human_time_diff(get_the_time('U', $post), current_time('timestamp')) . ' پیش'; ?></span>
+                                <span><?php echo hasht_time_ago($post->ID); ?></span>
                                 <span class="w-1 h-1 rounded-full bg-slate-200 dark:bg-slate-800"></span>
                                 <a href="<?php echo get_permalink($post); ?>" class="text-primary">مشاهده کامل گزارش</a>
                             </div>
@@ -95,9 +95,9 @@ if ($hero_query->have_posts()) :
                         </div>
                         <div class="flex flex-col flex-1">
                             <?php if ($cat_name): ?>
-                                <span class="text-[10px] font-black text-primary mb-1 hidden lg:block uppercase"><?php echo esc_html($cat_name); ?></span>
+                                <span class="text-[10px] font-medium text-primary mb-1 hidden lg:block uppercase"><?php echo esc_html($cat_name); ?></span>
                             <?php endif; ?>
-                            <h3 class="text-sm lg:text-base font-black text-slate-800 dark:text-slate-100 leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                            <h3 class="text-sm lg:text-base font-medium text-slate-800 dark:text-slate-100 leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2">
                                 <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                             </h3>
                             <span class="text-[10px] text-slate-400 mt-auto block pt-1"><?php echo human_time_diff(get_the_time('U', $post), current_time('timestamp')) . ' پیش'; ?></span>
@@ -125,7 +125,7 @@ if ($hero_query->have_posts()) :
                             <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 line-clamp-2 leading-snug group-hover:text-primary transition-colors">
                                 <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                             </h4>
-                            <span class="text-[10px] font-black text-slate-400 mt-1"><?php echo human_time_diff(get_the_time('U', $post), current_time('timestamp')) . ' پیش'; ?></span>
+                            <span class="text-[10px] font-medium text-slate-400 mt-1"><?php echo human_time_diff(get_the_time('U', $post), current_time('timestamp')) . ' پیش'; ?></span>
                         </div>
                     </div>
                     <?php endforeach; wp_reset_postdata(); ?>

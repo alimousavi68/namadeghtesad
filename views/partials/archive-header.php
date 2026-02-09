@@ -24,7 +24,7 @@ $author_image = $author_image ?? 'images/janansefat-3.jpg';
             <!-- Author Info -->
             <div class="flex-1 text-center md:text-right">
                 <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 mb-2">
-                    <h1 class="text-2xl font-black text-slate-900 dark:text-white"><?php echo $author_name; ?></h1>
+                    <h1 class="text-2xl font-medium text-slate-900 dark:text-white"><?php echo $author_name; ?></h1>
                     <span class="hidden md:inline-block w-1.5 h-1.5 bg-slate-300 rounded-full"></span>
                     <span class="text-primary font-bold text-sm"><?php echo $author_role; ?></span>
                 </div>
@@ -60,7 +60,7 @@ $author_image = $author_image ?? 'images/janansefat-3.jpg';
             <div class="flex items-center gap-4">
                 <div class="w-1.5 h-12 bg-primary rounded-full"></div>
                 <div>
-                    <h1 class="text-3xl font-black text-slate-900 dark:text-white mb-1">
+                    <h1 class="text-3xl font-medium text-slate-900 dark:text-white mb-1">
                         <?php echo $archive_title; ?>
                     </h1>
                     <?php if (!empty($archive_description)): ?>

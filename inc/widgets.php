@@ -12,7 +12,7 @@ function hasht_widgets_init() {
         'description'   => 'ویجت‌های سایدبار صفحه اصلی را اینجا قرار دهید.',
         'before_widget' => '<div id="%1$s" class="widget %2$s mb-6">',
         'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="section-title flex items-center gap-4 mb-4 text-xl font-black"><div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0"><div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div></div>',
+        'before_title'  => '<h3 class="section-title flex items-center gap-4 mb-4 text-xl font-medium"><div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0"><div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div></div>',
         'after_title'   => '</h3>',
     ]);
 
@@ -22,7 +22,7 @@ function hasht_widgets_init() {
         'description'   => 'ویجت‌های سایدبار صفحات داخلی (نوشته‌ها، برگه‌ها و آرشیو) را اینجا قرار دهید.',
         'before_widget' => '<div id="%1$s" class="widget %2$s mb-6">',
         'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="section-title flex items-center gap-4 mb-4 text-xl font-black"><div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0"><div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div></div>',
+        'before_title'  => '<h3 class="section-title flex items-center gap-4 mb-4 text-xl font-medium"><div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0"><div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div></div>',
         'after_title'   => '</h3>',
     ]);
 
@@ -32,7 +32,7 @@ function hasht_widgets_init() {
         'description'   => 'این سایدبار در بخش هیرو (بالای صفحه اصلی) نمایش داده می‌شود. می‌توانید ویجت پیشخوان بازار یا لیست اخبار را اینجا قرار دهید.',
         'before_widget' => '<div id="%1$s" class="widget %2$s mb-6">',
         'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="section-title flex items-center gap-4 mb-4 text-xl font-black"><div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0"><div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div></div>',
+        'before_title'  => '<h3 class="section-title flex items-center gap-4 mb-4 text-xl font-medium"><div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0"><div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div></div>',
         'after_title'   => '</h3>',
     ]);
 
@@ -42,7 +42,7 @@ function hasht_widgets_init() {
         'description'   => 'این سایدبار مخصوص ویجت یادداشت و مصاحبه در صفحه اصلی است.',
         'before_widget' => '<div id="%1$s" class="widget %2$s mb-6">',
         'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="section-title flex items-center gap-4 mb-4 text-xl font-black"><div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0"><div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div></div>',
+        'before_title'  => '<h3 class="section-title flex items-center gap-4 mb-4 text-xl font-medium"><div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0"><div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div></div>',
         'after_title'   => '</h3>',
     ]);
 
@@ -344,7 +344,7 @@ class Hasht_Selected_News_Widget extends WP_Widget {
                 echo '<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col">';
 
                 echo '<div class="flex items-center justify-between mb-4 shrink-0">';
-                echo '<h3 class="section-title flex items-center gap-4 text-xl font-black">';
+                echo '<h3 class="section-title flex items-center gap-4 text-xl font-medium">';
                 echo '<div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">';
                 echo '<div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div>';
                 echo '</div>';
@@ -378,7 +378,7 @@ class Hasht_Selected_News_Widget extends WP_Widget {
             } elseif ($style === 'most_viewed') {
                 echo '<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col">';
                 echo '<div class="flex items-center justify-between mb-4 shrink-0">';
-                echo '<h3 class="section-title flex items-center gap-4 text-xl font-black">';
+                echo '<h3 class="section-title flex items-center gap-4 text-xl font-medium">';
                 echo '<div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">';
                 echo '<div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div>';
                 echo '</div>';
@@ -420,7 +420,7 @@ class Hasht_Selected_News_Widget extends WP_Widget {
                 echo '<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">';
 
                 echo '<div class="flex items-center justify-between mb-4 shrink-0">';
-                echo '<h3 class="section-title flex items-center gap-4 text-xl font-black">';
+                echo '<h3 class="section-title flex items-center gap-4 text-xl font-medium">';
                 echo '<div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">';
                 echo '<div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div>';
                 echo '</div>';
@@ -572,7 +572,7 @@ class Hasht_Market_Widget extends WP_Widget {
         $title = !empty($instance['title']) ? $instance['title'] : 'پیشخوان بازار';
 
         echo '<section class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-colors mb-6" aria-label="Market Widget">';
-        echo '<h3 class="section-title flex items-center gap-4 mb-4 text-xl font-black">';
+        echo '<h3 class="section-title flex items-center gap-4 mb-4 text-xl font-medium">';
         echo '<div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0"><div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div></div>';
         echo esc_html($title);
         echo '</h3>';
@@ -587,7 +587,7 @@ class Hasht_Market_Widget extends WP_Widget {
             echo '<div class="w-full aspect-square flex items-center justify-center bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 rounded-xl group-hover:border-primary group-hover:bg-white dark:group-hover:bg-slate-800 transition-all text-slate-500 dark:text-text-light group-hover:text-primary shadow-sm">';
             echo '<i data-lucide="' . esc_attr($icon) . '" width="56" stroke-width="1.2"></i>';
             echo '</div>';
-            echo '<span class="text-sm font-black text-text-main dark:text-slate-300 group-hover:text-primary text-center leading-tight">' . esc_html($label) . '</span>';
+            echo '<span class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary text-center leading-tight">' . esc_html($label) . '</span>';
             echo '</a>';
         }
 
@@ -678,7 +678,7 @@ class Hasht_Advertisement_Widget extends WP_Widget {
         
         // Badge
         $badge_class = ($mode === 'horizontal') ? 'static ml-4' : 'absolute top-6 right-6';
-        echo '<div class="' . $badge_class . ' px-3 py-1 bg-slate-200 dark:bg-slate-700 rounded-lg text-xs font-black group-hover:bg-primary group-hover:text-white transition-colors shrink-0">تبلیغات</div>';
+        echo '<div class="' . $badge_class . ' px-3 py-1 bg-slate-200 dark:bg-slate-700 rounded-lg text-xs font-medium group-hover:bg-primary group-hover:text-white transition-colors shrink-0">تبلیغات</div>';
         
         // Content Wrapper
         $content_classes = ($mode === 'horizontal') ? 'flex items-center gap-4 text-right flex-1' : 'p-10 text-center';
@@ -695,7 +695,7 @@ class Hasht_Advertisement_Widget extends WP_Widget {
         
         // Text
         echo '<div>';
-        $title_class = ($mode === 'horizontal') ? 'text-lg font-black block' : 'text-2xl font-black block mb-4';
+        $title_class = ($mode === 'horizontal') ? 'text-lg font-medium block' : 'text-2xl font-medium block mb-4';
         echo '<span class="' . $title_class . '">فضای آگهی</span>';
         
         $desc_class = ($mode === 'horizontal') ? 'text-xs font-medium opacity-60 hidden sm:block' : 'text-sm font-medium opacity-60';
@@ -837,7 +837,7 @@ class Hasht_Notes_Interviews_Widget extends WP_Widget {
                                     alt="<?php echo esc_attr($author_name); ?>">
                             </div>
                             <div class="flex flex-col">
-                                <span class="text-sm font-black text-slate-800 dark:text-slate-200 group-hover:text-rose-600 transition-colors">
+                                <span class="text-sm font-medium text-slate-800 dark:text-slate-200 group-hover:text-rose-600 transition-colors">
                                     <?php echo esc_html($author_name); ?>
                                 </span>
                                 <span class="text-[10px] text-slate-400 font-bold mt-0.5">

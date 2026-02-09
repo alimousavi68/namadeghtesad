@@ -4,7 +4,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
             <!-- Brand Info -->
             <section class="col-span-1 flex flex-col items-center text-center md:items-start md:text-right">
-                <h2 class="text-3xl font-black text-white mb-6">
+                <h2 class="text-3xl font-medium text-white mb-6">
                     <?php
                     if (has_custom_logo()) {
                         $custom_logo_id = get_theme_mod('custom_logo');
@@ -67,7 +67,7 @@
                     }
                 }
                 ?>
-                <button class="w-full flex items-center justify-between text-white font-black mb-4 md:mb-6 border-r-2 border-primary pr-3 md:cursor-default">
+                <button class="w-full flex items-center justify-between text-white font-medium mb-4 md:mb-6 border-r-2 border-primary pr-3 md:cursor-default">
                     <span><?php echo esc_html($menu_title); ?></span>
                     <i data-lucide="chevron-down" class="w-5 h-5 md:hidden transition-transform duration-300"></i>
                 </button>
@@ -105,7 +105,7 @@
                     }
                 }
                 ?>
-                <button class="w-full flex items-center justify-between text-white font-black mb-4 md:mb-6 border-r-2 border-primary pr-3 md:cursor-default">
+                <button class="w-full flex items-center justify-between text-white font-medium mb-4 md:mb-6 border-r-2 border-primary pr-3 md:cursor-default">
                     <span><?php echo esc_html($menu_title_help); ?></span>
                     <i data-lucide="chevron-down" class="w-5 h-5 md:hidden transition-transform duration-300"></i>
                 </button>
@@ -127,7 +127,7 @@
 
             <!-- Contact -->
             <section class="col-span-1 footer-accordion">
-                <button class="w-full flex items-center justify-between text-white font-black mb-4 md:mb-6 border-r-2 border-primary pr-3 md:cursor-default">
+                <button class="w-full flex items-center justify-between text-white font-medium mb-4 md:mb-6 border-r-2 border-primary pr-3 md:cursor-default">
                     <span>تماس با ما</span>
                     <i data-lucide="chevron-down" class="w-5 h-5 md:hidden transition-transform duration-300"></i>
                 </button>

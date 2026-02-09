@@ -25,7 +25,7 @@
 
                     <!-- Search Box Area -->
                     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-sm mb-8">
-                        <h1 class="text-xl font-black text-slate-900 dark:text-white mb-6">جستجو در اخبار</h1>
+                        <h1 class="text-xl font-medium text-slate-900 dark:text-white mb-6">جستجو در اخبار</h1>
                         <form action="<?php echo home_url('/'); ?>" method="GET" class="relative">
                             <input type="text" name="s" value="<?php echo get_search_query(); ?>" placeholder="عبارت مورد نظر را جستجو کنید..." 
                                 class="w-full h-14 pr-12 pl-4 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-primary dark:focus:border-primary focus:ring-1 focus:ring-primary transition-all text-slate-800 dark:text-slate-200 placeholder:text-text-light">
@@ -83,7 +83,7 @@
                                                 <?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' پیش'; ?>
                                             </span>
                                         </div>
-                                        <h2 class="news-title text-lg md:text-xl font-black text-slate-800 dark:text-slate-100 leading-snug mb-3 transition-colors">
+                                        <h2 class="news-title text-lg md:text-xl font-medium text-slate-800 dark:text-slate-100 leading-snug mb-3 transition-colors">
                                             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                         </h2>
                                         <div class="text-sm text-slate-500 dark:text-text-light leading-relaxed text-justify mb-4 line-clamp-2 md:line-clamp-3">

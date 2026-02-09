@@ -19,13 +19,13 @@ $query = new WP_Query($args);
     <div class="container mx-auto">
         <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
             <div>
-                <h3 class="text-3xl font-black text-slate-900 dark:text-white mb-2 flex items-center gap-3">
+                <h3 class="text-3xl font-medium text-slate-900 dark:text-white mb-2 flex items-center gap-3">
                     <i data-lucide="file-text" class="text-primary" width="32"></i>
                     <?php echo esc_html($title); ?>
                 </h3>
                 <p class="text-base text-slate-500 dark:text-slate-400 font-medium"><?php echo esc_html($subtitle); ?></p>
             </div>
-            <button class="link-more font-black hover:gap-3 border-b-2 border-secondary/20 pb-1">
+            <button class="link-more font-medium hover:gap-3 border-b-2 border-secondary/20 pb-1">
                 مشاهده بیشتر <i data-lucide="arrow-left" width="12"></i>
             </button>
         </div>
@@ -47,10 +47,10 @@ $query = new WP_Query($args);
                              <?php
                                 $pub_type = get_post_meta($post->ID, '_news_publication_type', true);
                                 if ( $pub_type ) {
-                                    echo '<span class="inline-block px-3 py-1 rounded-full bg-rose-50 dark:bg-rose-900/30 text-primary dark:text-rose-400 text-[11px] font-black mb-3">' . esc_html( $pub_type ) . '</span>';
+                                    echo '<span class="inline-block px-3 py-1 rounded-full bg-rose-50 dark:bg-rose-900/30 text-primary dark:text-rose-400 text-[11px] font-medium mb-3">' . esc_html( $pub_type ) . '</span>';
                                 }
                             ?>
-                            <h4 class="text-lg font-black text-slate-800 dark:text-slate-100 leading-tight mb-3 group-hover:text-primary transition-colors">
+                            <h4 class="text-lg font-medium text-slate-800 dark:text-slate-100 leading-tight mb-3 group-hover:text-primary transition-colors">
                                 <a href="<?php echo get_permalink($post); ?>">
                                     <?php echo get_the_title($post); ?>
                                 </a>
@@ -61,7 +61,7 @@ $query = new WP_Query($args);
                         </div>
                         <div class="mt-auto pt-4 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
                             <span class="text-[10px] font-normal text-slate-400"><?php echo get_the_date('F Y', $post); ?></span>
-                            <button class="text-[11px] font-black text-primary flex items-center gap-1">دریافت PDF</button>
+                            <button class="text-[11px] font-medium text-primary flex items-center gap-1">دریافت PDF</button>
                         </div>
                     </div>
                 </article>

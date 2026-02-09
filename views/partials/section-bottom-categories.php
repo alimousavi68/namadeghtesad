@@ -44,7 +44,7 @@ foreach ($configs as $key => $conf) {
     ?>
     <section class="<?php echo esc_attr($padding_class); ?>">
         <div class="flex items-center justify-between mb-6">
-            <h3 class="section-title flex items-center gap-4 text-xl font-black">
+            <h3 class="section-title flex items-center gap-4 text-xl font-medium">
                 <div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">
                     <div class="h-1/3 bg-slate-400"></div>
                     <div class="h-2/3 bg-primary"></div>
@@ -68,7 +68,7 @@ foreach ($configs as $key => $conf) {
                     <?php endif; ?>
                 </div>
                 <div class="flex flex-col flex-1">
-                    <h3 class="text-base font-black text-slate-800 dark:text-slate-100 leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                    <h3 class="text-base font-medium text-slate-800 dark:text-slate-100 leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2">
                         <?php echo get_the_title($post); ?>
                     </h3>
                     <span class="text-[10px] font-normal text-slate-400 mt-auto block pt-1"><?php echo human_time_diff(get_the_time('U', $post), current_time('timestamp')) . ' پیش'; ?></span>

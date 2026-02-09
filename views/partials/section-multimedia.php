@@ -65,7 +65,7 @@ if ($cat_id) {
                     </div>
                 </a>
             </div>
-            <h4 class="font-black text-lg leading-relaxed line-clamp-2 group-hover/item:text-rose-400 transition-colors">
+            <h4 class="font-medium text-lg leading-relaxed line-clamp-2 group-hover/item:text-rose-400 transition-colors">
                 <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
             </h4>
         </div>

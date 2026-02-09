@@ -132,7 +132,7 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                     <header class="mb-8">
                         <!-- Category Badge Removed -->
 
-                        <h1 class="text-2xl md:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white leading-tight mb-6">
+                        <h1 class="text-2xl md:text-3xl lg:text-4xl font-medium text-slate-900 dark:text-white leading-tight mb-6">
                             <?php the_title(); ?>
                         </h1>
 
@@ -275,7 +275,7 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                                             <span class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-xs font-bold">PDF</span>
                                         </div>
 
-                                        <h2 class="text-xl md:text-2xl font-black text-slate-800 dark:text-slate-100 mb-4 leading-tight">
+                                        <h2 class="text-xl md:text-2xl font-medium text-slate-800 dark:text-slate-100 mb-4 leading-tight">
                                             دانلود نسخه دیجیتال <?php the_title(); ?>
                                         </h2>
                                         
@@ -345,7 +345,7 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                                 <?php echo $box_avatar; ?>
                             </div>
                             <div class="flex-1">
-                                <h4 class="text-base font-black text-slate-800 dark:text-slate-100 mb-1"><?php echo esc_html($box_display_name); ?></h4>
+                                <h4 class="text-base font-medium text-slate-800 dark:text-slate-100 mb-1"><?php echo esc_html($box_display_name); ?></h4>
                                 <?php if (!empty($box_description)): ?>
                                     <p class="text-xs text-slate-500 dark:text-text-light leading-relaxed mb-2 line-clamp-2">
                                         <?php echo esc_html($box_description); ?>
@@ -431,7 +431,7 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                                 <div class="h-1/3 bg-slate-400"></div>
                                 <div class="h-2/3 bg-primary"></div>
                             </div>
-                            <h3 class="text-xl font-black text-slate-800 dark:text-white"><?php echo esc_html($related_title); ?></h3>
+                            <h3 class="text-xl font-medium text-slate-800 dark:text-white"><?php echo esc_html($related_title); ?></h3>
                         </div>
                         <div class="grid <?php echo esc_attr($grid_class); ?> gap-6">
                             <?php while ($related_query->have_posts()): $related_query->the_post(); ?>

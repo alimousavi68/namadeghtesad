@@ -1,7 +1,7 @@
 <!-- Company Stories -->
 <section class="my-16">
     <div class="flex items-center justify-between mb-8">
-        <h3 class="section-title flex items-center gap-4 text-xl font-black">
+        <h3 class="section-title flex items-center gap-4 text-xl font-medium">
             <div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">
                 <div class="h-1/3 bg-slate-400"></div>
                 <div class="h-2/3 bg-primary"></div>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <span
-                    class="text-sm font-black text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">ایران
+                    class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">ایران
                     خودرو</span>
             </div>
             <div class="flex flex-col items-center gap-3 group cursor-pointer shrink-0 snap-start">
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <span
-                    class="text-sm font-black text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">سایپا</span>
+                    class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">سایپا</span>
             </div>
             <div class="flex flex-col items-center gap-3 group cursor-pointer shrink-0 snap-start">
                 <div
@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <span
-                    class="text-sm font-black text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">بانک
+                    class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">بانک
                     مرکزی</span>
             </div>
             <div class="flex flex-col items-center gap-3 group cursor-pointer shrink-0 snap-start">
@@ -76,7 +76,7 @@
                     </div>
                 </div>
                 <span
-                    class="text-sm font-black text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">نفت
+                    class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">نفت
                     و گاز پارس</span>
             </div>
             <div class="flex flex-col items-center gap-3 group cursor-pointer shrink-0 snap-start">
@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <span
-                    class="text-sm font-black text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">فولاد
+                    class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">فولاد
                     مبارکه</span>
             </div>
             <div class="flex flex-col items-center gap-3 group cursor-pointer shrink-0 snap-start">
@@ -102,7 +102,7 @@
                     </div>
                 </div>
                 <span
-                    class="text-sm font-black text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">ذوب
+                    class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">ذوب
                     آهن</span>
             </div>
             <div class="flex flex-col items-center gap-3 group cursor-pointer shrink-0 snap-start">
@@ -115,7 +115,7 @@
                     </div>
                 </div>
                 <span
-                    class="text-sm font-black text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">مس
+                    class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">مس
                     کرمان</span>
             </div>
             <div class="flex flex-col items-center gap-3 group cursor-pointer shrink-0 snap-start">
@@ -128,7 +128,7 @@
                     </div>
                 </div>
                 <span
-                    class="text-sm font-black text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">ذوب
+                    class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">ذوب
                     آهن</span>
             </div>
         </div>

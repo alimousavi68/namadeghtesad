@@ -25,7 +25,7 @@
 
                     <!-- Page Content -->
                     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-sm">
-                        <h1 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-6 leading-tight">
+                        <h1 class="text-2xl md:text-3xl font-medium text-slate-900 dark:text-white mb-6 leading-tight">
                             عنوان صفحه نمونه
                         </h1>
                         

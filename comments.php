@@ -20,7 +20,7 @@ if ( post_password_required() ) {
             <div class="h-1/3 bg-slate-400"></div>
             <div class="h-2/3 bg-primary"></div>
         </div>
-        <h3 class="text-xl font-black text-slate-800 dark:text-white">
+        <h3 class="text-xl font-medium text-slate-800 dark:text-white">
             <?php
             $comment_count = get_comments_number();
             if ( '1' === $comment_count ) {

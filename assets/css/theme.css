@@ -554,6 +554,10 @@ video {
   display: none;
 }
 
+body {
+  font-family: 'IRANYekanX', sans-serif;
+}
+
 .container {
   width: 100%;
   margin-right: auto;
@@ -843,12 +847,14 @@ video {
 .single-content table tbody tr:hover td {
   --tw-bg-opacity: 1;
   background-color: rgb(255 241 242 / var(--tw-bg-opacity, 1));
-  color: var(--color-primary);
+  --tw-text-opacity: 1;
+  color: rgb(190 18 60 / var(--tw-text-opacity, 1));
 }
 
 .single-content table tbody tr:hover td:is(.dark *) {
   background-color: rgb(136 19 55 / 0.1);
-  color: var(--color-primary);
+  --tw-text-opacity: 1;
+  color: rgb(251 113 133 / var(--tw-text-opacity, 1));
 }
 
 .sr-only {
@@ -1444,6 +1450,10 @@ video {
   height: 400px;
 }
 
+.h-\[4rem\] {
+  height: 4rem;
+}
+
 .h-\[500px\] {
   height: 500px;
 }
@@ -1471,10 +1481,6 @@ video {
 
 .h-px {
   height: 1px;
-}
-
-.h-\[4rem\] {
-  height: 4rem;
 }
 
 .max-h-\[650px\] {
@@ -4094,6 +4100,19 @@ video {
 
 .forced-color-adjust-none {
   forced-color-adjust: none;
+}
+
+@font-face {
+  font-family: 'IRANYekanX';
+
+  src: url('../../fonts/IRANYekanX/IRANYekanXVF.woff2') format('woff2-variations'),
+       url('../../fonts/IRANYekanX/IRANYekanXVF.woff') format('woff-variations');
+
+  font-weight: 100 900;
+
+  font-style: normal;
+
+  font-display: swap;
 }
 
 /* Custom Animations */

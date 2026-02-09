@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'IRANYekanX';
+  src: url('../../fonts/IRANYekanX/IRANYekanXVF.woff2') format('woff2-variations'),
+       url('../../fonts/IRANYekanX/IRANYekanXVF.woff') format('woff-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  body {
+    font-family: 'IRANYekanX', sans-serif;
+  }
+}
+
 /* Custom Animations */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
@@ -83,6 +98,12 @@
 
     /* Hover Effect */
     .single-content table tbody tr:hover td {
-        @apply bg-rose-50 dark:bg-rose-900/10 text-primary dark:text-primary;
+        @apply bg-rose-50 dark:bg-rose-900/10 text-rose-700 dark:text-rose-400;
+    }
+
+    .persia-number {
+        font-feature-settings: "ss02";
+        -moz-font-feature-settings: "ss02";
+        -webkit-font-feature-settings: "ss02";
     }
 }

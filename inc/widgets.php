@@ -404,7 +404,7 @@ class Hasht_Selected_News_Widget extends WP_Widget {
                             <?php else : ?>
                                 <div class="w-full h-full rounded-lg bg-slate-200 dark:bg-slate-700"></div>
                             <?php endif; ?>
-                            <div class="absolute -top-2 -right-2 bg-rose-600 text-white text-sm font-light w-6 h-6 flex items-center justify-center rounded-full shadow-md z-10">
+                            <div class="absolute -top-2 -right-2 bg-rose-600 text-white text-sm font-light w-6 h-6 flex items-center justify-center rounded-full shadow-md z-10 persia-number">
                                 <?php echo $i++; ?>
                             </div>
                         </div>

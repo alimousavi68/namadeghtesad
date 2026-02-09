@@ -35,7 +35,7 @@ if ($cat_id) {
             <?php echo esc_html($title); ?>
         </h3>
         <a href="<?php echo esc_url($cat_link); ?>"
-            class="link-more">
+            class="link-more text-sm text-slate-500 hover:text-rose-600 transition-colors flex items-center gap-1">
             مشاهده بیشتر <i data-lucide="arrow-left" width="12"></i>
         </a>
     </div>

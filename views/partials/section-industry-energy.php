@@ -33,7 +33,7 @@
                 <?php echo esc_html($ind_title); ?>
             </h3>
             <a href="<?php echo esc_url($ind_link); ?>"
-                class="link-more">
+                class="link-more text-sm text-slate-500 hover:text-rose-600 transition-colors flex items-center gap-1">
                 مشاهده بیشتر <i data-lucide="arrow-left" width="12"></i>
             </a>
         </div>
@@ -130,7 +130,7 @@
                 <?php echo esc_html($en_title); ?>
             </h3>
             <a href="<?php echo esc_url($en_link); ?>"
-                class="link-more">
+                class="link-more text-sm text-slate-500 hover:text-rose-600 transition-colors flex items-center gap-1">
                 مشاهده بیشتر <i data-lucide="arrow-left" width="12"></i>
             </a>
         </div>

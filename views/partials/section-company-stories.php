@@ -10,7 +10,7 @@
         </h3>
 
         <a href="#"
-            class="link-more">
+            class="link-more text-sm text-slate-500 hover:text-rose-600 transition-colors flex items-center gap-1">
             مشاهده بیشتر <i data-lucide="arrow-left" width="12"></i>
         </a>
     </div>

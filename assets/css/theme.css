@@ -4874,6 +4874,10 @@ video {
     height: 430px;
   }
 
+  .lg\:h-\[6rem\] {
+    height: 6rem;
+  }
+
   .lg\:w-28 {
     width: 7rem;
   }

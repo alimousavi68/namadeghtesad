@@ -556,6 +556,8 @@ video {
 
 body {
   font-family: 'IRANYekanX', sans-serif;
+  font-variation-settings: "wght" 400, "dots" 0 !important;
+  font-feature-settings: "ss02";
 }
 
 .container {
@@ -4106,7 +4108,7 @@ body {
   font-family: 'IRANYekanX';
 
   src: url('../../fonts/IRANYekanX/IRANYekanXVF.woff2') format('woff2-variations'),
-       url('../../fonts/IRANYekanX/IRANYekanXVF.woff') format('woff-variations');
+        url('../../fonts/IRANYekanX/IRANYekanXVF.woff') format('woff-variations');
 
   font-weight: 100 900;
 

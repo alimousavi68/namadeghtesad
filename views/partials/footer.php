@@ -4,13 +4,13 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
             <!-- Brand Info -->
             <section class="col-span-1 flex flex-col items-center text-center md:items-start md:text-right">
-                <h2 class="text-3xl font-medium text-white mb-6">
+                <h2 class="text-3xl font-medium text-white mb-1">
                     <?php
                     if (has_custom_logo()) {
                         $custom_logo_id = get_theme_mod('custom_logo');
                         $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
                         if ($logo) {
-                            echo '<img src="' . esc_url($logo[0]) . '" alt="' . get_bloginfo('name') . '" class="h-12 w-auto">';
+                            echo '<img src="' . esc_url($logo[0]) . '" alt="' . get_bloginfo('name') . '" class="h-18 w-auto">';
                         }
                     } else {
                         echo 'نماد <span class="text-primary">اقتصاد</span>';

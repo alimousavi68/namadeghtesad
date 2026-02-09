@@ -10,7 +10,7 @@
                         $custom_logo_id = get_theme_mod('custom_logo');
                         $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
                         if ($logo) {
-                            echo '<img src="' . esc_url($logo[0]) . '" alt="' . get_bloginfo('name') . '" class="h-18 w-auto">';
+                            echo '<img src="' . esc_url($logo[0]) . '" alt="' . get_bloginfo('name') . '" class="h-14 w-auto">';
                         }
                     } else {
                         echo 'نماد <span class="text-primary">اقتصاد</span>';

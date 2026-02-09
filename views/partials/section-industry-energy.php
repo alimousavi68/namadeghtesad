@@ -74,7 +74,7 @@
             <?php foreach ($list_posts as $post): setup_postdata($post); 
                 $thumb_url = get_the_post_thumbnail_url($post, 'hasht-small-rect');
             ?>
-            <article class="news-card-h group">
+            <article class="news-card-h group flex items-start gap-3">
                 <div class="w-16 h-12 rounded-md overflow-hidden shrink-0">
                     <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
                         <?php if ($thumb_url): ?>
@@ -84,7 +84,7 @@
                         <?php endif; ?>
                     </a>
                 </div>
-                <h5 class="news-card-h-title">
+                <h5 class="news-card-h-title text-sm font-bold text-slate-700 dark:text-slate-200 leading-snug group-hover:text-primary transition-colors line-clamp-2">
                     <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                 </h5>
             </article>
@@ -168,7 +168,7 @@
             <?php foreach ($list_posts as $post): setup_postdata($post); 
                 $thumb_url = get_the_post_thumbnail_url($post, 'hasht-small-rect');
             ?>
-            <article class="news-card-h group">
+            <article class="news-card-h group flex items-start gap-3">
                 <div class="w-16 h-12 rounded-md overflow-hidden shrink-0">
                     <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
                         <?php if ($thumb_url): ?>
@@ -178,7 +178,7 @@
                         <?php endif; ?>
                     </a>
                 </div>
-                <h5 class="news-card-h-title">
+                <h5 class="news-card-h-title text-sm font-bold text-slate-700 dark:text-slate-200 leading-snug group-hover:text-primary transition-colors line-clamp-2">
                     <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                 </h5>
             </article>

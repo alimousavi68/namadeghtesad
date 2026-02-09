@@ -139,18 +139,30 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-6 mb-6 print:border-black">
                             <!-- Author Name (Replaced News ID) -->
                             <div class="flex items-center gap-2 text-sm text-slate-500 dark:text-text-light print:text-black">
-                                <?php if ($content_type === 'photo_report'): ?>
-                                    <i data-lucide="camera" width="16" class="text-primary"></i>
+                                <?php if ($content_type === 'note' || $content_type === 'interview'): ?>
+                                    <!-- Avatar for Note/Interview -->
+                                    <div class="w-10 h-10 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 shrink-0">
+                                        <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr($display_name); ?>" class="w-full h-full object-cover">
+                                    </div>
                                 <?php else: ?>
-                                    <i data-lucide="user" width="16" class="text-primary"></i>
+                                    <!-- Icons for other types -->
+                                    <?php if ($content_type === 'photo_report'): ?>
+                                        <i data-lucide="camera" width="16" class="text-primary"></i>
+                                    <?php else: ?>
+                                        <i data-lucide="user" width="16" class="text-primary"></i>
+                                    <?php endif; ?>
                                 <?php endif; ?>
 
-                                <?php if ($content_type === 'interview'): ?>
-                                    <span class="text-xs text-slate-400">گفت‌وگو با:</span>
-                                <?php elseif ($content_type === 'photo_report'): ?>
-                                    <span class="text-xs text-slate-400">عکاس:</span>
-                                <?php endif; ?>
-                                <span class="font-bold text-text-main dark:text-slate-200"><?php echo esc_html($display_name); ?></span>
+                                <div class="flex flex-col">
+                                    <?php if ($content_type === 'interview'): ?>
+                                        <span class="text-[10px] text-slate-400">گفت‌وگو با:</span>
+                                    <?php elseif ($content_type === 'photo_report'): ?>
+                                        <span class="text-[10px] text-slate-400">عکاس:</span>
+                                    <?php elseif ($content_type === 'note'): ?>
+                                        <span class="text-[10px] text-slate-400">یادداشت از:</span>
+                                    <?php endif; ?>
+                                    <span class="font-bold text-text-main dark:text-slate-200 leading-none mt-1"><?php echo esc_html($display_name); ?></span>
+                                </div>
                             </div>
 
                             <!-- Tools (Print, Share) - Hidden in Print -->
@@ -297,7 +309,7 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
 
                                 </div>
                             </div>
-                        <?php elseif (has_post_thumbnail()): ?>
+                        <?php elseif (has_post_thumbnail() && $content_type !== 'note' && $content_type !== 'interview'): ?>
                             <figure class="rounded-2xl overflow-hidden mb-10 print:shadow-none">
                                 <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-auto max-h-[650px] object-cover">
                             </figure>

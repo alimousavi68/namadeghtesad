@@ -41,6 +41,12 @@ foreach ($configs as $key => $conf) {
         $padding_class = 'lg:px-6';
         if ($key === 1) $padding_class = 'lg:pl-6';
         if ($key === 4) $padding_class = 'lg:pr-6';
+
+        // Generate Category Link
+        $cat_link = '#';
+        if (!empty($conf['slug'])) {
+            $cat_link = get_category_link($conf['slug']);
+        }
     ?>
     <section class="<?php echo esc_attr($padding_class); ?>">
         <div class="flex items-center justify-between mb-6">
@@ -51,7 +57,7 @@ foreach ($configs as $key => $conf) {
                 </div>
                 <?php echo esc_html($conf['title']); ?>
             </h3>
-            <a href="#" class="link-more text-sm text-slate-500 hover:text-rose-600 transition-colors flex items-center gap-1">مشاهده بیشتر <i data-lucide="arrow-left" width="12"></i></a>
+            <a href="<?php echo esc_url($cat_link); ?>" class="link-more text-sm text-slate-500 hover:text-rose-600 transition-colors flex items-center gap-1">مشاهده بیشتر <i data-lucide="arrow-left" width="12"></i></a>
         </div>
         <div class="space-y-4">
             <?php if ($query->have_posts()) : foreach ($query->posts as $post) : setup_postdata($post); 
@@ -59,17 +65,21 @@ foreach ($configs as $key => $conf) {
             ?>
             <article class="group cursor-pointer flex flex-col h-full">
                 <div class="aspect-[16/10] overflow-hidden rounded-xl mb-4 shrink-0 shadow-md">
-                    <?php if ($thumb_url) : ?>
-                        <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr(get_the_title($post)); ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    <?php else: ?>
-                        <div class="w-full h-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
-                            <span class="text-slate-400 text-xs">بدون تصویر</span>
-                        </div>
-                    <?php endif; ?>
+                    <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
+                        <?php if ($thumb_url) : ?>
+                            <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr(get_the_title($post)); ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <?php else: ?>
+                            <div class="w-full h-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
+                                <span class="text-slate-400 text-xs">بدون تصویر</span>
+                            </div>
+                        <?php endif; ?>
+                    </a>
                 </div>
                 <div class="flex flex-col flex-1">
                     <h3 class="text-base font-medium text-slate-800 dark:text-slate-100 leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                        <?php echo get_the_title($post); ?>
+                        <a href="<?php echo get_permalink($post); ?>">
+                            <?php echo get_the_title($post); ?>
+                        </a>
                     </h3>
                     <span class="text-[10px] font-normal text-slate-400 mt-auto block pt-1"><?php echo hasht_time_ago($post->ID); ?></span>
                 </div>

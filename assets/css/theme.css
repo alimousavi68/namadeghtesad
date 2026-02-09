@@ -15,3 +15,145 @@
 .animate-fade-in {
   animation: fadeIn 0.3s ease-out forwards;
 }
+
+/* 
+ * Single Post Table Styles 
+ * Using !important to override potential Tailwind resets or other styles
+ */
+.single-content table {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    margin: 2rem 0 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+    overflow: hidden !important;
+    border-radius: 1rem !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+    display: table !important; /* Force table display */
+}
+
+.dark .single-content table {
+    border-color: #334155 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Table Header */
+.single-content table thead th,
+.single-content table th { /* Target th regardless of thead */
+    background-color: #f1f5f9 !important;
+    color: #334155 !important;
+    font-weight: 700 !important;
+    padding: 1rem !important;
+    text-align: right !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+    white-space: nowrap !important;
+}
+
+.dark .single-content table thead th,
+.dark .single-content table th {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-bottom-color: #334155 !important;
+}
+
+/* Table Body Cells */
+.single-content table tbody td,
+.single-content table td { /* Target td regardless of tbody */
+    padding: 1rem !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    color: #475569 !important;
+    transition: all 0.2s ease !important;
+}
+
+.dark .single-content table tbody td,
+.dark .single-content table td {
+    border-bottom-color: #1e293b !important;
+    color: #cbd5e1 !important;
+}
+
+/* Zebra Striping */
+.single-content table tbody tr:nth-child(even),
+.single-content table tr:nth-child(even) {
+    background-color: #f8fafc !important;
+}
+
+.dark .single-content table tbody tr:nth-child(even),
+.dark .single-content table tr:nth-child(even) {
+    background-color: #0f172a !important;
+}
+
+/* Hover Effect */
+.single-content table tbody tr:hover td,
+.single-content table tr:hover td {
+    background-color: #fce7f3 !important; /* Rose-50 for subtle hover */
+    color: #be123c !important; /* Rose-700 */
+}
+
+.dark .single-content table tbody tr:hover td,
+.dark .single-content table tr:hover td {
+    background-color: rgba(225, 29, 72, 0.1) !important; /* Rose-600 with opacity */
+    color: #fb7185 !important; /* Rose-400 */
+}
+
+/* Remove bottom border from last row */
+.single-content table tbody tr:last-child td,
+.single-content table tr:last-child td {
+    border-bottom: none !important;
+}
+
+/* Blockquote Styles */
+.single-content blockquote {
+    position: relative !important;
+    margin: 2rem 0 !important;
+    padding: 1.5rem 2rem 1.5rem 4rem !important; /* Right padding for quote icon */
+    background: #f8fafc !important; /* Slate-50 */
+    border-right: 4px solid #e11d48 !important; /* Primary (Rose-600) */
+    border-radius: 0.75rem !important;
+    font-style: italic !important;
+    font-size: 1.1rem !important;
+    line-height: 1.8 !important;
+    color: #334155 !important; /* Slate-700 */
+}
+
+.dark .single-content blockquote {
+    background: #1e293b !important; /* Slate-800 */
+    color: #e2e8f0 !important; /* Slate-200 */
+    border-right-color: #e11d48 !important;
+}
+
+/* Quote Icon (Pseudo-element) */
+.single-content blockquote::before {
+    content: '"' !important; /* Or use a font icon code */
+    position: absolute !important;
+    top: 0.5rem !important;
+    right: 1rem !important;
+    font-size: 4rem !important;
+    line-height: 1 !important;
+    color: #e11d48 !important; /* Primary */
+    opacity: 0.2 !important;
+    font-family: Georgia, serif !important;
+}
+
+/* Nested p in blockquote */
+.single-content blockquote p {
+    margin-bottom: 0 !important;
+    display: inline !important;
+}
+
+/* Citation/Footer in blockquote */
+.single-content blockquote cite,
+.single-content blockquote footer {
+    display: block !important;
+    margin-top: 1rem !important;
+    font-size: 0.9rem !important;
+    font-style: normal !important;
+    font-weight: bold !important;
+    color: #64748b !important; /* Slate-500 */
+}
+
+.dark .single-content blockquote cite,
+.dark .single-content blockquote footer {
+    color: #94a3b8 !important; /* Slate-400 */
+}

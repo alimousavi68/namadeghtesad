@@ -849,7 +849,7 @@ class Hasht_Notes_Interviews_Widget extends WP_Widget {
                             <div class="shrink-0 mt-1 text-rose-600 group-hover:text-rose-600 transition-colors">
                                 <i data-lucide="<?php echo esc_attr($icon); ?>" width="18"></i>
                             </div>
-                            <h4 class="text-xl font-bold text-slate-700 dark:text-slate-300 leading-relaxed group-hover:text-slate-950 dark:group-hover:text-white transition-colors">
+                            <h4 class=" font-bold text-slate-700 dark:text-slate-300 leading-relaxed group-hover:text-slate-950 dark:group-hover:text-white transition-colors">
                                 <?php the_title(); ?>
                             </h4>
                         </div>

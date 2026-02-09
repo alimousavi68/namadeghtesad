@@ -677,8 +677,8 @@ class Hasht_Advertisement_Widget extends WP_Widget {
         echo '<aside class="' . $container_classes . '" aria-label="Advertisement">';
         
         // Badge
-        $badge_class = ($mode === 'horizontal') ? 'static ml-4' : 'absolute top-6 right-6';
-        echo '<div class="' . $badge_class . ' px-3 py-1 bg-slate-200 dark:bg-slate-700 rounded-lg text-xs font-medium group-hover:bg-primary group-hover:text-white transition-colors shrink-0">تبلیغات</div>';
+        // $badge_class = ($mode === 'horizontal') ? 'static ml-4' : 'absolute top-6 right-6';
+        // echo '<div class="' . $badge_class . ' px-3 py-1 bg-slate-200 dark:bg-slate-700 rounded-lg text-xs font-medium group-hover:bg-primary group-hover:text-white transition-colors shrink-0">تبلیغات</div>';
         
         // Content Wrapper
         $content_classes = ($mode === 'horizontal') ? 'flex items-center gap-4 text-right flex-1' : 'p-10 text-center';

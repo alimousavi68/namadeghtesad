@@ -180,8 +180,8 @@
             class="border-t border-slate-800 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center text-[10px] md:text-xs text-slate-500 font-bold">
             <p><?php echo esc_html(get_theme_mod('hasht_footer_copyright', '© ۱۴۰۳ تمامی حقوق مادی و معنوی متعلق به پایگاه خبری نماد اقتصاد می‌باشد.')); ?></p>
             <div class="flex gap-6 mt-4 md:mt-0">
-                <span>طراحی و توسعه: هشت بهشت</span>
-                <a href="#" class="hover:text-white">نقشه سایت</a>
+                
+                <a href="https://ihasht.ir/" target="_blank"><span>طراحی و توسعه: هشت بهشت</span></a>
             </div>
         </div>
     </div>

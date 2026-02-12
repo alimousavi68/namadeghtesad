@@ -125,7 +125,7 @@ if ($hero_query->have_posts()) :
                             <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 line-clamp-2 leading-snug group-hover:text-primary transition-colors">
                                 <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                             </h4>
-                            <span class="text-[10px] font-medium text-slate-400 mt-1"><?php echo human_time_diff(get_the_time('U', $post), current_time('timestamp')) . ' پیش'; ?></span>
+                            <span class="text-[10px] font-medium text-slate-400 mt-1"><?php echo hasht_time_ago($post->ID); ?></span>
                         </div>
                     </div>
                     <?php endforeach; wp_reset_postdata(); ?>

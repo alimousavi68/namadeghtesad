@@ -64,9 +64,9 @@
 
     <!-- Main Branding & Navigation Bar -->
     <div class="container mx-auto px-4 py-2 md:py-3 flex items-center justify-between gap-8">
-        <div class="flex items-center gap-10 lg:gap-14">
+        <div class="flex items-center gap-10 lg:gap-14 grow">
             <!-- Logo -->
-            <div class="flex items-center shrink-0">
+            <div class="flex items-center shrink-0 order-last lg:order-first">
                 <?php 
                 $custom_logo_id = get_theme_mod('custom_logo');
                 if ($custom_logo_id) : 
@@ -89,7 +89,7 @@
             wp_nav_menu([
                 'theme_location' => 'primary',
                 'container'      => 'nav',
-                'container_class'=> 'hidden lg:block',
+                'container_class'=> 'hidden lg:block mr-auto lg:mr-0',
                 'menu_class'     => 'flex items-center',
                 'fallback_cb'    => false,
                 'walker'         => new Hasht_Header_Walker(),

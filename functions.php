@@ -172,7 +172,7 @@ class Hasht_Header_Walker extends Walker_Nav_Menu
         // Classes for the <a>
         $link_classes = '';
         if ($depth === 0) {
-            $link_classes = 'flex items-center gap-1 py-1.5 px-3 text-base font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-500 transition-all whitespace-nowrap';
+            $link_classes = 'flex items-center gap-1 py-1.5 px-2 lg:px-3 text-sm lg:text-base font-normal text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-500 transition-all whitespace-nowrap';
         } else {
             $link_classes = 'block px-6 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-rose-600';
         }

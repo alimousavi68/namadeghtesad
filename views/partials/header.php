@@ -63,8 +63,8 @@
     </div>
 
     <!-- Main Branding & Navigation Bar -->
-    <div class="container mx-auto px-4 py-2 md:py-3 flex items-center justify-between gap-8">
-        <div class="flex items-center gap-10 lg:gap-14 grow">
+    <div class="container mx-auto px-4 py-2 md:py-3 flex items-center justify-between gap-4 lg:gap-8">
+        <div class="flex items-center gap-2 lg:gap-6">
             <!-- Logo -->
             <div class="flex items-center shrink-0 order-last lg:order-first">
                 <?php 
@@ -89,7 +89,7 @@
             wp_nav_menu([
                 'theme_location' => 'primary',
                 'container'      => 'nav',
-                'container_class'=> 'hidden lg:block mr-auto lg:mr-0',
+                'container_class'=> 'hidden lg:block',
                 'menu_class'     => 'flex items-center',
                 'fallback_cb'    => false,
                 'walker'         => new Hasht_Header_Walker(),

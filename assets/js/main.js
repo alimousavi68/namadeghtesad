@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const htmlRoot = document.documentElement;
 
     // Check local storage
-    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    if (localStorage.getItem('theme') === 'dark') {
         htmlRoot.classList.add('dark');
         if (sunIcon) sunIcon.classList.remove('hidden');
         if (moonIcon) moonIcon.classList.add('hidden');
@@ -144,6 +144,50 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // Single Page Actions (Comments Scroll & Shortlink Copy)
+    const commentsBtn = document.getElementById('scroll-to-comments');
+    const commentsSection = document.getElementById('comments');
+    
+    if (commentsBtn && commentsSection) {
+        commentsBtn.addEventListener('click', () => {
+            commentsSection.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+
+    const shortlinkBtn = document.getElementById('scroll-to-shortlink');
+    const shortlinkBox = document.getElementById('short-link-text');
+
+    if (shortlinkBtn && shortlinkBox) {
+        shortlinkBtn.addEventListener('click', () => {
+            shortlinkBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Highlight effect
+            shortlinkBox.parentElement.classList.add('ring-2', 'ring-primary', 'ring-offset-2');
+            setTimeout(() => {
+                shortlinkBox.parentElement.classList.remove('ring-2', 'ring-primary', 'ring-offset-2');
+            }, 2000);
+        });
+    }
+
+    const copyLinkBtn = document.getElementById('copy-link-btn');
+    const toastNotification = document.getElementById('toast-notification');
+
+    if (copyLinkBtn && shortlinkBox) {
+        copyLinkBtn.addEventListener('click', () => {
+            const linkText = shortlinkBox.innerText;
+            navigator.clipboard.writeText(linkText).then(() => {
+                // Show toast
+                if (toastNotification) {
+                    toastNotification.classList.remove('translate-y-20', 'opacity-0');
+                    setTimeout(() => {
+                        toastNotification.classList.add('translate-y-20', 'opacity-0');
+                    }, 3000);
+                }
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        });
+    }
 
     // Search Modal Logic
     const searchToggle = document.getElementById('search-toggle');

@@ -100,7 +100,7 @@ if ($hero_query->have_posts()) :
                             <h3 class="text-sm lg:text-base font-medium text-slate-800 dark:text-slate-100 leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2">
                                 <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                             </h3>
-                            <span class="text-[10px] text-slate-400 mt-auto block pt-1"><?php echo human_time_diff(get_the_time('U', $post), current_time('timestamp')) . ' پیش'; ?></span>
+                            <span class="text-[10px] text-slate-400 mt-auto block pt-1"><?php echo hasht_time_ago($post->ID); ?></span>
                         </div>
                     </div>
                 </div>

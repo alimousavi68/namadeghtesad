@@ -167,23 +167,23 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
 
                             <!-- Tools (Print, Share) - Hidden in Print -->
                             <div class="flex items-center gap-3 print:hidden">
-                                <button id="scroll-to-comments" class="share-btn" title="دیدگاه‌ها">
+                                <button id="scroll-to-comments" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="دیدگاه‌ها">
                                     <i data-lucide="message-square" width="18"></i>
                                 </button>
-                                <button id="scroll-to-shortlink" class="share-btn" title="لینک کوتاه">
+                                <button id="scroll-to-shortlink" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="لینک کوتاه">
                                     <i data-lucide="link" width="18"></i>
                                 </button>
-                                <button onclick="window.print()" class="share-btn" title="پرینت">
+                                <button onclick="window.print()" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="پرینت">
                                     <i data-lucide="printer" width="18"></i>
                                 </button>
                                 <div class="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-1"></div>
-                                <a href="#" class="share-btn" title="تلگرام">
+                                <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="تلگرام">
                                     <i data-lucide="send" width="18"></i>
                                 </a>
-                                <a href="#" class="share-btn" title="توییتر">
+                                <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="توییتر">
                                     <i data-lucide="twitter" width="18"></i>
                                 </a>
-                                <a href="#" class="share-btn" title="واتساپ">
+                                <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="واتساپ">
                                     <i data-lucide="phone" width="18"></i>
                                 </a>
                             </div>

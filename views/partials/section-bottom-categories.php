@@ -76,7 +76,7 @@ foreach ($configs as $key => $conf) {
                     </a>
                 </div>
                 <div class="flex flex-col flex-1">
-                    <h3 class="text-base font-medium text-slate-800 dark:text-slate-100 leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                    <h3 class="text-base font-medium text-slate-800 dark:text-slate-100 leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2 h-[70px]">
                         <a href="<?php echo get_permalink($post); ?>">
                             <?php echo get_the_title($post); ?>
                         </a>

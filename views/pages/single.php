@@ -311,7 +311,7 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                             </div>
                         <?php elseif (has_post_thumbnail() && $content_type !== 'note' && $content_type !== 'interview'): ?>
                             <figure class="rounded-2xl overflow-hidden mb-10 print:shadow-none">
-                                <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-auto max-h-[650px] object-cover">
+                                <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-auto max-h-[580px] object-cover">
                             </figure>
                         <?php endif; ?>
                     </header>

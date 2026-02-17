@@ -558,12 +558,12 @@ class Hasht_Market_Widget extends WP_Widget {
     public function widget($args, $instance) {
         // Defaults
         $defaults = [
-            1 => ['label' => 'روزنامه‌ها', 'icon' => 'newspaper', 'link' => '#'],
-            2 => ['label' => 'ارز', 'icon' => 'dollar-sign', 'link' => '#'],
-            3 => ['label' => 'طلا و سکه', 'icon' => 'coins', 'link' => '#'],
+            1 => ['label' => 'روزنامه', 'icon' => 'newspaper', 'link' => '#'],
+            2 => ['label' => 'طلا و ارز', 'icon' => 'coins', 'link' => '#'],
+            3 => ['label' => 'ارز دیجیتال', 'icon' => 'bitcoin', 'link' => '#'],
             4 => ['label' => 'بورس', 'icon' => 'bar-chart-3', 'link' => '#'],
-            5 => ['label' => 'ارز دیجیتال', 'icon' => 'bitcoin', 'link' => '#'],
-            6 => ['label' => 'خودرو', 'icon' => 'car', 'link' => '#'],
+            5 => ['label' => 'خودرو', 'icon' => 'car', 'link' => '#'],
+            6 => ['label' => 'مسکن', 'icon' => 'home', 'link' => '#'],
         ];
 
         // Title
@@ -603,12 +603,12 @@ class Hasht_Market_Widget extends WP_Widget {
         <hr>
         <?php
         $defaults = [
-            1 => ['label' => 'روزنامه‌ها', 'icon' => 'newspaper'],
-            2 => ['label' => 'ارز', 'icon' => 'dollar-sign'],
-            3 => ['label' => 'طلا و سکه', 'icon' => 'coins'],
+            1 => ['label' => 'روزنامه', 'icon' => 'newspaper'],
+            2 => ['label' => 'طلا و ارز', 'icon' => 'coins'],
+            3 => ['label' => 'ارز دیجیتال', 'icon' => 'bitcoin'],
             4 => ['label' => 'بورس', 'icon' => 'bar-chart-3'],
-            5 => ['label' => 'ارز دیجیتال', 'icon' => 'bitcoin'],
-            6 => ['label' => 'خودرو', 'icon' => 'car'],
+            5 => ['label' => 'خودرو', 'icon' => 'car'],
+            6 => ['label' => 'مسکن', 'icon' => 'home'],
         ];
 
         for ($i = 1; $i <= 6; $i++) {

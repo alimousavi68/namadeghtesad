@@ -17,7 +17,7 @@ echo '<img src="' . esc_url($logo[0]) . '" alt="' . get_bloginfo('name') . '" cl
                     }
                     ?>
                 </h2>
-                <p class="text-sm leading-7 mb-6 font-medium">
+                <p class="text-sm leading-7 mb-6 font-medium text-justify">
                     <?php echo nl2br(esc_html(get_theme_mod('hasht_footer_about', 'پایگاه خبری نماد اقتصاد...'))); ?>
                 </p>
                 <div class="flex gap-3 flex-wrap justify-center w-full">

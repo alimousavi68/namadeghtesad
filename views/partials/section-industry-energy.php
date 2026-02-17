@@ -60,7 +60,7 @@
                         <div class="w-full h-full bg-slate-200"></div>
                     <?php endif; ?>
                     <div class="news-card-overlay-content absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                        <h4 class="news-card-overlay-title text-white font-bold text-lg">
+                        <h4 class="news-card-overlay-title text-white font-bold lg:text-lg md:text-sm sm:text-sm">
                             <?php echo get_the_title($post); ?>
                         </h4>
                     </div>
@@ -154,7 +154,7 @@
                         <div class="w-full h-full bg-slate-200"></div>
                     <?php endif; ?>
                     <div class="news-card-overlay-content absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                        <h4 class="news-card-overlay-title text-white font-bold text-lg">
+                        <h4 class="news-card-overlay-title text-white font-bold lg:text-lg md:text-sm sm:text-sm">
                             <?php echo get_the_title($post); ?>
                         </h4>
                     </div>

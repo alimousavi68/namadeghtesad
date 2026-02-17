@@ -34,7 +34,7 @@ foreach ($configs as $key => $conf) {
 }
 ?>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-0 lg:divide-x lg:rtl:divide-x-reverse lg:divide-slate-200 lg:dark:divide-slate-800 mt-24 mb-16 pt-20 border-t border-slate-200 dark:border-slate-800">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-0 lg:divide-x lg:rtl:divide-x-reverse lg:divide-[#cfcfcf] lg:dark:divide-slate-600 mt-24 mb-16 pt-20 border-t border-slate-200 dark:border-slate-800">
     <?php foreach ($configs as $key => $conf) : 
         $query = $queries[$key];
         // Dynamic padding classes

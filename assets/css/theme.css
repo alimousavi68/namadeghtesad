@@ -4801,6 +4801,11 @@ body {
   .sm\:flex-row {
     flex-direction: row;
   }
+
+  .sm\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -5101,6 +5106,16 @@ body {
     border-color: rgb(226 232 240 / var(--tw-divide-opacity, 1));
   }
 
+  .lg\:divide-slate-400 > :not([hidden]) ~ :not([hidden]) {
+    --tw-divide-opacity: 1;
+    border-color: rgb(148 163 184 / var(--tw-divide-opacity, 1));
+  }
+
+  .lg\:divide-\[\#cfcfcf\] > :not([hidden]) ~ :not([hidden]) {
+    --tw-divide-opacity: 1;
+    border-color: rgb(207 207 207 / var(--tw-divide-opacity, 1));
+  }
+
   .lg\:border-l {
     border-left-width: 1px;
   }
@@ -5173,9 +5188,19 @@ body {
     line-height: 1rem;
   }
 
+  .lg\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
   .lg\:dark\:divide-slate-800:is(.dark *) > :not([hidden]) ~ :not([hidden]) {
     --tw-divide-opacity: 1;
     border-color: rgb(30 41 59 / var(--tw-divide-opacity, 1));
+  }
+
+  .lg\:dark\:divide-slate-600:is(.dark *) > :not([hidden]) ~ :not([hidden]) {
+    --tw-divide-opacity: 1;
+    border-color: rgb(71 85 105 / var(--tw-divide-opacity, 1));
   }
 
   .lg\:dark\:border-slate-800:is(.dark *) {

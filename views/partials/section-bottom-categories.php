@@ -67,7 +67,7 @@ foreach ($configs as $key => $conf) {
                 <div class="aspect-[16/10] overflow-hidden rounded-xl mb-4 shrink-0 shadow-md">
                     <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
                         <?php if ($thumb_url) : ?>
-                            <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr(get_the_title($post)); ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr(get_the_title($post)); ?>" class="w-full object-cover group-hover:scale-110 transition-transform duration-700 h-[200px]">
                         <?php else: ?>
                             <div class="w-full h-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
                                 <span class="text-slate-400 text-xs">بدون تصویر</span>
@@ -76,7 +76,7 @@ foreach ($configs as $key => $conf) {
                     </a>
                 </div>
                 <div class="flex flex-col flex-1">
-                    <h3 class="text-base font-medium text-slate-800 dark:text-slate-100 leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2 h-[45px]">
+                    <h3 class="text-base font-medium text-slate-800 dark:text-slate-100 leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2 h-[40px]">
                         <a href="<?php echo get_permalink($post); ?>">
                             <?php echo get_the_title($post); ?>
                         </a>

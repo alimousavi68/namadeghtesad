@@ -92,10 +92,10 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                 <!-- Main Content (Columns 1-9) -->
                 <article class="lg:col-span-9 print:w-full">
 
-                    <!-- Breadcrumb (Moved inside Article) -->
-                    <div class="flex items-center justify-between mb-6 print:hidden">
+                    <!-- Breadcrumb + Tools -->
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6 print:hidden">
                         <!-- Breadcrumb Links -->
-                        <nav class="flex items-center gap-2 text-sm text-slate-500 dark:text-text-light">
+                        <nav class="flex items-center gap-2 text-sm text-slate-500 dark:text-text-light order-1">
                             <a href="<?php echo home_url('/'); ?>" class="hover:text-primary transition-colors">خانه</a>
                             <i data-lucide="chevron-left" width="14"></i>
                             <?php 
@@ -108,23 +108,27 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                             ?>
                         </nav>
 
-                        <!-- Author & Date (Moved here) -->
-                        <div class="flex items-center gap-6 text-xs text-text-light font-bold">
-                            <!-- News ID (Moved here) -->
-                            <div class="flex items-center gap-2">
-                                <span class="">کد خبر:</span>
-                                <span class=""><?php the_ID(); ?></span>
-                            </div>
-                            <div class="flex items-center gap-1.5">
-                                <i data-lucide="calendar" width="14"></i>
-                                <span><?php echo get_the_date('j F Y'); ?></span>
-                            </div>
-                            <?php if ($content_type === 'video' && !empty($video_duration)): ?>
-                                <div class="flex items-center gap-1.5 text-rose-500">
-                                    <i data-lucide="clock" width="14"></i>
-                                    <span><?php echo esc_html($video_duration); ?></span>
-                                </div>
-                            <?php endif; ?>
+                        <!-- Tools (Print, Share) - Hidden in Print -->
+                        <div class="flex items-center gap-3 order-2 md:order-2 md:justify-end">
+                            <button id="scroll-to-comments" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="دیدگاه‌ها">
+                                <i data-lucide="message-square" width="18"></i>
+                            </button>
+                            <button id="scroll-to-shortlink" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="لینک کوتاه">
+                                <i data-lucide="link" width="18"></i>
+                            </button>
+                            <button onclick="window.print()" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="پرینت">
+                                <i data-lucide="printer" width="18"></i>
+                            </button>
+                            <div class="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-1"></div>
+                            <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="تلگرام">
+                                <i data-lucide="send" width="18"></i>
+                            </a>
+                            <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="توییتر">
+                                <i data-lucide="twitter" width="18"></i>
+                            </a>
+                            <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="واتساپ">
+                                <i data-lucide="phone" width="18"></i>
+                            </a>
                         </div>
                     </div>
 
@@ -132,67 +136,109 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
                     <header class="mb-8">
                         <!-- Category Badge Removed -->
 
-                        <h1 class="text-2xl md:text-3xl lg:text-4xl font-medium text-slate-900 dark:text-white leading-tight mb-6">
-                            <?php the_title(); ?>
-                        </h1>
-
-                        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-6 mb-6 print:border-black">
-                            <!-- Author Name (Replaced News ID) -->
-                            <div class="flex items-center gap-2 text-sm text-slate-500 dark:text-text-light print:text-black">
-                                <?php if ($content_type === 'note' || $content_type === 'interview'): ?>
-                                    <!-- Avatar for Note/Interview -->
-                                    <div class="w-10 h-10 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 shrink-0">
-                                        <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr($display_name); ?>" class="w-full h-full object-cover">
-                                    </div>
-                                <?php else: ?>
-                                    <!-- Icons for other types -->
-                                    <?php if ($content_type === 'photo_report'): ?>
-                                        <i data-lucide="camera" width="16" class="text-primary"></i>
+                        <?php if (!(has_post_thumbnail() && $content_type !== 'note' && $content_type !== 'interview' && $content_type !== 'video' && $content_type !== 'photo_report' && $content_type !== 'publication')): ?>
+                            <h1 class="text-2xl md:text-4xl lg:text-4xl font-medium text-slate-900 dark:text-white leading-[2] mb-4" style="line-height: 150%;">
+                                <?php the_title(); ?>
+                            </h1>
+                            <div class="flex flex-wrap items-center gap-6 border-b border-slate-100 dark:border-slate-800 pb-6 mb-6 print:border-black">
+                                <div class="flex items-center gap-2 text-sm text-slate-500 dark:text-text-light print:text-black">
+                                    <?php if ($content_type === 'note' || $content_type === 'interview'): ?>
+                                        <div class="w-10 h-10 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 shrink-0">
+                                            <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr($display_name); ?>" class="w-full h-full object-cover">
+                                        </div>
                                     <?php else: ?>
-                                        <i data-lucide="user" width="16" class="text-primary"></i>
+                                        <?php if ($content_type === 'photo_report'): ?>
+                                            <i data-lucide="camera" width="16" class="text-primary"></i>
+                                        <?php else: ?>
+                                            <i data-lucide="user" width="16" class="text-primary"></i>
+                                        <?php endif; ?>
                                     <?php endif; ?>
-                                <?php endif; ?>
 
-                                <div class="flex flex-col">
-                                    <?php if ($content_type === 'interview'): ?>
-                                        <span class="text-[10px] text-slate-400">گفت‌وگو با:</span>
-                                    <?php elseif ($content_type === 'photo_report'): ?>
-                                        <span class="text-[10px] text-slate-400">عکاس:</span>
-                                    <?php elseif ($content_type === 'note'): ?>
-                                        <span class="text-[10px] text-slate-400">یادداشت از:</span>
-                                    <?php endif; ?>
-                                    <span class="font-bold text-text-main dark:text-slate-200 leading-none mt-1"><?php echo esc_html($display_name); ?></span>
+                                    <div class="flex flex-col">
+                                        <?php if ($content_type === 'interview'): ?>
+                                            <span class="text-[10px] text-slate-400">گفت‌وگو با:</span>
+                                        <?php elseif ($content_type === 'photo_report'): ?>
+                                            <span class="text-[10px] text-slate-400">عکاس:</span>
+                                        <?php elseif ($content_type === 'note'): ?>
+                                            <span class="text-[10px] text-slate-400">یادداشت از:</span>
+                                        <?php endif; ?>
+                                        <span class="font-bold text-text-main dark:text-slate-200 leading-none mt-1"><?php echo esc_html($display_name); ?></span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-1.5 text-xs text-text-light font-bold">
+                                    <i data-lucide="calendar" width="14"></i>
+                                    <span><?php echo get_the_date('j F Y'); ?></span>
+                                </div>
+
+                                <?php if ($content_type === 'video' && !empty($video_duration)): ?>
+                                    <div class="flex items-center gap-1.5 text-rose-500 text-xs font-bold">
+                                        <i data-lucide="clock" width="14"></i>
+                                        <span><?php echo esc_html($video_duration); ?></span>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if (has_post_thumbnail() && $content_type !== 'note' && $content_type !== 'interview' && $content_type !== 'video' && $content_type !== 'photo_report' && $content_type !== 'publication'): ?>
+                            <div class="flex flex-col md:flex-row gap-6 md:gap-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 md:p-6 shadow-sm mb-6">
+                                <div class="w-full md:w-5/12 order-2 md:order-2">
+                                    <div class="aspect-[4/3] rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 shadow-md">
+                                        <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover" loading="lazy" decoding="async">
+                                    </div>
+                                </div>
+                                <div class="w-full md:w-7/12 order-1 md:order-1">
+                                    <h1 class="text-xl md:text-4xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-4" style="line-height: 150%;">
+                                        <?php the_title(); ?>
+                                    </h1>
+                                    <div class="flex flex-wrap items-center gap-4 text-xs text-text-light font-bold mb-4">
+                                        <div class="flex items-center gap-2 text-sm text-slate-500 dark:text-text-light">
+                                            <?php if ($content_type === 'note' || $content_type === 'interview'): ?>
+                                                <div class="w-10 h-10 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 shrink-0">
+                                                    <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr($display_name); ?>" class="w-full h-full object-cover">
+                                                </div>
+                                            <?php else: ?>
+                                                <?php if ($content_type === 'photo_report'): ?>
+                                                    <i data-lucide="camera" width="16" class="text-primary"></i>
+                                                <?php else: ?>
+                                                    <i data-lucide="user" width="16" class="text-primary"></i>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+
+                                            <div class="flex flex-col">
+                                                <?php if ($content_type === 'interview'): ?>
+                                                    <span class="text-[10px] text-slate-400">گفت‌وگو با:</span>
+                                                <?php elseif ($content_type === 'photo_report'): ?>
+                                                    <span class="text-[10px] text-slate-400">عکاس:</span>
+                                                <?php elseif ($content_type === 'note'): ?>
+                                                    <span class="text-[10px] text-slate-400">یادداشت از:</span>
+                                                <?php endif; ?>
+                                                <span class="font-bold text-text-main dark:text-slate-200 leading-none mt-1"><?php echo esc_html($display_name); ?></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-center gap-1.5">
+                                            <i data-lucide="calendar" width="14"></i>
+                                            <span><?php echo get_the_date('j F Y'); ?></span>
+                                        </div>
+
+                                        <?php if ($content_type === 'video' && !empty($video_duration)): ?>
+                                            <div class="flex items-center gap-1.5 text-rose-500">
+                                                <i data-lucide="clock" width="14"></i>
+                                                <span><?php echo esc_html($video_duration); ?></span>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <p class="text-base md:text-md font-medium text-slate-600 dark:text-slate-300 leading-[1.5] text-justify">
+                                        <?php echo get_the_excerpt(); ?>
+                                    </p>
                                 </div>
                             </div>
-
-                            <!-- Tools (Print, Share) - Hidden in Print -->
-                            <div class="flex items-center gap-3 print:hidden">
-                                <button id="scroll-to-comments" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="دیدگاه‌ها">
-                                    <i data-lucide="message-square" width="18"></i>
-                                </button>
-                                <button id="scroll-to-shortlink" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="لینک کوتاه">
-                                    <i data-lucide="link" width="18"></i>
-                                </button>
-                                <button onclick="window.print()" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="پرینت">
-                                    <i data-lucide="printer" width="18"></i>
-                                </button>
-                                <div class="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-1"></div>
-                                <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="تلگرام">
-                                    <i data-lucide="send" width="18"></i>
-                                </a>
-                                <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="توییتر">
-                                    <i data-lucide="twitter" width="18"></i>
-                                </a>
-                                <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-white hover:border-primary hover:text-primary dark:hover:bg-slate-900 dark:hover:border-primary dark:hover:text-primary transition-all duration-300" title="واتساپ">
-                                    <i data-lucide="phone" width="18"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Lead (Border moved to right) -->
-                        <p class="text-sm md:text-base font-medium text-slate-600 dark:text-slate-300 leading-relaxed text-justify border-r-4 border-primary pr-4 mb-8 print:text-black print:border-r-0 print:pr-0">
-                            <?php echo get_the_excerpt(); ?>
-                        </p>
+                        <?php else: ?>
+                            <p class="text-base md:text-lg font-medium text-slate-600 dark:text-slate-300 leading-[1.5] text-justify mb-8 print:text-black">
+                                <?php echo get_the_excerpt(); ?>
+                            </p>
+                        <?php endif; ?>
 
                         <?php if ($content_type === 'video'): ?>
                             <!-- Video Player -->
@@ -309,10 +355,6 @@ $thumb_url = get_the_post_thumbnail_url($post_id, 'full');
 
                                 </div>
                             </div>
-                        <?php elseif (has_post_thumbnail() && $content_type !== 'note' && $content_type !== 'interview'): ?>
-                            <figure class="rounded-2xl overflow-hidden mb-10 print:shadow-none">
-                                <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-auto max-h-[580px] object-cover">
-                            </figure>
                         <?php endif; ?>
                     </header>
 

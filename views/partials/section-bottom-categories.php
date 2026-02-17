@@ -69,7 +69,7 @@ foreach ($configs as $key => $conf) {
                         <?php if ($thumb_url) : ?>
                             <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr(get_the_title($post)); ?>" class="w-full object-cover group-hover:scale-110 transition-transform duration-700 h-[200px]">
                         <?php else: ?>
-                            <div class="w-full h-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
+                            <div class="w-full h-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center ">
                                 <span class="text-slate-400 text-xs">بدون تصویر</span>
                             </div>
                         <?php endif; ?>

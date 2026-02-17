@@ -64,12 +64,12 @@ foreach ($configs as $key => $conf) {
                 $thumb_url = get_the_post_thumbnail_url($post, 'hasht-medium');
             ?>
             <article class="group cursor-pointer flex flex-col h-full">
-                <div class="aspect-[16/10] overflow-hidden rounded-xl mb-4 shrink-0 shadow-md">
+                <div class="h-[200px] overflow-hidden rounded-xl mb-4 shrink-0 shadow-md">
                     <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
                         <?php if ($thumb_url) : ?>
-                            <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr(get_the_title($post)); ?>" class="w-full object-cover group-hover:scale-110 transition-transform duration-700 h-[200px]">
+                            <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr(get_the_title($post)); ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                         <?php else: ?>
-                            <div class="w-full h-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center ">
+                            <div class="w-full h-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
                                 <span class="text-slate-400 text-xs">بدون تصویر</span>
                             </div>
                         <?php endif; ?>

@@ -1560,6 +1560,10 @@ body {
   height: 70px;
 }
 
+.h-\[45px\] {
+  height: 45px;
+}
+
 .max-h-\[580px\] {
   max-height: 580px;
 }

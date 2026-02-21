@@ -314,13 +314,14 @@ if (!function_exists('hasht_time_ago')) {
         $post = get_post($post_id);
         if (!$post) return '';
         
-        // Get GMT timestamp of the post
         $post_time_gmt = get_post_time('U', true, $post);
-        
-        // Get current GMT timestamp
-        $current_time_gmt = time();
-        
-        // Calculate difference
+        if (!$post_time_gmt) return '';
+
+        $current_time_gmt = current_time('timestamp', true);
+        if ($current_time_gmt < $post_time_gmt) {
+            return human_time_diff($current_time_gmt, $post_time_gmt) . ' بعد';
+        }
+
         return human_time_diff($post_time_gmt, $current_time_gmt) . ' پیش';
     }
 }

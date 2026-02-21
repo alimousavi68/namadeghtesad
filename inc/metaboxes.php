@@ -17,6 +17,7 @@ class Hasht_News_Meta_Box {
         add_action('add_meta_boxes', [$this, 'add_meta_box']);
         add_action('save_post', [$this, 'save']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
+        add_action('edit_form_after_title', [$this, 'render_rotiter_after_title']);
     }
 
     /**
@@ -71,6 +72,7 @@ class Hasht_News_Meta_Box {
         // Retrieve existing values
         $content_type = get_post_meta($post->ID, '_news_content_type', true);
         if (empty($content_type)) $content_type = 'standard';
+        $rotiter = get_post_meta($post->ID, '_news_rotiter', true);
 
         // Note Fields
         $author_name = get_post_meta($post->ID, '_news_author_name', true);
@@ -106,6 +108,13 @@ class Hasht_News_Meta_Box {
 
         ?>
         <div class="hasht-metabox-wrapper">
+            <?php if (!did_action('edit_form_after_title')) : ?>
+                <div class="hasht-field-row">
+                    <label for="hasht_rotiter"><strong>روتیتر:</strong></label>
+                    <input type="text" name="_news_rotiter" id="hasht_rotiter" value="<?php echo esc_attr($rotiter); ?>" class="widefat" maxlength="200">
+                </div>
+                <hr>
+            <?php endif; ?>
             
             <!-- Content Type -->
             <div class="hasht-field-row">
@@ -253,6 +262,21 @@ class Hasht_News_Meta_Box {
         <?php
     }
 
+    public function render_rotiter_after_title($post) {
+        if (!$post || $post->post_type !== 'post') {
+            return;
+        }
+        $rotiter = get_post_meta($post->ID, '_news_rotiter', true);
+        ?>
+        <div class="hasht-metabox-wrapper" style="padding: 12px 10px 0;">
+            <div class="hasht-field-row">
+                <label for="hasht_rotiter"><strong>روتیتر:</strong></label>
+                <input type="text" name="_news_rotiter" id="hasht_rotiter" value="<?php echo esc_attr($rotiter); ?>" class="widefat" maxlength="200">
+            </div>
+        </div>
+        <?php
+    }
+
     /**
      * Save meta box content.
      *
@@ -284,6 +308,10 @@ class Hasht_News_Meta_Box {
         // 1. Content Type
         if (isset($_POST['_news_content_type'])) {
             update_post_meta($post_id, '_news_content_type', sanitize_key($_POST['_news_content_type']));
+        }
+
+        if (isset($_POST['_news_rotiter'])) {
+            update_post_meta($post_id, '_news_rotiter', sanitize_text_field($_POST['_news_rotiter']));
         }
 
         // 2. Note Fields

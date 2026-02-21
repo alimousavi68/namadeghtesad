@@ -34,7 +34,7 @@ $query = new WP_Query($args);
             <?php if ($query->have_posts()) : ?>
                 <?php foreach ($query->posts as $post) : setup_postdata($post); 
                     $thumb_url = get_the_post_thumbnail_url($post, 'hasht-portrait');
-                   
+                    $rotiter = get_post_meta($post->ID, '_news_rotiter', true);
                 ?>
                 <article class="group bg-white dark:bg-slate-900 p-5 rounded-xl flex flex-col shadow-sm hover:shadow-xl transition-all cursor-pointer border border-slate-100 dark:border-slate-800 relative">
                     <div class="aspect-[3/4] rounded-xl overflow-hidden mb-6 shadow-2xl transition-transform group-hover:-translate-y-2">
@@ -50,6 +50,9 @@ $query = new WP_Query($args);
                                     echo '<span class="inline-block px-3 py-1 rounded-full bg-rose-50 dark:bg-rose-900/30 text-primary dark:text-rose-400 text-[11px] font-medium mb-3">' . esc_html( $pub_type ) . '</span>';
                                 }
                             ?>
+                            <?php if (!empty($rotiter)) : ?>
+                                <span class="text-[11px] font-light text-secondary block mb-2"><?php echo esc_html($rotiter); ?></span>
+                            <?php endif; ?>
                             <h4 class="text-lg font-medium text-slate-800 dark:text-slate-100 leading-tight mb-3 group-hover:text-primary transition-colors">
                                 <a href="<?php echo get_permalink($post); ?>">
                                     <?php echo get_the_title($post); ?>

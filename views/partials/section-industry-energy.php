@@ -49,6 +49,7 @@
             $post = $main_post; 
             setup_postdata($post);
             $thumb_url = get_the_post_thumbnail_url($post, 'hasht-large');
+            $rotiter = get_post_meta($post->ID, '_news_rotiter', true);
         ?>
         <!-- Main Feature Item -->
         <article class="news-card-overlay group">
@@ -59,7 +60,10 @@
                     <?php else: ?>
                         <div class="w-full h-full bg-slate-200"></div>
                     <?php endif; ?>
-                    <div class="news-card-overlay-content absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                    <div class="news-card-overlay-content absolute bottom-0 left-0 right-0 p-4 pt-5 bg-gradient-to-t from-black/80 to-transparent">
+                        <?php if (!empty($rotiter)) : ?>
+                            <span class="text-[11px] font-light text-secondary block mb-1"><?php echo esc_html($rotiter); ?></span>
+                        <?php endif; ?>
                         <h4 class="news-card-overlay-title text-white font-bold lg:text-lg md:text-sm sm:text-xs">
                             <?php echo get_the_title($post); ?>
                         </h4>
@@ -73,8 +77,9 @@
         <div class="space-y-4 mt-4">
             <?php foreach ($list_posts as $post): setup_postdata($post); 
                 $thumb_url = get_the_post_thumbnail_url($post, 'hasht-small-rect');
+                $rotiter = get_post_meta($post->ID, '_news_rotiter', true);
             ?>
-            <article class="news-card-h group flex items-start gap-3">
+            <article class="news-card-h group flex items-start gap-4">
                 <div class="w-16 h-12 rounded-md overflow-hidden shrink-0">
                     <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
                         <?php if ($thumb_url): ?>
@@ -84,9 +89,14 @@
                         <?php endif; ?>
                     </a>
                 </div>
-                <h5 class="news-card-h-title text-sm font-bold text-slate-700 dark:text-slate-200 leading-snug group-hover:text-primary transition-colors line-clamp-2">
-                    <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
-                </h5>
+                <div>
+                    <?php if (!empty($rotiter)) : ?>
+                        <span class="text-[11px] font-light text-secondary block mb-1"><?php echo esc_html($rotiter); ?></span>
+                    <?php endif; ?>
+                    <h5 class="news-card-h-title text-sm font-bold text-slate-700 dark:text-slate-200 leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                        <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
+                    </h5>
+                </div>
             </article>
             <?php endforeach; wp_reset_postdata(); ?>
         </div>
@@ -143,6 +153,7 @@
             // Main Post
             $post = $main_post; setup_postdata($post);
             $thumb_url = get_the_post_thumbnail_url($post, 'hasht-large');
+            $rotiter = get_post_meta($post->ID, '_news_rotiter', true);
         ?>
         <!-- Main Feature Item -->
         <article class="news-card-overlay group">
@@ -153,7 +164,10 @@
                     <?php else: ?>
                         <div class="w-full h-full bg-slate-200"></div>
                     <?php endif; ?>
-                    <div class="news-card-overlay-content absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                    <div class="news-card-overlay-content absolute bottom-0 left-0 right-0 p-4 pt-5 bg-gradient-to-t from-black/80 to-transparent">
+                        <?php if (!empty($rotiter)) : ?>
+                            <span class="text-[11px] font-light text-secondary block mb-1"><?php echo esc_html($rotiter); ?></span>
+                        <?php endif; ?>
                         <h4 class="news-card-overlay-title text-white font-bold lg:text-lg md:text-sm sm:text-xs">
                             <?php echo get_the_title($post); ?>
                         </h4>
@@ -167,8 +181,9 @@
         <div class="space-y-4 mt-4">
             <?php foreach ($list_posts as $post): setup_postdata($post); 
                 $thumb_url = get_the_post_thumbnail_url($post, 'hasht-small-rect');
+                $rotiter = get_post_meta($post->ID, '_news_rotiter', true);
             ?>
-            <article class="news-card-h group flex items-start gap-3">
+            <article class="news-card-h group flex items-start gap-4">
                 <div class="w-16 h-12 rounded-md overflow-hidden shrink-0">
                     <a href="<?php echo get_permalink($post); ?>" class="block w-full h-full">
                         <?php if ($thumb_url): ?>
@@ -178,9 +193,14 @@
                         <?php endif; ?>
                     </a>
                 </div>
-                <h5 class="news-card-h-title text-sm font-bold text-slate-700 dark:text-slate-200 leading-snug group-hover:text-primary transition-colors line-clamp-2">
-                    <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
-                </h5>
+                <div>
+                    <?php if (!empty($rotiter)) : ?>
+                        <span class="text-[11px] font-light text-secondary block mb-1"><?php echo esc_html($rotiter); ?></span>
+                    <?php endif; ?>
+                    <h5 class="news-card-h-title text-sm font-bold text-slate-700 dark:text-slate-200 leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                        <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
+                    </h5>
+                </div>
             </article>
             <?php endforeach; wp_reset_postdata(); ?>
         </div>

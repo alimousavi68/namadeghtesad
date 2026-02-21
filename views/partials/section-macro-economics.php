@@ -42,6 +42,7 @@ if ($cat_id) {
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
         <?php foreach ($query->posts as $post) : setup_postdata($post); 
             $thumb_url = get_the_post_thumbnail_url($post, 'hasht-medium');
+            $rotiter = get_post_meta($post->ID, '_news_rotiter', true);
         ?>
         <article class="news-card-v group">
             <div class="news-card-v-img-wrapper rounded-xl overflow-hidden aspect-[16/10]">
@@ -54,7 +55,10 @@ if ($cat_id) {
                     <?php endif; ?>
                 </a>
             </div>
-            <div class="news-card-v-content">
+            <div class="news-card-v-content mt-3">
+                <?php if (!empty($rotiter)) : ?>
+                    <span class="text-[11px] font-light text-secondary block mb-1"><?php echo esc_html($rotiter); ?></span>
+                <?php endif; ?>
                 <h3 class="news-card-v-title">
                     <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                 </h3>
@@ -65,4 +69,3 @@ if ($cat_id) {
     </div>
 </section>
 <?php endif; ?>
-

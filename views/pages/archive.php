@@ -72,6 +72,7 @@ if (is_category()) {
                                 $categories = get_the_category();
                                 $first_cat = !empty($categories) ? $categories[0] : null;
                                 $time_diff = hasht_time_ago(get_the_ID());
+                                $rotiter = get_post_meta(get_the_ID(), '_news_rotiter', true);
                             ?>
                             
                             <article class="news-card-archive bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 md:p-5 flex flex-col md:flex-row gap-6 shadow-sm hover:shadow-md hover:border-rose-200 dark:hover:border-rose-900/30">
@@ -92,6 +93,9 @@ if (is_category()) {
                                             <?php echo $time_diff; ?>
                                         </span>
                                     </div>
+                                    <?php if (!empty($rotiter)) : ?>
+                                        <span class="text-[11px] font-light text-secondary block mb-2"><?php echo esc_html($rotiter); ?></span>
+                                    <?php endif; ?>
                                     <h2 class="news-title text-lg md:text-xl font-medium text-slate-800 dark:text-slate-100 leading-snug mb-3 transition-colors">
                                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                     </h2>

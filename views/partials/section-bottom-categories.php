@@ -62,6 +62,7 @@ foreach ($configs as $key => $conf) {
         <div class="space-y-4">
             <?php if ($query->have_posts()) : foreach ($query->posts as $post) : setup_postdata($post); 
                 $thumb_url = get_the_post_thumbnail_url($post, 'hasht-medium');
+                $rotiter = get_post_meta($post->ID, '_news_rotiter', true);
             ?>
             <article class="group cursor-pointer flex flex-col h-full">
                 <div class="h-[200px] overflow-hidden rounded-xl mb-4 shrink-0 shadow-md">
@@ -76,6 +77,9 @@ foreach ($configs as $key => $conf) {
                     </a>
                 </div>
                 <div class="flex flex-col flex-1">
+                    <?php if (!empty($rotiter)) : ?>
+                        <span class="text-[11px] font-light text-secondary block mb-1"><?php echo esc_html($rotiter); ?></span>
+                    <?php endif; ?>
                     <h3 class="text-base font-medium text-slate-800 dark:text-slate-100 leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2 h-[40px]">
                         <a href="<?php echo get_permalink($post); ?>">
                             <?php echo get_the_title($post); ?>

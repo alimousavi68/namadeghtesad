@@ -48,6 +48,7 @@ if ($cat_id) {
     <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
         <?php foreach ($query->posts as $post) : setup_postdata($post); 
              $thumb_url = get_the_post_thumbnail_url($post, 'hasht-medium');
+             $rotiter = get_post_meta($post->ID, '_news_rotiter', true);
         ?>
         <!-- Video Item -->
         <div class="group/item cursor-pointer">
@@ -65,6 +66,9 @@ if ($cat_id) {
                     </div>
                 </a>
             </div>
+    <?php if (!empty($rotiter)) : ?>
+        <span class="text-[11px] font-light text-secondary block mb-1"><?php echo esc_html($rotiter); ?></span>
+    <?php endif; ?>
             <h4 class="font-medium text-lg leading-relaxed line-clamp-2 group-hover/item:text-rose-400 transition-colors">
                 <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
             </h4>
@@ -73,4 +77,3 @@ if ($cat_id) {
     </div>
 </section>
 <?php endif; ?>
-

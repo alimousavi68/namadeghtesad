@@ -40,6 +40,7 @@ if ($hero_query->have_posts()) :
                     $category = get_the_category($post->ID);
                     $cat_name = !empty($category) ? $category[0]->name : '';
                     $cat_link = !empty($category) ? get_category_link($category[0]->term_id) : '#';
+                    $rotiter = get_post_meta($post->ID, '_news_rotiter', true);
                 ?>
                 <div class="relative group cursor-pointer w-full">
                     <div class="w-full h-[400px] lg:h-[430px] relative overflow-hidden rounded-xl shadow-xl bg-slate-900">
@@ -54,6 +55,9 @@ if ($hero_query->have_posts()) :
                     </div>
                     <div class="absolute -bottom-8 lg:-bottom-12 left-1/2 -translate-x-1/2 w-[90%] bg-white dark:bg-slate-900 p-4 lg:p-7 transition-transform duration-500 group-hover:-translate-y-2 z-20 border border-slate-100 dark:border-slate-800 rounded-t-xl">
                         <div class="pt-2 pb-2">
+                            <?php if (!empty($rotiter)) : ?>
+                                <span class="text-[11px] font-light text-secondary block mb-2"><?php echo esc_html($rotiter); ?></span>
+                            <?php endif; ?>
                             <h2 class="text-lg lg:text-2xl font-medium text-slate-900 dark:text-white leading-tight group-hover:text-primary dark:group-hover:text-primary transition-colors">
                                 <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                             </h2>
@@ -80,6 +84,7 @@ if ($hero_query->have_posts()) :
                     $thumb_url = get_the_post_thumbnail_url($post, 'hasht-medium');
                     $category = get_the_category($post->ID);
                     $cat_name = !empty($category) ? $category[0]->name : '';
+                    $rotiter = get_post_meta($post->ID, '_news_rotiter', true);
                 ?>
                 <div class="h-auto">
                     <div class="group cursor-pointer flex flex-row lg:flex-col gap-4 lg:gap-0 h-full items-center lg:items-start">
@@ -97,6 +102,9 @@ if ($hero_query->have_posts()) :
                             <?php if ($cat_name): ?>
                                 <span class="text-[10px] font-medium text-primary mb-1 hidden lg:block uppercase"><?php echo esc_html($cat_name); ?></span>
                             <?php endif; ?>
+                            <?php if (!empty($rotiter)) : ?>
+                                <span class="text-[11px] font-light text-secondary block mb-1"><?php echo esc_html($rotiter); ?></span>
+                            <?php endif; ?>
                             <h3 class="text-sm lg:text-base font-medium text-slate-800 dark:text-slate-100 leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2">
                                 <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                             </h3>
@@ -110,6 +118,7 @@ if ($hero_query->have_posts()) :
                 <div class="flex flex-col divide-y divide-slate-100 dark:divide-slate-800">
                     <?php foreach ($middle_thumbs as $post): setup_postdata($post); 
                         $thumb_url = get_the_post_thumbnail_url($post, 'thumbnail');
+                        $rotiter = get_post_meta($post->ID, '_news_rotiter', true);
                     ?>
                     <div class="flex items-center gap-3 py-1 group cursor-pointer border-b border-slate-100 dark:border-slate-800 last:border-none">
                         <div class="w-20 aspect-[3/2] lg:w-28 shrink-0 overflow-hidden rounded-lg shadow-sm">
@@ -122,6 +131,9 @@ if ($hero_query->have_posts()) :
                             </a>
                         </div>
                         <div class="flex flex-col justify-center">
+                            <?php if (!empty($rotiter)) : ?>
+                                <span class="text-[11px] font-light text-secondary block mb-1"><?php echo esc_html($rotiter); ?></span>
+                            <?php endif; ?>
                             <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 line-clamp-2 leading-snug group-hover:text-primary transition-colors">
                                 <a href="<?php echo get_permalink($post); ?>"><?php echo get_the_title($post); ?></a>
                             </h4>
@@ -148,4 +160,3 @@ if ($hero_query->have_posts()) :
     </div>
 </section>
 <?php endif; ?>
-

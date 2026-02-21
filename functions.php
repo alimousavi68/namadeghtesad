@@ -265,6 +265,8 @@ add_action('pre_get_posts', function ($q) {
         } else {
             $q->set('post_type', ['post']);
         }
+        $q->set('orderby', 'date');
+        $q->set('order', 'DESC');
         $cat = isset($_GET['cat']) ? absint($_GET['cat']) : 0;
         if ($cat) {
             $q->set('cat', $cat);

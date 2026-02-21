@@ -285,6 +285,26 @@ add_action('pre_get_posts', function ($q) {
     }
 });
 
+add_filter('posts_search', function ($search, $query) {
+    if (is_admin() || !$query->is_main_query() || !$query->is_search()) {
+        return $search;
+    }
+    $search_term = $query->get('s');
+    if (!$search_term || !$search) {
+        return $search;
+    }
+    global $wpdb;
+    $like = '%' . $wpdb->esc_like($search_term) . '%';
+    $tag_sql = $wpdb->prepare(
+        " OR EXISTS (SELECT 1 FROM {$wpdb->term_relationships} tr INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id AND tt.taxonomy = 'post_tag' INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id WHERE tr.object_id = {$wpdb->posts}.ID AND t.name LIKE %s)",
+        $like
+    );
+    if (strpos($search, $tag_sql) !== false) {
+        return $search;
+    }
+    return preg_replace('/\)\s*$/', $tag_sql . ')', $search);
+});
+
 
 if (!function_exists('hasht_get_thumbnail')) {
     function hasht_get_thumbnail($size = 'medium', $attrs = [])

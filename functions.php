@@ -303,7 +303,7 @@ add_filter('posts_search', function ($search, $query) {
         return $search;
     }
     return preg_replace('/\)\s*$/', $tag_sql . ')', $search);
-});
+}, 10, 2);
 
 
 if (!function_exists('hasht_get_thumbnail')) {

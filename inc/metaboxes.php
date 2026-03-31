@@ -400,3 +400,228 @@ class Hasht_News_Meta_Box {
 
 // Initialize the class
 new Hasht_News_Meta_Box();
+
+class Hasht_Company_Meta_Box {
+    public function __construct() {
+        add_action('add_meta_boxes', [$this, 'add_meta_box']);
+        add_action('save_post', [$this, 'save']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
+    }
+
+    public function add_meta_box() {
+        add_meta_box(
+            'hasht_company_meta_box',
+            'اطلاعات شرکت',
+            [$this, 'render_meta_box'],
+            'company',
+            'normal',
+            'high'
+        );
+    }
+
+    public function enqueue_scripts($hook) {
+        if ('post.php' !== $hook && 'post-new.php' !== $hook) {
+            return;
+        }
+
+        $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+        if (!$screen || $screen->post_type !== 'company') {
+            return;
+        }
+
+        wp_enqueue_media();
+
+        wp_enqueue_script(
+            'hasht-admin-metabox',
+            get_template_directory_uri() . '/assets/js/admin-metabox.js',
+            ['jquery'],
+            '1.0.0',
+            true
+        );
+
+        wp_enqueue_style(
+            'hasht-admin-metabox',
+            get_template_directory_uri() . '/assets/css/admin-metabox.css',
+            [],
+            '1.0.0'
+        );
+    }
+
+    public function render_meta_box($post) {
+        wp_nonce_field('hasht_company_save_meta_box_data', 'hasht_company_meta_box_nonce');
+
+        $website = get_post_meta($post->ID, '_company_website', true);
+        $email = get_post_meta($post->ID, '_company_email', true);
+        $phones = get_post_meta($post->ID, '_company_phones', true);
+        $addresses = get_post_meta($post->ID, '_company_addresses', true);
+        $location_address = get_post_meta($post->ID, '_company_location_address', true);
+
+        $social_instagram = get_post_meta($post->ID, '_company_social_instagram', true);
+        $social_telegram = get_post_meta($post->ID, '_company_social_telegram', true);
+        $social_linkedin = get_post_meta($post->ID, '_company_social_linkedin', true);
+        $social_x = get_post_meta($post->ID, '_company_social_x', true);
+        $social_whatsapp = get_post_meta($post->ID, '_company_social_whatsapp', true);
+
+        $intro = get_post_meta($post->ID, '_company_intro', true);
+        $description = get_post_meta($post->ID, '_company_description', true);
+        $products = get_post_meta($post->ID, '_company_products', true);
+
+        ?>
+        <div class="hasht-metabox-wrapper">
+            <div class="hasht-field-row">
+                <label for="hasht_company_website"><strong>وب‌سایت:</strong></label>
+                <input type="url" name="_company_website" id="hasht_company_website" value="<?php echo esc_url($website); ?>" class="widefat ltr-input" placeholder="https://...">
+            </div>
+
+            <div class="hasht-field-row">
+                <label for="hasht_company_email"><strong>ایمیل:</strong></label>
+                <input type="email" name="_company_email" id="hasht_company_email" value="<?php echo esc_attr($email); ?>" class="widefat ltr-input" placeholder="name@example.com">
+            </div>
+
+            <div class="hasht-field-row">
+                <label for="hasht_company_phones"><strong>تلفن‌ها:</strong></label>
+                <textarea name="_company_phones" id="hasht_company_phones" class="widefat ltr-input" rows="3" placeholder="هر شماره در یک خط"><?php echo esc_textarea($phones); ?></textarea>
+            </div>
+
+            <div class="hasht-field-row">
+                <label for="hasht_company_addresses"><strong>آدرس‌ها:</strong></label>
+                <textarea name="_company_addresses" id="hasht_company_addresses" class="widefat" rows="3" placeholder="هر آدرس در یک خط"><?php echo esc_textarea($addresses); ?></textarea>
+            </div>
+
+            <div class="hasht-field-row">
+                <label for="hasht_company_location_address"><strong>آدرس لوکیشن (برای لینک نقشه):</strong></label>
+                <input type="text" name="_company_location_address" id="hasht_company_location_address" value="<?php echo esc_attr($location_address); ?>" class="widefat" placeholder="مثلاً تهران، ...">
+            </div>
+
+            <hr>
+
+            <div class="hasht-field-row">
+                <label for="hasht_company_social_instagram"><strong>اینستاگرام:</strong></label>
+                <input type="url" name="_company_social_instagram" id="hasht_company_social_instagram" value="<?php echo esc_url($social_instagram); ?>" class="widefat ltr-input" placeholder="https://instagram.com/...">
+            </div>
+            <div class="hasht-field-row">
+                <label for="hasht_company_social_telegram"><strong>تلگرام:</strong></label>
+                <input type="url" name="_company_social_telegram" id="hasht_company_social_telegram" value="<?php echo esc_url($social_telegram); ?>" class="widefat ltr-input" placeholder="https://t.me/...">
+            </div>
+            <div class="hasht-field-row">
+                <label for="hasht_company_social_linkedin"><strong>لینکدین:</strong></label>
+                <input type="url" name="_company_social_linkedin" id="hasht_company_social_linkedin" value="<?php echo esc_url($social_linkedin); ?>" class="widefat ltr-input" placeholder="https://linkedin.com/...">
+            </div>
+            <div class="hasht-field-row">
+                <label for="hasht_company_social_x"><strong>X (توییتر):</strong></label>
+                <input type="url" name="_company_social_x" id="hasht_company_social_x" value="<?php echo esc_url($social_x); ?>" class="widefat ltr-input" placeholder="https://x.com/...">
+            </div>
+            <div class="hasht-field-row">
+                <label for="hasht_company_social_whatsapp"><strong>واتساپ:</strong></label>
+                <input type="url" name="_company_social_whatsapp" id="hasht_company_social_whatsapp" value="<?php echo esc_url($social_whatsapp); ?>" class="widefat ltr-input" placeholder="https://wa.me/...">
+            </div>
+
+            <hr>
+
+            <div class="hasht-field-row">
+                <label><strong>معرفی:</strong></label>
+                <?php
+                wp_editor((string) $intro, 'hasht_company_intro', [
+                    'textarea_name' => '_company_intro',
+                    'textarea_rows' => 6,
+                    'media_buttons' => true,
+                    'teeny' => false,
+                    'quicktags' => true,
+                ]);
+                ?>
+            </div>
+
+            <div class="hasht-field-row">
+                <label><strong>توضیحات:</strong></label>
+                <?php
+                wp_editor((string) $description, 'hasht_company_description', [
+                    'textarea_name' => '_company_description',
+                    'textarea_rows' => 8,
+                    'media_buttons' => true,
+                    'teeny' => false,
+                    'quicktags' => true,
+                ]);
+                ?>
+            </div>
+
+            <div class="hasht-field-row">
+                <label><strong>محصولات:</strong></label>
+                <?php
+                wp_editor((string) $products, 'hasht_company_products', [
+                    'textarea_name' => '_company_products',
+                    'textarea_rows' => 8,
+                    'media_buttons' => true,
+                    'teeny' => false,
+                    'quicktags' => true,
+                ]);
+                ?>
+            </div>
+        </div>
+        <?php
+    }
+
+    public function save($post_id) {
+        if (!isset($_POST['hasht_company_meta_box_nonce'])) {
+            return $post_id;
+        }
+
+        if (!wp_verify_nonce($_POST['hasht_company_meta_box_nonce'], 'hasht_company_save_meta_box_data')) {
+            return $post_id;
+        }
+
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return $post_id;
+        }
+
+        if (!current_user_can('edit_post', $post_id)) {
+            return $post_id;
+        }
+
+        $post = get_post($post_id);
+        if (!$post || $post->post_type !== 'company') {
+            return $post_id;
+        }
+
+        if (isset($_POST['_company_website'])) {
+            update_post_meta($post_id, '_company_website', esc_url_raw($_POST['_company_website']));
+        }
+        if (isset($_POST['_company_email'])) {
+            update_post_meta($post_id, '_company_email', sanitize_email($_POST['_company_email']));
+        }
+        if (isset($_POST['_company_phones'])) {
+            update_post_meta($post_id, '_company_phones', sanitize_textarea_field($_POST['_company_phones']));
+        }
+        if (isset($_POST['_company_addresses'])) {
+            update_post_meta($post_id, '_company_addresses', sanitize_textarea_field($_POST['_company_addresses']));
+        }
+        if (isset($_POST['_company_location_address'])) {
+            update_post_meta($post_id, '_company_location_address', sanitize_text_field($_POST['_company_location_address']));
+        }
+
+        $social_fields = [
+            '_company_social_instagram' => '_company_social_instagram',
+            '_company_social_telegram' => '_company_social_telegram',
+            '_company_social_linkedin' => '_company_social_linkedin',
+            '_company_social_x' => '_company_social_x',
+            '_company_social_whatsapp' => '_company_social_whatsapp',
+        ];
+
+        foreach ($social_fields as $key => $post_key) {
+            if (isset($_POST[$post_key])) {
+                update_post_meta($post_id, $key, esc_url_raw($_POST[$post_key]));
+            }
+        }
+
+        if (isset($_POST['_company_intro'])) {
+            update_post_meta($post_id, '_company_intro', wp_kses_post($_POST['_company_intro']));
+        }
+        if (isset($_POST['_company_description'])) {
+            update_post_meta($post_id, '_company_description', wp_kses_post($_POST['_company_description']));
+        }
+        if (isset($_POST['_company_products'])) {
+            update_post_meta($post_id, '_company_products', wp_kses_post($_POST['_company_products']));
+        }
+    }
+}
+
+new Hasht_Company_Meta_Box();

@@ -8,6 +8,387 @@
 <?php
 $post_id = get_the_ID();
 
+if (get_post_type($post_id) === 'company') {
+    $company_id = $post_id;
+
+    $website = get_post_meta($company_id, '_company_website', true);
+    $email = get_post_meta($company_id, '_company_email', true);
+    $phones = get_post_meta($company_id, '_company_phones', true);
+    $addresses = get_post_meta($company_id, '_company_addresses', true);
+    $location_address = get_post_meta($company_id, '_company_location_address', true);
+
+    $social_instagram = get_post_meta($company_id, '_company_social_instagram', true);
+    $social_telegram = get_post_meta($company_id, '_company_social_telegram', true);
+    $social_linkedin = get_post_meta($company_id, '_company_social_linkedin', true);
+    $social_x = get_post_meta($company_id, '_company_social_x', true);
+    $social_whatsapp = get_post_meta($company_id, '_company_social_whatsapp', true);
+
+    $intro = (string) get_post_meta($company_id, '_company_intro', true);
+    $description = (string) get_post_meta($company_id, '_company_description', true);
+    $products = (string) get_post_meta($company_id, '_company_products', true);
+
+    $logo = get_the_post_thumbnail_url($company_id, 'medium');
+    $activity_terms = get_the_terms($company_id, 'company_activity');
+    $primary_activity_id = (!is_wp_error($activity_terms) && !empty($activity_terms)) ? (int) $activity_terms[0]->term_id : 0;
+    $all_activities = get_terms([
+        'taxonomy' => 'company_activity',
+        'hide_empty' => false,
+    ]);
+
+    $archive_link = get_post_type_archive_link('company');
+    $map_link = '';
+    if (!empty($location_address)) {
+        $map_link = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode($location_address);
+    }
+
+    $phones_list = [];
+    if (!empty($phones)) {
+        $phones_list = array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', (string) $phones))));
+    }
+    $addresses_list = [];
+    if (!empty($addresses)) {
+        $addresses_list = array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', (string) $addresses))));
+    }
+    ?>
+
+    <div class="container mx-auto px-4 mt-6 lg:mt-10">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 md:p-6 shadow-sm">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shrink-0 flex items-center justify-center">
+                        <?php if ($logo) : ?>
+                            <img src="<?php echo esc_url($logo); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover">
+                        <?php else : ?>
+                            <i data-lucide="building" width="22" class="text-slate-400"></i>
+                        <?php endif; ?>
+                    </div>
+                    <div>
+                        <h1 class="text-xl md:text-2xl font-black text-slate-900 dark:text-slate-100"><?php the_title(); ?></h1>
+                        <div class="mt-2 flex items-center gap-2 flex-wrap">
+                            <?php if (!is_wp_error($activity_terms) && !empty($activity_terms)) : ?>
+                                <?php foreach (array_slice($activity_terms, 0, 3) as $t) : ?>
+                                    <a href="<?php echo esc_url(get_term_link($t)); ?>" class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-md hover:opacity-90 transition-opacity">
+                                        <?php echo esc_html($t->name); ?>
+                                    </a>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <span class="text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 dark:text-slate-300 px-2 py-0.5 rounded-md">بدون موضوع</span>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <form method="get" action="<?php echo esc_url($archive_link); ?>" class="w-full lg:w-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="md:col-span-2">
+                            <div class="flex items-center gap-2 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2">
+                                <i data-lucide="search" width="18" class="text-slate-400"></i>
+                                <input type="text" name="q" value="" class="w-full bg-transparent outline-none text-sm text-slate-700 dark:text-slate-200 placeholder:text-slate-400" placeholder="جستجوی شرکت‌ها">
+                            </div>
+                        </div>
+                        <div>
+                            <select name="activity" class="w-full bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-700 dark:text-slate-200">
+                                <option value="0">همه موضوع‌ها</option>
+                                <?php if (!is_wp_error($all_activities) && !empty($all_activities)) : ?>
+                                    <?php foreach ($all_activities as $t) : ?>
+                                        <option value="<?php echo esc_attr($t->term_id); ?>" <?php selected((int) $t->term_id, (int) $primary_activity_id); ?>>
+                                            <?php echo esc_html($t->name); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-3 flex items-center gap-3">
+                        <button type="submit" class="h-10 px-4 rounded-xl bg-primary text-white font-bold text-sm hover:opacity-90 transition-opacity inline-flex items-center justify-center gap-2">
+                            <i data-lucide="filter" width="16"></i>
+                            جستجو
+                        </button>
+                        <a href="<?php echo esc_url($archive_link); ?>" class="h-10 px-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 font-bold text-sm hover:border-primary hover:text-primary transition-colors inline-flex items-center justify-center">
+                            آرشیو شرکت‌ها
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+            <aside class="lg:col-span-3">
+                <div class="sticky top-24 space-y-4 transition-transform duration-300 will-change-transform">
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                                <i data-lucide="layout-list" width="18"></i>
+                            </span>
+                            <h2 class="text-sm font-black text-slate-900 dark:text-slate-100">اطلاعات پایه</h2>
+                        </div>
+                        <div class="space-y-2">
+                            <button type="button" data-scroll-to="company-basic" class="group w-full flex items-center justify-between px-3 py-2 rounded-xl border border-transparent hover:bg-primary/10 hover:text-primary hover:border-primary/20 dark:hover:bg-primary/10 dark:hover:border-primary/20 text-sm font-bold text-slate-700 dark:text-slate-200 transition-colors">
+                                <span class="inline-flex items-center gap-2 text-right">
+                                    <i data-lucide="badge-info" width="16" class="text-slate-400 group-hover:text-primary"></i>
+                                    اطلاعات پایه
+                                </span>
+                                <i data-lucide="chevron-left" width="16" class="text-slate-400 group-hover:text-primary"></i>
+                            </button>
+                            <button type="button" data-scroll-to="company-intro" class="group w-full flex items-center justify-between px-3 py-2 rounded-xl border border-transparent hover:bg-primary/10 hover:text-primary hover:border-primary/20 dark:hover:bg-primary/10 dark:hover:border-primary/20 text-sm font-bold text-slate-700 dark:text-slate-200 transition-colors">
+                                <span class="inline-flex items-center gap-2 text-right">
+                                    <i data-lucide="sparkles" width="16" class="text-slate-400 group-hover:text-primary"></i>
+                                    معرفی
+                                </span>
+                                <i data-lucide="chevron-left" width="16" class="text-slate-400 group-hover:text-primary"></i>
+                            </button>
+                            <button type="button" data-scroll-to="company-description" class="group w-full flex items-center justify-between px-3 py-2 rounded-xl border border-transparent hover:bg-primary/10 hover:text-primary hover:border-primary/20 dark:hover:bg-primary/10 dark:hover:border-primary/20 text-sm font-bold text-slate-700 dark:text-slate-200 transition-colors">
+                                <span class="inline-flex items-center gap-2 text-right">
+                                    <i data-lucide="file-text" width="16" class="text-slate-400 group-hover:text-primary"></i>
+                                    توضیحات
+                                </span>
+                                <i data-lucide="chevron-left" width="16" class="text-slate-400 group-hover:text-primary"></i>
+                            </button>
+                            <button type="button" data-scroll-to="company-products" class="group w-full flex items-center justify-between px-3 py-2 rounded-xl border border-transparent hover:bg-primary/10 hover:text-primary hover:border-primary/20 dark:hover:bg-primary/10 dark:hover:border-primary/20 text-sm font-bold text-slate-700 dark:text-slate-200 transition-colors">
+                                <span class="inline-flex items-center gap-2 text-right">
+                                    <i data-lucide="package" width="16" class="text-slate-400 group-hover:text-primary"></i>
+                                    محصولات
+                                </span>
+                                <i data-lucide="chevron-left" width="16" class="text-slate-400 group-hover:text-primary"></i>
+                            </button>
+                            <button type="button" data-scroll-to="company-posts" class="group w-full flex items-center justify-between px-3 py-2 rounded-xl border border-transparent hover:bg-primary/10 hover:text-primary hover:border-primary/20 dark:hover:bg-primary/10 dark:hover:border-primary/20 text-sm font-bold text-slate-700 dark:text-slate-200 transition-colors">
+                                <span class="inline-flex items-center gap-2 text-right">
+                                    <i data-lucide="newspaper" width="16" class="text-slate-400 group-hover:text-primary"></i>
+                                    مطالب منتشر شده
+                                </span>
+                                <i data-lucide="chevron-left" width="16" class="text-slate-400 group-hover:text-primary"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="lg:col-span-9 space-y-6">
+                <section id="company-basic" class="scroll-mt-28 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 md:p-6 shadow-sm">
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                                <i data-lucide="badge-info" width="18"></i>
+                            </span>
+                            <h2 class="text-lg font-extrabold text-slate-900 dark:text-slate-100">اطلاعات پایه</h2>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+                            <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                                <i data-lucide="layers" width="14"></i>
+                                موضوع فعالیت
+                            </div>
+                            <div class="mt-2 flex items-center gap-2 flex-wrap">
+                                <?php if (!is_wp_error($activity_terms) && !empty($activity_terms)) : ?>
+                                    <?php foreach ($activity_terms as $t) : ?>
+                                        <a href="<?php echo esc_url(get_term_link($t)); ?>" class="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-xl hover:opacity-90 transition-opacity">
+                                            <?php echo esc_html($t->name); ?>
+                                        </a>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                    <span class="text-xs text-slate-500 dark:text-slate-300">ثبت نشده</span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <div class="border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+                            <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                                <i data-lucide="globe" width="14"></i>
+                                وب‌سایت
+                            </div>
+                            <div class="mt-2 text-sm font-bold text-slate-800 dark:text-slate-100">
+                                <?php if (!empty($website)) : ?>
+                                    <a href="<?php echo esc_url($website); ?>" class="hover:text-primary transition-colors ltr" target="_blank" rel="noopener">
+                                        <?php echo esc_html(preg_replace('#^https?://#', '', $website)); ?>
+                                    </a>
+                                <?php else : ?>
+                                    <span class="text-slate-400">ثبت نشده</span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <div class="border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+                            <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                                <i data-lucide="mail" width="14"></i>
+                                ایمیل
+                            </div>
+                            <div class="mt-2 text-sm font-bold text-slate-800 dark:text-slate-100">
+                                <?php if (!empty($email)) : ?>
+                                    <a href="mailto:<?php echo esc_attr($email); ?>" class="hover:text-primary transition-colors ltr">
+                                        <?php echo esc_html($email); ?>
+                                    </a>
+                                <?php else : ?>
+                                    <span class="text-slate-400">ثبت نشده</span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+                            <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                                <i data-lucide="phone" width="14"></i>
+                                تلفن‌ها
+                            </div>
+                            <div class="mt-2 space-y-1">
+                                <?php if (!empty($phones_list)) : ?>
+                                    <?php foreach ($phones_list as $p) : ?>
+                                        <div class="text-sm font-bold text-slate-800 dark:text-slate-100 ltr"><?php echo esc_html($p); ?></div>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                    <div class="text-sm text-slate-400">ثبت نشده</div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <div class="border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+                            <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                                <i data-lucide="map-pin" width="14"></i>
+                                آدرس‌ها
+                            </div>
+                            <div class="mt-2 space-y-2">
+                                <?php if (!empty($addresses_list)) : ?>
+                                    <?php foreach ($addresses_list as $a) : ?>
+                                        <div class="text-sm text-slate-700 dark:text-slate-200 leading-relaxed"><?php echo esc_html($a); ?></div>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                    <div class="text-sm text-slate-400">ثبت نشده</div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <?php if (!empty($location_address) || !empty($social_instagram) || !empty($social_telegram) || !empty($social_linkedin) || !empty($social_x) || !empty($social_whatsapp)) : ?>
+                        <div class="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div class="border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+                                <a href="<?php echo esc_url($map_link ?: '#'); ?>" class="block" target="_blank" rel="noopener">
+                                    <div class="h-44 bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center">
+                                        <div class="flex items-center gap-2 text-slate-500 dark:text-slate-300">
+                                            <i data-lucide="map" width="18"></i>
+                                            <span class="text-sm font-bold">مشاهده در نقشه</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="p-4">
+                                    <div class="text-xs text-slate-500 dark:text-slate-400 mb-2">آدرس لوکیشن</div>
+                                    <?php if (!empty($location_address) && !empty($map_link)) : ?>
+                                        <a href="<?php echo esc_url($map_link); ?>" class="text-sm text-slate-800 dark:text-slate-100 hover:text-primary transition-colors" target="_blank" rel="noopener">
+                                            <?php echo esc_html($location_address); ?>
+                                        </a>
+                                    <?php else : ?>
+                                        <div class="text-sm text-slate-400">ثبت نشده</div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+
+                            <div class="border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+                                <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                                    <i data-lucide="share-2" width="14"></i>
+                                    شبکه‌های اجتماعی
+                                </div>
+                                <div class="mt-3 flex items-center gap-2 flex-wrap">
+                                    <?php if (!empty($social_instagram)) : ?>
+                                        <a href="<?php echo esc_url($social_instagram); ?>" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-primary hover:text-primary transition-colors flex items-center gap-2">
+                                            <i data-lucide="instagram" width="14"></i>اینستاگرام
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($social_telegram)) : ?>
+                                        <a href="<?php echo esc_url($social_telegram); ?>" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-primary hover:text-primary transition-colors flex items-center gap-2">
+                                            <i data-lucide="send" width="14"></i>تلگرام
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($social_linkedin)) : ?>
+                                        <a href="<?php echo esc_url($social_linkedin); ?>" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-primary hover:text-primary transition-colors flex items-center gap-2">
+                                            <i data-lucide="linkedin" width="14"></i>لینکدین
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($social_x)) : ?>
+                                        <a href="<?php echo esc_url($social_x); ?>" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-primary hover:text-primary transition-colors flex items-center gap-2">
+                                            <i data-lucide="twitter" width="14"></i>X
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($social_whatsapp)) : ?>
+                                        <a href="<?php echo esc_url($social_whatsapp); ?>" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-primary hover:text-primary transition-colors flex items-center gap-2">
+                                            <i data-lucide="message-circle" width="14"></i>واتساپ
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </section>
+
+                <section id="company-intro" class="scroll-mt-28 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 md:p-6 shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                            <i data-lucide="sparkles" width="18"></i>
+                        </span>
+                        <h2 class="text-lg font-extrabold text-slate-900 dark:text-slate-100">معرفی</h2>
+                    </div>
+                    <?php if (trim($intro) !== '') : ?>
+                        <div class="prose max-w-none prose-slate dark:prose-invert text-slate-700 dark:text-slate-200 text-justify leading-8 prose-p:leading-8 prose-li:leading-8">
+                            <?php echo wp_kses_post($intro); ?>
+                        </div>
+                    <?php else : ?>
+                        <div class="text-sm text-slate-400">موردی ثبت نشده است.</div>
+                    <?php endif; ?>
+                </section>
+
+                <section id="company-description" class="scroll-mt-28 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 md:p-6 shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                            <i data-lucide="file-text" width="18"></i>
+                        </span>
+                        <h2 class="text-lg font-extrabold text-slate-900 dark:text-slate-100">توضیحات</h2>
+                    </div>
+                    <?php if (trim($description) !== '') : ?>
+                        <div class="prose max-w-none prose-slate dark:prose-invert text-slate-700 dark:text-slate-200 text-justify leading-8 prose-p:leading-8 prose-li:leading-8">
+                            <?php echo wp_kses_post($description); ?>
+                        </div>
+                    <?php else : ?>
+                        <div class="text-sm text-slate-400">موردی ثبت نشده است.</div>
+                    <?php endif; ?>
+                </section>
+
+                <section id="company-products" class="scroll-mt-28 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 md:p-6 shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                            <i data-lucide="package" width="18"></i>
+                        </span>
+                        <h2 class="text-lg font-extrabold text-slate-900 dark:text-slate-100">محصولات</h2>
+                    </div>
+                    <?php if (trim($products) !== '') : ?>
+                        <div class="prose max-w-none prose-slate dark:prose-invert text-slate-700 dark:text-slate-200 text-justify leading-8 prose-p:leading-8 prose-li:leading-8">
+                            <?php echo wp_kses_post($products); ?>
+                        </div>
+                    <?php else : ?>
+                        <div class="text-sm text-slate-400">موردی ثبت نشده است.</div>
+                    <?php endif; ?>
+                </section>
+
+                <section id="company-posts" class="scroll-mt-28 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 md:p-6 shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                            <i data-lucide="newspaper" width="18"></i>
+                        </span>
+                        <h2 class="text-lg font-extrabold text-slate-900 dark:text-slate-100">مطالب منتشر شده از شرکت</h2>
+                    </div>
+                    <div class="text-sm text-slate-500 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl p-4">
+                        فعلاً مطلبی برای این شرکت نمایش داده نمی‌شود. این بخش در فاز ۳ به شرکت‌ها متصل می‌شود.
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <?php
+    core_end_section();
+    core_view('layout/base');
+    return;
+}
+
 // 1. Fetch Metadata
 $content_type = get_post_meta($post_id, '_news_content_type', true);
 if (empty($content_type)) $content_type = 'standard';

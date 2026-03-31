@@ -90,6 +90,62 @@
     });
 
     document.addEventListener('click', function(e) {
+        const btn = e.target.closest('[data-scroll-to]');
+        if (!btn) return;
+        const id = btn.getAttribute('data-scroll-to');
+        if (!id) return;
+        const el = document.getElementById(id);
+        if (!el) return;
+        e.preventDefault();
+        const setActiveCompanyNav = (targetBtn) => {
+            document.querySelectorAll('[data-scroll-to]').forEach((b) => {
+                b.classList.remove('bg-primary/10', 'text-primary', 'border-primary/20');
+                b.querySelectorAll('svg').forEach((svg) => svg.classList.remove('text-primary'));
+            });
+            targetBtn.classList.add('bg-primary/10', 'text-primary', 'border-primary/20');
+            targetBtn.querySelectorAll('svg').forEach((svg) => svg.classList.add('text-primary'));
+        };
+        setActiveCompanyNav(btn);
+        const header = document.getElementById('main-header');
+        const headerOffset = header ? header.getBoundingClientRect().height : 0;
+        const top = el.getBoundingClientRect().top + window.scrollY - headerOffset - 24;
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const sections = document.querySelectorAll('#company-basic, #company-intro, #company-description, #company-products, #company-posts');
+        if (!sections.length || typeof IntersectionObserver === 'undefined') {
+            return;
+        }
+        const setActiveCompanyNavById = (id) => {
+            const btn = document.querySelector('[data-scroll-to="' + id + '"]');
+            if (!btn) return;
+            document.querySelectorAll('[data-scroll-to]').forEach((b) => {
+                b.classList.remove('bg-primary/10', 'text-primary', 'border-primary/20');
+                b.querySelectorAll('svg').forEach((svg) => svg.classList.remove('text-primary'));
+            });
+            btn.classList.add('bg-primary/10', 'text-primary', 'border-primary/20');
+            btn.querySelectorAll('svg').forEach((svg) => svg.classList.add('text-primary'));
+        };
+
+        const header = document.getElementById('main-header');
+        const headerOffset = header ? header.getBoundingClientRect().height : 0;
+        const observer = new IntersectionObserver((entries) => {
+            const visible = entries.filter((e) => e.isIntersecting);
+            if (!visible.length) return;
+            visible.sort((a, b) => Math.abs(a.boundingClientRect.top - (headerOffset + 24)) - Math.abs(b.boundingClientRect.top - (headerOffset + 24)));
+            const id = visible[0].target && visible[0].target.id ? visible[0].target.id : null;
+            if (!id) return;
+            setActiveCompanyNavById(id);
+        }, {
+            root: null,
+            rootMargin: `-${headerOffset + 24}px 0px -60% 0px`,
+            threshold: [0, 0.1, 0.2],
+        });
+        sections.forEach((s) => observer.observe(s));
+    });
+
+    document.addEventListener('click', function(e) {
         const btn = e.target.closest('[data-toggle-submenu]');
         if (!btn) return;
         const li = btn.closest('li');

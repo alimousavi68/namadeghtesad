@@ -41,6 +41,71 @@ add_theme_support( 'html5', array(
     'script' 
 ) );
 
+add_action('init', function () {
+    $labels = [
+        'name'                  => 'شرکت‌ها',
+        'singular_name'         => 'شرکت',
+        'menu_name'             => 'شرکت‌ها',
+        'name_admin_bar'        => 'شرکت',
+        'add_new'               => 'افزودن',
+        'add_new_item'          => 'افزودن شرکت جدید',
+        'new_item'              => 'شرکت جدید',
+        'edit_item'             => 'ویرایش شرکت',
+        'view_item'             => 'نمایش شرکت',
+        'all_items'             => 'همه شرکت‌ها',
+        'search_items'          => 'جستجوی شرکت‌ها',
+        'not_found'             => 'شرکتی یافت نشد',
+        'not_found_in_trash'    => 'در زباله‌دان چیزی یافت نشد',
+        'featured_image'        => 'لوگو شرکت',
+        'set_featured_image'    => 'انتخاب لوگو',
+        'remove_featured_image' => 'حذف لوگو',
+        'use_featured_image'    => 'استفاده به عنوان لوگو',
+    ];
+
+    register_post_type('company', [
+        'labels' => $labels,
+        'public' => true,
+        'has_archive' => true,
+        'rewrite' => [
+            'slug' => 'companies',
+            'with_front' => false,
+        ],
+        'menu_icon' => 'dashicons-building',
+        'supports' => ['title', 'thumbnail'],
+        'show_in_rest' => true,
+        'taxonomies' => [],
+    ]);
+
+    $tax_labels = [
+        'name'              => 'موضوع فعالیت',
+        'singular_name'     => 'موضوع فعالیت',
+        'search_items'      => 'جستجوی موضوع فعالیت',
+        'all_items'         => 'همه موضوع‌ها',
+        'parent_item'       => 'موضوع مادر',
+        'parent_item_colon' => 'موضوع مادر:',
+        'edit_item'         => 'ویرایش موضوع',
+        'update_item'       => 'به‌روزرسانی موضوع',
+        'add_new_item'      => 'افزودن موضوع جدید',
+        'new_item_name'     => 'نام موضوع جدید',
+        'menu_name'         => 'موضوع فعالیت',
+    ];
+
+    register_taxonomy('company_activity', ['company'], [
+        'labels' => $tax_labels,
+        'public' => true,
+        'hierarchical' => true,
+        'show_in_rest' => true,
+        'rewrite' => [
+            'slug' => 'company-activity',
+            'with_front' => false,
+        ],
+    ]);
+});
+
+add_action('after_switch_theme', function () {
+    flush_rewrite_rules();
+});
+
 // Register Custom Image Sizes
 add_action('after_setup_theme', function () {
     // 1. Standard Landscape (Workhorse for grids)

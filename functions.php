@@ -106,6 +106,170 @@ add_action('after_switch_theme', function () {
     flush_rewrite_rules();
 });
 
+add_action('wp_head', function () {
+    if (is_admin()) {
+        return;
+    }
+
+    $encode = function ($data) {
+        return wp_json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    };
+
+    if (is_singular('company')) {
+        $company_id = get_queried_object_id();
+        if (!$company_id) {
+            return;
+        }
+
+        $company_url = get_permalink($company_id);
+        $org_id = trailingslashit($company_url) . '#org';
+
+        $website = get_post_meta($company_id, '_company_website', true);
+        $email = get_post_meta($company_id, '_company_email', true);
+        $phones_raw = get_post_meta($company_id, '_company_phones', true);
+        $addresses_raw = get_post_meta($company_id, '_company_addresses', true);
+
+        $phones = [];
+        if (!empty($phones_raw)) {
+            $phones = array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', (string) $phones_raw))));
+        }
+
+        $street_address = '';
+        if (!empty($addresses_raw)) {
+            $street_address = implode('، ', array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', (string) $addresses_raw)))));
+        }
+
+        $same_as = [];
+        $social_keys = [
+            '_company_social_instagram',
+            '_company_social_telegram',
+            '_company_social_linkedin',
+            '_company_social_x',
+            '_company_social_whatsapp',
+        ];
+        foreach ($social_keys as $k) {
+            $v = get_post_meta($company_id, $k, true);
+            $v = $v ? wp_http_validate_url($v) : '';
+            if ($v) {
+                $same_as[] = $v;
+            }
+        }
+
+        $logo = get_the_post_thumbnail_url($company_id, 'full');
+        $org = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Organization',
+            '@id' => $org_id,
+            'name' => get_the_title($company_id),
+            'url' => $company_url,
+        ];
+
+        if ($logo) {
+            $org['logo'] = $logo;
+        }
+
+        if ($website && wp_http_validate_url($website)) {
+            $org['sameAs'] = array_values(array_unique(array_merge($same_as, [wp_http_validate_url($website)])));
+        } elseif (!empty($same_as)) {
+            $org['sameAs'] = array_values(array_unique($same_as));
+        }
+
+        if ($email) {
+            $org['email'] = sanitize_email($email);
+        }
+
+        if (!empty($phones)) {
+            $org['telephone'] = $phones[0];
+            $org['contactPoint'] = [
+                [
+                    '@type' => 'ContactPoint',
+                    'telephone' => $phones[0],
+                    'contactType' => 'customer service',
+                ],
+            ];
+        }
+
+        if ($street_address !== '') {
+            $org['address'] = [
+                '@type' => 'PostalAddress',
+                'streetAddress' => $street_address,
+                'addressCountry' => 'IR',
+            ];
+        }
+
+        $webpage = [
+            '@context' => 'https://schema.org',
+            '@type' => 'WebPage',
+            'url' => $company_url,
+            'name' => get_the_title($company_id),
+            'isPartOf' => [
+                '@type' => 'WebSite',
+                'url' => home_url('/'),
+                'name' => get_bloginfo('name'),
+            ],
+            'mainEntity' => [
+                '@id' => $org_id,
+            ],
+        ];
+
+        echo '<script type="application/ld+json">' . $encode([
+            '@context' => 'https://schema.org',
+            '@graph' => [$org, $webpage],
+        ]) . '</script>';
+
+        return;
+    }
+
+    if (is_post_type_archive('company') || is_tax('company_activity')) {
+        global $wp_query;
+        if (!$wp_query || empty($wp_query->posts)) {
+            return;
+        }
+
+        $items = [];
+        $pos = 1;
+        foreach ($wp_query->posts as $p) {
+            if (!$p || $p->post_type !== 'company') {
+                continue;
+            }
+            $items[] = [
+                '@type' => 'ListItem',
+                'position' => $pos++,
+                'url' => get_permalink($p),
+                'name' => get_the_title($p),
+            ];
+            if ($pos > 21) {
+                break;
+            }
+        }
+
+        if (empty($items)) {
+            return;
+        }
+
+        $page_url = function_exists('get_pagenum_link') ? get_pagenum_link(max(1, get_query_var('paged'))) : home_url('/');
+        $title = is_tax('company_activity') ? single_term_title('', false) : 'شرکت‌ها';
+
+        $schema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'CollectionPage',
+            'url' => $page_url,
+            'name' => $title,
+            'isPartOf' => [
+                '@type' => 'WebSite',
+                'url' => home_url('/'),
+                'name' => get_bloginfo('name'),
+            ],
+            'mainEntity' => [
+                '@type' => 'ItemList',
+                'itemListElement' => $items,
+            ],
+        ];
+
+        echo '<script type="application/ld+json">' . $encode($schema) . '</script>';
+    }
+}, 20);
+
 // Register Custom Image Sizes
 add_action('after_setup_theme', function () {
     // 1. Standard Landscape (Workhorse for grids)

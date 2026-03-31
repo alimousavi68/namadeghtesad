@@ -57,7 +57,7 @@ if (is_post_type_archive('company') || is_tax('company_activity')) {
                     </span>
                     <div>
                         <h1 class="text-lg md:text-xl font-bold text-slate-900 dark:text-slate-100"><?php echo esc_html($title); ?></h1>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">جستجو و فیلتر بر اساس نام و موضوع فعالیت</p>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">در این بخش می‌توانید پروفایل شرکت‌ها را مشاهده کنید، بر اساس نام جستجو کنید و با انتخاب موضوع فعالیت، نتایج را دقیق‌تر کنید.</p>
                     </div>
                 </div>
                 <form method="get" action="<?php echo esc_url($archive_link); ?>" class="w-full lg:w-auto">
@@ -174,7 +174,6 @@ if (is_post_type_archive('company') || is_tax('company_activity')) {
                                 مشاهده پروفایل
                                 <i data-lucide="arrow-left" width="16"></i>
                             </a>
-                            <span class="text-xs text-slate-400"><?php echo esc_html(get_the_date('j F Y', $company_id)); ?></span>
                         </div>
                     </article>
                 <?php endwhile; ?>

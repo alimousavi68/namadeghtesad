@@ -38,7 +38,8 @@ if (get_post_type($post_id) === 'company') {
     $archive_link = get_post_type_archive_link('company');
     $map_link = '';
     if (!empty($location_address)) {
-        $map_link = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode($location_address);
+        $validated = function_exists('wp_http_validate_url') ? wp_http_validate_url($location_address) : '';
+        $map_link = $validated ? $validated : '';
     }
 
     $phones_list = [];
@@ -167,14 +168,14 @@ if (get_post_type($post_id) === 'company') {
                 <section id="company-basic" class="scroll-mt-28 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 md:p-6 shadow-sm">
                     <div class="flex items-center justify-between gap-4 mb-4">
                         <div class="flex items-center gap-2">
-                            <span class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                            <span class="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 dark:bg-rose-900/20 dark:text-rose-200 flex items-center justify-center">
                                 <i data-lucide="badge-info" width="18"></i>
                             </span>
                             <h2 class="text-lg font-extrabold text-slate-900 dark:text-slate-100">اطلاعات پایه</h2>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
                             <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
                                 <i data-lucide="layers" width="14"></i>
@@ -183,7 +184,7 @@ if (get_post_type($post_id) === 'company') {
                             <div class="mt-2 flex items-center gap-2 flex-wrap">
                                 <?php if (!is_wp_error($activity_terms) && !empty($activity_terms)) : ?>
                                     <?php foreach ($activity_terms as $t) : ?>
-                                        <a href="<?php echo esc_url(get_term_link($t)); ?>" class="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-xl hover:opacity-90 transition-opacity">
+                                        <a href="<?php echo esc_url(get_term_link($t)); ?>" class="text-xs font-bold text-rose-700 bg-rose-50 dark:bg-rose-900/20 dark:text-rose-200 px-3 py-1 rounded-xl hover:opacity-90 transition-opacity">
                                             <?php echo esc_html($t->name); ?>
                                         </a>
                                     <?php endforeach; ?>
@@ -200,7 +201,7 @@ if (get_post_type($post_id) === 'company') {
                             </div>
                             <div class="mt-2 text-sm font-bold text-slate-800 dark:text-slate-100">
                                 <?php if (!empty($website)) : ?>
-                                    <a href="<?php echo esc_url($website); ?>" class="hover:text-primary transition-colors ltr" target="_blank" rel="noopener">
+                                    <a href="<?php echo esc_url($website); ?>" class="hover:text-rose-600 dark:hover:text-rose-200 transition-colors ltr" target="_blank" rel="noopener">
                                         <?php echo esc_html(preg_replace('#^https?://#', '', $website)); ?>
                                     </a>
                                 <?php else : ?>
@@ -216,7 +217,7 @@ if (get_post_type($post_id) === 'company') {
                             </div>
                             <div class="mt-2 text-sm font-bold text-slate-800 dark:text-slate-100">
                                 <?php if (!empty($email)) : ?>
-                                    <a href="mailto:<?php echo esc_attr($email); ?>" class="hover:text-primary transition-colors ltr">
+                                    <a href="mailto:<?php echo esc_attr($email); ?>" class="hover:text-rose-600 dark:hover:text-rose-200 transition-colors ltr">
                                         <?php echo esc_html($email); ?>
                                     </a>
                                 <?php else : ?>
@@ -230,7 +231,7 @@ if (get_post_type($post_id) === 'company') {
                         <div class="border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
                             <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
                                 <i data-lucide="phone" width="14"></i>
-                                تلفن‌ها
+                                تلفن
                             </div>
                             <div class="mt-2 space-y-1">
                                 <?php if (!empty($phones_list)) : ?>
@@ -245,79 +246,84 @@ if (get_post_type($post_id) === 'company') {
 
                         <div class="border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
                             <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                                <i data-lucide="map-pin" width="14"></i>
-                                آدرس‌ها
+                                <i data-lucide="share-2" width="14"></i>
+                                شبکه‌های اجتماعی
                             </div>
-                            <div class="mt-2 space-y-2">
-                                <?php if (!empty($addresses_list)) : ?>
-                                    <?php foreach ($addresses_list as $a) : ?>
-                                        <div class="text-sm text-slate-700 dark:text-slate-200 leading-relaxed"><?php echo esc_html($a); ?></div>
-                                    <?php endforeach; ?>
-                                <?php else : ?>
+                            <div class="mt-3 flex items-center gap-2 flex-wrap">
+                                <?php if (!empty($social_instagram)) : ?>
+                                    <a href="<?php echo esc_url($social_instagram); ?>" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-rose-200 hover:text-rose-700 dark:hover:border-rose-900/30 dark:hover:text-rose-200 transition-colors flex items-center gap-2">
+                                        <i data-lucide="instagram" width="14"></i>اینستاگرام
+                                    </a>
+                                <?php endif; ?>
+                                <?php if (!empty($social_telegram)) : ?>
+                                    <a href="<?php echo esc_url($social_telegram); ?>" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-rose-200 hover:text-rose-700 dark:hover:border-rose-900/30 dark:hover:text-rose-200 transition-colors flex items-center gap-2">
+                                        <i data-lucide="send" width="14"></i>تلگرام
+                                    </a>
+                                <?php endif; ?>
+                                <?php if (!empty($social_linkedin)) : ?>
+                                    <a href="<?php echo esc_url($social_linkedin); ?>" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-rose-200 hover:text-rose-700 dark:hover:border-rose-900/30 dark:hover:text-rose-200 transition-colors flex items-center gap-2">
+                                        <i data-lucide="linkedin" width="14"></i>لینکدین
+                                    </a>
+                                <?php endif; ?>
+                                <?php if (!empty($social_x)) : ?>
+                                    <a href="<?php echo esc_url($social_x); ?>" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-rose-200 hover:text-rose-700 dark:hover:border-rose-900/30 dark:hover:text-rose-200 transition-colors flex items-center gap-2">
+                                        <i data-lucide="twitter" width="14"></i>X
+                                    </a>
+                                <?php endif; ?>
+                                <?php if (!empty($social_whatsapp)) : ?>
+                                    <a href="<?php echo esc_url($social_whatsapp); ?>" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-rose-200 hover:text-rose-700 dark:hover:border-rose-900/30 dark:hover:text-rose-200 transition-colors flex items-center gap-2">
+                                        <i data-lucide="message-circle" width="14"></i>واتساپ
+                                    </a>
+                                <?php endif; ?>
+                                <?php if (empty($social_instagram) && empty($social_telegram) && empty($social_linkedin) && empty($social_x) && empty($social_whatsapp)) : ?>
                                     <div class="text-sm text-slate-400">ثبت نشده</div>
                                 <?php endif; ?>
                             </div>
                         </div>
                     </div>
 
-                    <?php if (!empty($location_address) || !empty($social_instagram) || !empty($social_telegram) || !empty($social_linkedin) || !empty($social_x) || !empty($social_whatsapp)) : ?>
-                        <div class="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
-                            <div class="border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
-                                <a href="<?php echo esc_url($map_link ?: '#'); ?>" class="block" target="_blank" rel="noopener">
-                                    <div class="h-44 bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center">
-                                        <div class="flex items-center gap-2 text-slate-500 dark:text-slate-300">
-                                            <i data-lucide="map" width="18"></i>
-                                            <span class="text-sm font-bold">مشاهده در نقشه</span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="p-4">
-                                    <div class="text-xs text-slate-500 dark:text-slate-400 mb-2">آدرس لوکیشن</div>
-                                    <?php if (!empty($location_address) && !empty($map_link)) : ?>
-                                        <a href="<?php echo esc_url($map_link); ?>" class="text-sm text-slate-800 dark:text-slate-100 hover:text-primary transition-colors" target="_blank" rel="noopener">
-                                            <?php echo esc_html($location_address); ?>
-                                        </a>
+                    <?php
+                    $address_display = '';
+                    if (!empty($addresses_list)) {
+                        $address_display = implode('، ', $addresses_list);
+                    }
+                    $map_link = '';
+                    if (!empty($location_address)) {
+                        $validated = function_exists('wp_http_validate_url') ? wp_http_validate_url($location_address) : '';
+                        $map_link = $validated ? $validated : '';
+                    }
+                    ?>
+
+                    <div class="mt-4 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+                        <div class="flex flex-col md:flex-row md:items-stretch">
+                            <div class="flex-1 p-4 md:p-5">
+                                <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                                    <i data-lucide="map-pin" width="14"></i>
+                                    نشانی ثبت شده برای شرکت
+                                </div>
+                                <div class="mt-2 text-sm text-slate-700 dark:text-slate-200 leading-relaxed text-justify">
+                                    <?php if ($address_display !== '') : ?>
+                                        <?php echo esc_html($address_display); ?>
                                     <?php else : ?>
-                                        <div class="text-sm text-slate-400">ثبت نشده</div>
+                                        <span class="text-slate-400">ثبت نشده</span>
                                     <?php endif; ?>
                                 </div>
                             </div>
-
-                            <div class="border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
-                                <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                                    <i data-lucide="share-2" width="14"></i>
-                                    شبکه‌های اجتماعی
-                                </div>
-                                <div class="mt-3 flex items-center gap-2 flex-wrap">
-                                    <?php if (!empty($social_instagram)) : ?>
-                                        <a href="<?php echo esc_url($social_instagram); ?>" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-primary hover:text-primary transition-colors flex items-center gap-2">
-                                            <i data-lucide="instagram" width="14"></i>اینستاگرام
-                                        </a>
-                                    <?php endif; ?>
-                                    <?php if (!empty($social_telegram)) : ?>
-                                        <a href="<?php echo esc_url($social_telegram); ?>" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-primary hover:text-primary transition-colors flex items-center gap-2">
-                                            <i data-lucide="send" width="14"></i>تلگرام
-                                        </a>
-                                    <?php endif; ?>
-                                    <?php if (!empty($social_linkedin)) : ?>
-                                        <a href="<?php echo esc_url($social_linkedin); ?>" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-primary hover:text-primary transition-colors flex items-center gap-2">
-                                            <i data-lucide="linkedin" width="14"></i>لینکدین
-                                        </a>
-                                    <?php endif; ?>
-                                    <?php if (!empty($social_x)) : ?>
-                                        <a href="<?php echo esc_url($social_x); ?>" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-primary hover:text-primary transition-colors flex items-center gap-2">
-                                            <i data-lucide="twitter" width="14"></i>X
-                                        </a>
-                                    <?php endif; ?>
-                                    <?php if (!empty($social_whatsapp)) : ?>
-                                        <a href="<?php echo esc_url($social_whatsapp); ?>" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-primary hover:text-primary transition-colors flex items-center gap-2">
-                                            <i data-lucide="message-circle" width="14"></i>واتساپ
-                                        </a>
-                                    <?php endif; ?>
-                                </div>
+                            <div class="w-full md:w-[260px] p-4 md:p-0 md:border-r md:border-slate-200 md:dark:border-slate-800">
+                                <?php if (!empty($map_link)) : ?>
+                                    <a href="<?php echo esc_url($map_link); ?>" target="_blank" rel="noopener" class="block h-32 md:h-full bg-cover bg-center rounded-xl md:rounded-none overflow-hidden" style="background-image: url('<?php echo esc_url(get_template_directory_uri() . '/assets/images/map.png'); ?>');">
+                                        <div class="w-full h-full bg-black/0 hover:bg-black/5 transition-colors flex items-center justify-center">
+                                            <span class="w-10 h-10 rounded-2xl bg-white/90 text-rose-600 flex items-center justify-center shadow-sm">
+                                                <i data-lucide="map" width="18"></i>
+                                            </span>
+                                        </div>
+                                    </a>
+                                <?php else : ?>
+                                    <div class="h-32 md:h-full bg-cover bg-center rounded-xl md:rounded-none overflow-hidden opacity-60" style="background-image: url('<?php echo esc_url(get_template_directory_uri() . '/assets/images/map.png'); ?>');"></div>
+                                <?php endif; ?>
                             </div>
                         </div>
-                    <?php endif; ?>
+                    </div>
                 </section>
 
                 <section id="company-intro" class="scroll-mt-28 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 md:p-6 shadow-sm">
@@ -360,7 +366,7 @@ if (get_post_type($post_id) === 'company') {
                         <h2 class="text-lg font-extrabold text-slate-900 dark:text-slate-100">محصولات</h2>
                     </div>
                     <?php if (trim($products) !== '') : ?>
-                        <div class="prose max-w-none prose-slate dark:prose-invert text-slate-700 dark:text-slate-200 text-justify leading-8 prose-p:leading-8 prose-li:leading-8">
+                        <div class="max-w-none text-justify leading-8 [&_p]:text-slate-700 dark:[&_p]:text-slate-200 [&_p]:leading-8 [&_p]:mb-4 [&_h1]:text-xl [&_h1]:font-extrabold [&_h1]:mt-6 [&_h1]:mb-3 [&_h2]:text-lg [&_h2]:font-extrabold [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-base [&_h3]:font-bold [&_h3]:mt-5 [&_h3]:mb-2 [&_strong]:font-bold [&_b]:font-bold [&_a]:text-rose-700 dark:[&_a]:text-rose-200 [&_a]:underline-offset-2 hover:[&_a]:underline [&_ul]:list-disc [&_ul]:pr-6 [&_ol]:list-decimal [&_ol]:pr-6 [&_li]:my-1">
                             <?php echo wp_kses_post($products); ?>
                         </div>
                     <?php else : ?>
@@ -370,14 +376,73 @@ if (get_post_type($post_id) === 'company') {
 
                 <section id="company-posts" class="scroll-mt-28 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 md:p-6 shadow-sm">
                     <div class="flex items-center gap-2 mb-4">
-                        <span class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                        <span class="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 dark:bg-rose-900/20 dark:text-rose-200 flex items-center justify-center">
                             <i data-lucide="newspaper" width="18"></i>
                         </span>
                         <h2 class="text-lg font-extrabold text-slate-900 dark:text-slate-100">مطالب منتشر شده از شرکت</h2>
                     </div>
-                    <div class="text-sm text-slate-500 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl p-4">
-                        فعلاً مطلبی برای این شرکت نمایش داده نمی‌شود. این بخش در فاز ۳ به شرکت‌ها متصل می‌شود.
-                    </div>
+                    <?php
+                    $company_posts = new WP_Query([
+                        'post_type' => 'post',
+                        'post_status' => 'publish',
+                        'posts_per_page' => 8,
+                        'orderby' => 'date',
+                        'order' => 'DESC',
+                        'meta_query' => [
+                            'relation' => 'AND',
+                            [
+                                'key' => '_news_content_type',
+                                'value' => 'company',
+                                'compare' => '=',
+                            ],
+                            [
+                                'key' => '_news_related_company_id',
+                                'value' => (string) $company_id,
+                                'compare' => '=',
+                            ],
+                        ],
+                    ]);
+                    ?>
+
+                    <?php if ($company_posts->have_posts()) : ?>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <?php while ($company_posts->have_posts()) : $company_posts->the_post(); ?>
+                                <?php
+                                $p_id = get_the_ID();
+                                $thumb = get_the_post_thumbnail_url($p_id, 'hasht-small-rect');
+                                $time_diff = function_exists('hasht_time_ago') ? hasht_time_ago($p_id) : '';
+                                ?>
+                                <article class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex gap-4 shadow-sm hover:shadow-md hover:border-rose-200 dark:hover:border-rose-900/30 transition-all">
+                                    <a href="<?php the_permalink(); ?>" class="w-28 h-20 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0 block">
+                                        <?php if ($thumb) : ?>
+                                            <img src="<?php echo esc_url($thumb); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover">
+                                        <?php endif; ?>
+                                    </a>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center gap-2 text-[11px] text-slate-400 mb-2">
+                                            <?php if ($time_diff) : ?>
+                                                <span class="inline-flex items-center gap-1">
+                                                    <i data-lucide="clock" width="12"></i>
+                                                    <?php echo esc_html($time_diff); ?>
+                                                </span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <h3 class="text-sm md:text-base font-bold text-slate-900 dark:text-slate-100 leading-relaxed line-clamp-2">
+                                            <a href="<?php the_permalink(); ?>" class="hover:text-rose-600 dark:hover:text-rose-200 transition-colors"><?php the_title(); ?></a>
+                                        </h3>
+                                        <p class="mt-2 text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2">
+                                            <?php echo esc_html(get_the_excerpt()); ?>
+                                        </p>
+                                    </div>
+                                </article>
+                            <?php endwhile; ?>
+                        </div>
+                        <?php wp_reset_postdata(); ?>
+                    <?php else : ?>
+                        <div class="text-sm text-slate-500 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl p-4">
+                            مطلبی برای این شرکت ثبت نشده است.
+                        </div>
+                    <?php endif; ?>
                 </section>
             </main>
         </div>
@@ -765,6 +830,74 @@ $share_text = rawurlencode(get_the_title($post_id) . ' - ' . get_permalink($post
                                 <?php else: ?>
                                     <?php echo esc_html($source_name); ?>
                                 <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php
+                        $related_company_id = 0;
+                        if ($content_type === 'company') {
+                            $related_company_id = absint(get_post_meta($post_id, '_news_related_company_id', true));
+                            $related_post = $related_company_id ? get_post($related_company_id) : null;
+                            if (!$related_post || $related_post->post_type !== 'company') {
+                                $related_company_id = 0;
+                            }
+                        }
+                        ?>
+
+                        <?php if ($related_company_id) : ?>
+                            <?php
+                            $company_title = get_the_title($related_company_id);
+                            $company_link = get_permalink($related_company_id);
+                            $company_logo = get_the_post_thumbnail_url($related_company_id, 'thumbnail');
+                            $company_website = get_post_meta($related_company_id, '_company_website', true);
+                            $company_intro = (string) get_post_meta($related_company_id, '_company_intro', true);
+                            $company_desc = (string) get_post_meta($related_company_id, '_company_description', true);
+                            $company_summary_src = $company_intro ?: $company_desc;
+                            $company_summary = wp_trim_words(wp_strip_all_tags((string) $company_summary_src), 28, '…');
+                            ?>
+                            <div class="mt-10 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 md:p-6 shadow-sm">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-14 h-14 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shrink-0 flex items-center justify-center">
+                                        <?php if ($company_logo) : ?>
+                                            <img src="<?php echo esc_url($company_logo); ?>" alt="<?php echo esc_attr($company_title); ?>" class="w-full h-full object-cover">
+                                        <?php else : ?>
+                                            <i data-lucide="building" width="22" class="text-slate-400"></i>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center justify-between gap-3 flex-wrap">
+                                            <div class="flex items-center gap-2">
+                                                <i data-lucide="building-2" width="18" class="text-rose-600 dark:text-rose-200"></i>
+                                                <h3 class="text-base md:text-lg font-extrabold text-slate-900 dark:text-slate-100">
+                                                    <?php echo esc_html($company_title); ?>
+                                                </h3>
+                                            </div>
+                                            <a href="<?php echo esc_url($company_link); ?>" class="px-4 h-10 rounded-xl bg-rose-600 text-white text-sm font-bold inline-flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+                                                مشاهده پروفایل
+                                                <i data-lucide="arrow-left" width="16"></i>
+                                            </a>
+                                        </div>
+
+                                        <?php if (!empty($company_summary)) : ?>
+                                            <p class="mt-3 text-sm text-slate-600 dark:text-slate-300 leading-8 text-justify">
+                                                <?php echo esc_html($company_summary); ?>
+                                            </p>
+                                        <?php endif; ?>
+
+                                        <div class="mt-4 flex items-center gap-4 flex-wrap text-xs text-slate-500 dark:text-slate-400">
+                                            <?php if (!empty($company_website)) : ?>
+                                                <a href="<?php echo esc_url($company_website); ?>" target="_blank" rel="noopener" class="inline-flex items-center gap-2 hover:text-rose-600 dark:hover:text-rose-200 transition-colors ltr">
+                                                    <i data-lucide="globe" width="14"></i>
+                                                    <?php echo esc_html(preg_replace('#^https?://#', '', $company_website)); ?>
+                                                </a>
+                                            <?php endif; ?>
+                                            <a href="<?php echo esc_url($company_link); ?>" class="inline-flex items-center gap-2 hover:text-rose-600 dark:hover:text-rose-200 transition-colors">
+                                                <i data-lucide="square-user" width="14"></i>
+                                                صفحه اختصاصی شرکت
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         <?php endif; ?>
                     </div>

@@ -9,6 +9,17 @@ global $wp_query;
 if ( $wp_query->max_num_pages <= 1 ) return;
 
 $big = 999999999; // need an unlikely integer
+$add_args = [];
+if (!empty($_GET) && is_array($_GET)) {
+    foreach ($_GET as $k => $v) {
+        if ($k === 'paged') {
+            continue;
+        }
+        if (is_scalar($v) && $v !== '') {
+            $add_args[$k] = sanitize_text_field(wp_unslash($v));
+        }
+    }
+}
 
 $pages = paginate_links( array(
     'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
@@ -20,6 +31,7 @@ $pages = paginate_links( array(
     'next_text' => '<i data-lucide="chevron-left" width="20"></i>',
     'mid_size'  => 1,
     'end_size'  => 1,
+    'add_args'  => $add_args,
 ) );
 
 if ( is_array( $pages ) ) {

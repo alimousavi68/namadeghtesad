@@ -182,4 +182,97 @@ jQuery(document).ready(function($) {
         item.remove();
     });
 
+    var $companySearch = $('#hasht_related_company_search');
+    var $companyResults = $('#hasht_related_company_results');
+    var $companyIdInput = $('#hasht_related_company_id');
+    var $companySelectedWrap = $('#hasht_related_company_selected');
+    var $companySelectedTitle = $('#hasht_related_company_selected_title');
+    var $companyClearBtn = $('#hasht_related_company_clear');
+
+    function clearCompanySelection() {
+        $companyIdInput.val('');
+        $companySelectedTitle.text('');
+        $companySelectedWrap.addClass('hidden');
+    }
+
+    function renderCompanyResults(items) {
+        $companyResults.empty();
+        if (!items || !items.length) {
+            $companyResults.addClass('hidden');
+            return;
+        }
+        items.forEach(function(item) {
+            var $row = $('<div class="hasht-autocomplete-item"></div>');
+            $row.text(item.title);
+            $row.attr('data-id', item.id);
+            $row.attr('data-title', item.title);
+            $companyResults.append($row);
+        });
+        $companyResults.removeClass('hidden');
+    }
+
+    if ($companySearch.length) {
+        var searchTimer = null;
+
+        $companyClearBtn.on('click', function(e) {
+            e.preventDefault();
+            clearCompanySelection();
+            $companySearch.val('');
+            $companyResults.empty().addClass('hidden');
+        });
+
+        $companySearch.on('input', function() {
+            clearTimeout(searchTimer);
+            clearCompanySelection();
+
+            var q = ($companySearch.val() || '').trim();
+            if (q.length < 2) {
+                $companyResults.empty().addClass('hidden');
+                return;
+            }
+
+            searchTimer = setTimeout(function() {
+                if (!window.hasht_admin_vars || !hasht_admin_vars.ajax_url) {
+                    return;
+                }
+                $.ajax({
+                    url: hasht_admin_vars.ajax_url,
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        action: 'hasht_company_search',
+                        q: q,
+                        nonce: hasht_admin_vars.nonce
+                    }
+                }).done(function(res) {
+                    if (!res || !res.success) {
+                        renderCompanyResults([]);
+                        return;
+                    }
+                    renderCompanyResults(res.data && res.data.items ? res.data.items : []);
+                }).fail(function() {
+                    renderCompanyResults([]);
+                });
+            }, 250);
+        });
+
+        $companyResults.on('click', '.hasht-autocomplete-item', function() {
+            var $item = $(this);
+            var id = $item.attr('data-id');
+            var title = $item.attr('data-title');
+            $companyIdInput.val(id);
+            $companySearch.val(title);
+            $companySelectedTitle.text(title);
+            $companySelectedWrap.removeClass('hidden');
+            $companyResults.empty().addClass('hidden');
+        });
+
+        $(document).on('click', function(e) {
+            if ($(e.target).closest('#hasht_related_company_results, #hasht_related_company_search').length) {
+                return;
+            }
+            $companyResults.addClass('hidden');
+        });
+    }
+
 });

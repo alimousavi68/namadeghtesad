@@ -58,6 +58,11 @@ class Hasht_News_Meta_Box {
             [],
             '1.0.0'
         );
+
+        wp_localize_script('hasht-admin-metabox', 'hasht_admin_vars', [
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('hasht_company_search'),
+        ]);
     }
 
     /**
@@ -73,6 +78,16 @@ class Hasht_News_Meta_Box {
         $content_type = get_post_meta($post->ID, '_news_content_type', true);
         if (empty($content_type)) $content_type = 'standard';
         $rotiter = get_post_meta($post->ID, '_news_rotiter', true);
+        $related_company_id = absint(get_post_meta($post->ID, '_news_related_company_id', true));
+        $related_company_title = '';
+        if ($related_company_id) {
+            $related_post = get_post($related_company_id);
+            if ($related_post && $related_post->post_type === 'company') {
+                $related_company_title = get_the_title($related_company_id);
+            } else {
+                $related_company_id = 0;
+            }
+        }
 
         // Note Fields
         $author_name = get_post_meta($post->ID, '_news_author_name', true);
@@ -126,10 +141,26 @@ class Hasht_News_Meta_Box {
                     <option value="video" <?php selected($content_type, 'video'); ?>>ویدیو</option>
                     <option value="photo_report" <?php selected($content_type, 'photo_report'); ?>>گزارش تصویری</option>
                     <option value="publication" <?php selected($content_type, 'publication'); ?>>نشریه</option>
+                    <option value="company" <?php selected($content_type, 'company'); ?>>شرکت‌ها</option>
                 </select>
             </div>
 
             <hr>
+
+            <div class="hasht-conditional-section" data-show-if="company">
+                <div class="hasht-field-row">
+                    <label for="hasht_related_company_search">شرکت مرتبط:</label>
+                    <input type="hidden" name="_news_related_company_id" id="hasht_related_company_id" value="<?php echo esc_attr($related_company_id); ?>">
+                    <input type="text" id="hasht_related_company_search" class="widefat" value="<?php echo esc_attr($related_company_title); ?>" placeholder="نام شرکت را جستجو کنید..." autocomplete="off">
+                    <div id="hasht_related_company_results" class="hasht-autocomplete-results hidden"></div>
+                    <div id="hasht_related_company_selected" class="<?php echo $related_company_id ? '' : 'hidden'; ?>">
+                        <div class="hasht-selected-item">
+                            <span id="hasht_related_company_selected_title"><?php echo esc_html($related_company_title); ?></span>
+                            <button type="button" class="button-link-delete" id="hasht_related_company_clear">حذف</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Note Fields -->
             <div class="hasht-conditional-section" data-show-if="note">
@@ -306,12 +337,25 @@ class Hasht_News_Meta_Box {
         /* OK, it's safe for us to save the data now. */
 
         // 1. Content Type
+        $posted_content_type = '';
         if (isset($_POST['_news_content_type'])) {
-            update_post_meta($post_id, '_news_content_type', sanitize_key($_POST['_news_content_type']));
+            $posted_content_type = sanitize_key($_POST['_news_content_type']);
+            update_post_meta($post_id, '_news_content_type', $posted_content_type);
         }
 
         if (isset($_POST['_news_rotiter'])) {
             update_post_meta($post_id, '_news_rotiter', sanitize_text_field($_POST['_news_rotiter']));
+        }
+
+        if ($posted_content_type === 'company') {
+            $rel_id = isset($_POST['_news_related_company_id']) ? absint($_POST['_news_related_company_id']) : 0;
+            if ($rel_id) {
+                update_post_meta($post_id, '_news_related_company_id', $rel_id);
+            } else {
+                delete_post_meta($post_id, '_news_related_company_id');
+            }
+        } else {
+            delete_post_meta($post_id, '_news_related_company_id');
         }
 
         // 2. Note Fields
@@ -445,6 +489,11 @@ class Hasht_Company_Meta_Box {
             [],
             '1.0.0'
         );
+
+        wp_localize_script('hasht-admin-metabox', 'hasht_admin_vars', [
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('hasht_company_search'),
+        ]);
     }
 
     public function render_meta_box($post) {

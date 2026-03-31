@@ -133,13 +133,19 @@
 
         const pickActiveSectionId = () => {
             const line = headerOffset + 24;
+            let candidate = null;
             for (const s of sections) {
                 const r = s.getBoundingClientRect();
-                if (r.top <= line && r.bottom > line) {
-                    return s.id;
+                if (r.top <= line) {
+                    candidate = s.id;
+                    if (r.bottom > line) {
+                        return s.id;
+                    }
+                    continue;
                 }
+                break;
             }
-            return sections[0] && sections[0].id ? sections[0].id : null;
+            return candidate || (sections[0] && sections[0].id ? sections[0].id : null);
         };
 
         const applyActiveFromViewport = () => {

@@ -9,8 +9,16 @@ if (!function_exists('core_enqueue_assets')) {
 
     function core_enqueue_assets()
     {
-        // if wp debug is true assets is not cached
-        $version = defined('WP_DEBUG') && WP_DEBUG ? time() : '1.0.0';
+        $debug_version = defined('WP_DEBUG') && WP_DEBUG ? (string) time() : null;
+        $base_dir = get_template_directory();
+        $ver = function ($relative_path) use ($debug_version, $base_dir) {
+            if ($debug_version) {
+                return $debug_version;
+            }
+            $full_path = $base_dir . $relative_path;
+            $mtime = @filemtime($full_path);
+            return $mtime ? (string) $mtime : '1.0.0';
+        };
 
         // 1. Core Static 
         if (file_exists(get_template_directory() . '/_hasht_core/assets/css/core-static.css')) {
@@ -18,7 +26,7 @@ if (!function_exists('core_enqueue_assets')) {
                 'core-static',
                 get_stylesheet_directory_uri() . '/_hasht_core/assets/css/core-static.css',
                 [],
-                $version
+                $ver('/_hasht_core/assets/css/core-static.css')
             );
         }
 
@@ -28,7 +36,7 @@ if (!function_exists('core_enqueue_assets')) {
                 'core-rtl',
                 get_stylesheet_directory_uri() . '/_hasht_core/assets/css/core-rtl.css',
                 ['core-static'],
-                $version
+                $ver('/_hasht_core/assets/css/core-rtl.css')
             );
         }
 
@@ -38,7 +46,7 @@ if (!function_exists('core_enqueue_assets')) {
                 'theme-tokens',
                 get_stylesheet_directory_uri() . '/assets/css/tokens.css',
                 [],
-                $version
+                $ver('/assets/css/tokens.css')
             );
         }
 
@@ -48,12 +56,13 @@ if (!function_exists('core_enqueue_assets')) {
                 'theme-main',
                 get_stylesheet_directory_uri() . '/assets/css/theme.css',
                 ['core-static', 'theme-tokens'],
-                $version
+                $ver('/assets/css/theme.css')
             );
         }
 
         // 5. Theme Style.css
-        wp_enqueue_style('theme-style', get_stylesheet_uri(), ['theme-main'], $version);
+        $style_mtime = @filemtime(get_stylesheet_directory() . '/style.css');
+        wp_enqueue_style('theme-style', get_stylesheet_uri(), ['theme-main'], $debug_version ?: ($style_mtime ? (string) $style_mtime : '1.0.0'));
 
 
         // --- JavaScript ---
@@ -64,7 +73,7 @@ if (!function_exists('core_enqueue_assets')) {
                 'core-js',
                 get_stylesheet_directory_uri() . '/_hasht_core/assets/js/core.js',
                 ['jquery'],
-                $version,
+                $ver('/_hasht_core/assets/js/core.js'),
                 true
             );
         }
@@ -75,7 +84,7 @@ if (!function_exists('core_enqueue_assets')) {
                 'theme-js',
                 get_stylesheet_directory_uri() . '/assets/js/theme.js',
                 ['core-js'],
-                $version,
+                $ver('/assets/js/theme.js'),
                 true
             );
         }

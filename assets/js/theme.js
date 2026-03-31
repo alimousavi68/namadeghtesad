@@ -99,11 +99,11 @@
         e.preventDefault();
         const setActiveCompanyNav = (targetBtn) => {
             document.querySelectorAll('[data-scroll-to]').forEach((b) => {
-                b.classList.remove('bg-primary/10', 'text-primary', 'border-primary/20');
-                b.querySelectorAll('svg').forEach((svg) => svg.classList.remove('text-primary'));
+                b.classList.remove('bg-rose-50', 'text-rose-700', 'border-rose-200', 'dark:bg-rose-900/20', 'dark:text-rose-200', 'dark:border-rose-900/30');
+                b.querySelectorAll('svg').forEach((svg) => svg.classList.remove('text-rose-600', 'dark:text-rose-200'));
             });
-            targetBtn.classList.add('bg-primary/10', 'text-primary', 'border-primary/20');
-            targetBtn.querySelectorAll('svg').forEach((svg) => svg.classList.add('text-primary'));
+            targetBtn.classList.add('bg-rose-50', 'text-rose-700', 'border-rose-200', 'dark:bg-rose-900/20', 'dark:text-rose-200', 'dark:border-rose-900/30');
+            targetBtn.querySelectorAll('svg').forEach((svg) => svg.classList.add('text-rose-600', 'dark:text-rose-200'));
         };
         setActiveCompanyNav(btn);
         const header = document.getElementById('main-header');
@@ -121,28 +121,53 @@
             const btn = document.querySelector('[data-scroll-to="' + id + '"]');
             if (!btn) return;
             document.querySelectorAll('[data-scroll-to]').forEach((b) => {
-                b.classList.remove('bg-primary/10', 'text-primary', 'border-primary/20');
-                b.querySelectorAll('svg').forEach((svg) => svg.classList.remove('text-primary'));
+                b.classList.remove('bg-rose-50', 'text-rose-700', 'border-rose-200', 'dark:bg-rose-900/20', 'dark:text-rose-200', 'dark:border-rose-900/30');
+                b.querySelectorAll('svg').forEach((svg) => svg.classList.remove('text-rose-600', 'dark:text-rose-200'));
             });
-            btn.classList.add('bg-primary/10', 'text-primary', 'border-primary/20');
-            btn.querySelectorAll('svg').forEach((svg) => svg.classList.add('text-primary'));
+            btn.classList.add('bg-rose-50', 'text-rose-700', 'border-rose-200', 'dark:bg-rose-900/20', 'dark:text-rose-200', 'dark:border-rose-900/30');
+            btn.querySelectorAll('svg').forEach((svg) => svg.classList.add('text-rose-600', 'dark:text-rose-200'));
         };
 
         const header = document.getElementById('main-header');
         const headerOffset = header ? header.getBoundingClientRect().height : 0;
-        const observer = new IntersectionObserver((entries) => {
-            const visible = entries.filter((e) => e.isIntersecting);
-            if (!visible.length) return;
-            visible.sort((a, b) => Math.abs(a.boundingClientRect.top - (headerOffset + 24)) - Math.abs(b.boundingClientRect.top - (headerOffset + 24)));
-            const id = visible[0].target && visible[0].target.id ? visible[0].target.id : null;
+
+        const pickActiveSectionId = () => {
+            const line = headerOffset + 24;
+            for (const s of sections) {
+                const r = s.getBoundingClientRect();
+                if (r.top <= line && r.bottom > line) {
+                    return s.id;
+                }
+            }
+            return sections[0] && sections[0].id ? sections[0].id : null;
+        };
+
+        const applyActiveFromViewport = () => {
+            const id = pickActiveSectionId();
             if (!id) return;
             setActiveCompanyNavById(id);
+        };
+
+        const observer = new IntersectionObserver(() => {
+            applyActiveFromViewport();
         }, {
             root: null,
             rootMargin: `-${headerOffset + 24}px 0px -60% 0px`,
             threshold: [0, 0.1, 0.2],
         });
         sections.forEach((s) => observer.observe(s));
+
+        let ticking = false;
+        window.addEventListener('scroll', function() {
+            if (ticking) return;
+            ticking = true;
+            window.requestAnimationFrame(function() {
+                ticking = false;
+                applyActiveFromViewport();
+            });
+        }, { passive: true });
+
+        applyActiveFromViewport();
     });
 
     document.addEventListener('click', function(e) {

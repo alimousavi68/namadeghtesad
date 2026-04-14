@@ -121,7 +121,7 @@ if (get_post_type($post_id) === 'company') {
                             <span class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
                                 <i data-lucide="layout-list" width="18"></i>
                             </span>
-                            <h2 class="text-sm font-black text-slate-900 dark:text-slate-100">اطلاعات پایه</h2>
+                            <h2 class="text-sm font-black text-slate-900 dark:text-slate-100">منوی اطلاعات</h2>
                         </div>
                         <div class="space-y-2">
                             <button type="button" data-scroll-to="company-basic" class="group w-full flex items-center justify-between px-3 py-2 rounded-xl border border-transparent hover:bg-rose-50 hover:text-rose-700 hover:border-rose-200 dark:hover:bg-rose-900/20 dark:hover:text-rose-200 dark:hover:border-rose-900/30 text-sm font-bold text-slate-700 dark:text-slate-200 transition-colors">

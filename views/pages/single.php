@@ -383,22 +383,25 @@ if (get_post_type($post_id) === 'company') {
                     </div>
                     <?php
                     $company_posts = new WP_Query([
-                        'post_type' => 'post',
-                        'post_status' => 'publish',
-                        'posts_per_page' => 8,
-                        'orderby' => 'date',
-                        'order' => 'DESC',
-                        'meta_query' => [
+                        'post_type'      => 'post',
+                        'post_status'    => 'publish',
+
+                        'orderby'        => 'date',
+                        'order'          => 'DESC',
+                        'ignore_sticky_posts' => true,
+                        'no_found_rows'  => true,
+                        'meta_query'     => [
                             'relation' => 'AND',
                             [
-                                'key' => '_news_content_type',
-                                'value' => 'company',
+                                'key'     => '_news_content_type',
+                                'value'   => 'company',
                                 'compare' => '=',
                             ],
                             [
-                                'key' => '_news_related_company_id',
-                                'value' => (string) $company_id,
+                                'key'     => '_news_related_company_id',
+                                'value'   => $company_id,
                                 'compare' => '=',
+                                'type'    => 'NUMERIC',
                             ],
                         ],
                     ]);
@@ -409,6 +412,15 @@ if (get_post_type($post_id) === 'company') {
                             <?php while ($company_posts->have_posts()) : $company_posts->the_post(); ?>
                                 <?php
                                 $p_id = get_the_ID();
+                                
+                                // Extra safety check to prevent "leaking" posts
+                                $current_p_type = get_post_meta($p_id, '_news_content_type', true);
+                                $current_p_company = get_post_meta($p_id, '_news_related_company_id', true);
+                                
+                                if ($current_p_type !== 'company' || (int)$current_p_company !== (int)$company_id) {
+                                    continue;
+                                }
+
                                 $thumb = get_the_post_thumbnail_url($p_id, 'hasht-small-rect');
                                 $time_diff = function_exists('hasht_time_ago') ? hasht_time_ago($p_id) : '';
                                 ?>

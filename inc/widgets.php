@@ -46,11 +46,22 @@ function hasht_widgets_init() {
         'after_title'   => '</h3>',
     ]);
 
+    register_sidebar([
+        'name'          => 'سایدبار بالای محتوای صفحه اصلی',
+        'id'            => 'home-top-content-sidebar',
+        'description'   => 'این سایدبار در بالای محتوای اصلی صفحه (قبل از دسته‌بندی‌ها) نمایش داده می‌شود.',
+        'before_widget' => '<div id="%1$s" class="widget %2$s mb-8">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="section-title flex items-center gap-4 mb-4 text-xl font-medium"><div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0"><div class="h-1/3 bg-slate-400"></div><div class="h-2/3 bg-primary"></div></div>',
+        'after_title'   => '</h3>',
+    ]);
+
     register_widget('Hasht_Selected_News_Widget');
     register_widget('Hasht_Market_Widget');
     register_widget('Hasht_Advertisement_Widget');
     register_widget('Hasht_Pro_Ad_Widget');
     register_widget('Hasht_Notes_Interviews_Widget');
+    register_widget('Hasht_Company_Stories_Widget');
 }
 add_action('widgets_init', 'hasht_widgets_init');
 
@@ -895,6 +906,101 @@ class Hasht_Notes_Interviews_Widget extends WP_Widget {
         $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
         $instance['cat'] = (!empty($new_instance['cat'])) ? absint($new_instance['cat']) : 0;
         $instance['count'] = (!empty($new_instance['count'])) ? absint($new_instance['count']) : 3;
+        return $instance;
+    }
+}
+
+/**
+ * Widget: Company Stories
+ * Displays an Instagram-style story carousel for companies.
+ */
+class Hasht_Company_Stories_Widget extends WP_Widget {
+
+    public function __construct() {
+        parent::__construct(
+            'hasht_company_stories_widget',
+            'نماد اقتصاد: استوری شرکت‌ها',
+            ['description' => 'نمایش شرکت‌ها در قالب استوری اینستاگرام با کاروسل لمسی']
+        );
+    }
+
+    public function widget($args, $instance) {
+        $title = !empty($instance['title']) ? $instance['title'] : '';
+        $count = !empty($instance['count']) ? $instance['count'] : 12;
+        $show_name = isset($instance['show_name']) ? (bool) $instance['show_name'] : true;
+        $cat = !empty($instance['cat']) ? $instance['cat'] : 0;
+        $visible_items = !empty($instance['visible_items']) ? $instance['visible_items'] : 8;
+        $autoplay = isset($instance['autoplay']) ? (bool) $instance['autoplay'] : false;
+
+        echo $args['before_widget'];
+
+        // Enqueue Swiper only when widget is active
+        wp_enqueue_style('swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', [], '11.0.0');
+        wp_enqueue_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', [], '11.0.0', true);
+
+        get_template_part('views/partials/section-company-stories', null, [
+            'title'         => $title,
+            'count'         => $count,
+            'show_name'     => $show_name,
+            'cat'           => $cat,
+            'visible_items' => $visible_items,
+            'autoplay'      => $autoplay,
+        ]);
+
+        echo $args['after_widget'];
+    }
+
+    public function form($instance) {
+        $title = !empty($instance['title']) ? $instance['title'] : 'شرکت‌های برتر';
+        $count = !empty($instance['count']) ? $instance['count'] : 12;
+        $show_name = isset($instance['show_name']) ? (bool) $instance['show_name'] : true;
+        $cat = !empty($instance['cat']) ? $instance['cat'] : 0;
+        $visible_items = !empty($instance['visible_items']) ? $instance['visible_items'] : 8;
+        $autoplay = isset($instance['autoplay']) ? (bool) $instance['autoplay'] : false;
+        ?>
+        <p>
+            <label for="<?php echo $this->get_field_id('title'); ?>">عنوان ویجت:</label>
+            <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>">
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('cat'); ?>">دسته‌بندی فعالیت:</label>
+            <?php wp_dropdown_categories([
+                'show_option_all' => 'همه دسته‌ها',
+                'taxonomy'        => 'company_activity',
+                'name'            => $this->get_field_name('cat'),
+                'id'              => $this->get_field_id('cat'),
+                'selected'        => $cat,
+                'class'           => 'widefat',
+                'hide_empty'      => 0,
+            ]); ?>
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('count'); ?>">تعداد کل شرکت‌ها (برای لود):</label>
+            <input class="tiny-text" id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>" type="number" step="1" min="1" value="<?php echo esc_attr($count); ?>" size="3">
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('visible_items'); ?>">تعداد نمایشی در دسکتاپ:</label>
+            <input class="tiny-text" id="<?php echo $this->get_field_id('visible_items'); ?>" name="<?php echo $this->get_field_name('visible_items'); ?>" type="number" step="1" min="1" value="<?php echo esc_attr($visible_items); ?>" size="3">
+        </p>
+        <p>
+            <input class="checkbox" type="checkbox" <?php checked($show_name); ?> id="<?php echo $this->get_field_id('show_name'); ?>" name="<?php echo $this->get_field_name('show_name'); ?>" />
+            <label for="<?php echo $this->get_field_id('show_name'); ?>">نمایش نام شرکت</label>
+        </p>
+        <p>
+            <input class="checkbox" type="checkbox" <?php checked($autoplay); ?> id="<?php echo $this->get_field_id('autoplay'); ?>" name="<?php echo $this->get_field_name('autoplay'); ?>" />
+            <label for="<?php echo $this->get_field_id('autoplay'); ?>">جابجایی خودکار (Autoplay)</label>
+        </p>
+        <?php
+    }
+
+    public function update($new_instance, $old_instance) {
+        $instance = [];
+        $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
+        $instance['count'] = (!empty($new_instance['count'])) ? absint($new_instance['count']) : 12;
+        $instance['show_name'] = isset($new_instance['show_name']) ? (bool) $new_instance['show_name'] : false;
+        $instance['cat'] = (!empty($new_instance['cat'])) ? absint($new_instance['cat']) : 0;
+        $instance['visible_items'] = (!empty($new_instance['visible_items'])) ? absint($new_instance['visible_items']) : 8;
+        $instance['autoplay'] = isset($new_instance['autoplay']) ? (bool) $new_instance['autoplay'] : false;
         return $instance;
     }
 }

@@ -1,136 +1,190 @@
-<!-- Company Stories -->
-<section class="my-16">
-    <div class="flex items-center justify-between mb-8">
-        <h3 class="section-title flex items-center gap-4 text-xl font-medium">
-            <div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">
-                <div class="h-1/3 bg-slate-400"></div>
-                <div class="h-2/3 bg-primary"></div>
-            </div>
-            پیشخوان شرکت‌ها
-        </h3>
+<?php
+/**
+ * Partial: Company Stories
+ * Displays a professional, responsive Instagram-style story carousel for companies.
+ *
+ * @var array $args Widget arguments and instances
+ */
 
-        <a href="#"
-            class="link-more text-sm text-slate-500 hover:text-rose-600 transition-colors flex items-center gap-1">
-            مشاهده بیشتر <i data-lucide="arrow-left" width="12"></i>
-        </a>
-    </div>
+$title = !empty($args['title']) ? $args['title'] : '';
+$count = !empty($args['count']) ? $args['count'] : 12;
+$show_name = isset($args['show_name']) ? $args['show_name'] : true;
+$cat = !empty($args['cat']) ? $args['cat'] : 0;
+$visible_items = !empty($args['visible_items']) ? $args['visible_items'] : 8;
+$autoplay = isset($args['autoplay']) ? (bool) $args['autoplay'] : false;
 
-    <div class="relative group" id="company-stories-container">
-        <button id="scroll-right"
-            class="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-lg border border-slate-100 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 transition-opacity hover:text-primary">
-            <i data-lucide="chevron-right" width="24"></i>
-        </button>
-        <button id="scroll-left"
-            class="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-lg border border-slate-100 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 transition-opacity hover:text-primary">
-            <i data-lucide="chevron-left" width="24"></i>
-        </button>
+$query_args = [
+    'post_type'      => 'company',
+    'posts_per_page' => $count,
+    'post_status'    => 'publish',
+    'orderby'        => 'date',
+    'order'          => 'DESC',
+];
 
-        <div id="company-scroll-area"
-            class="flex items-center gap-8 overflow-x-auto pb-6 scrollbar-hide scroll-smooth px-4 snap-x snap-mandatory">
-            <!-- Company Items -->
-            <div class="flex flex-col items-center gap-3 group cursor-pointer shrink-0 snap-start">
-                <div
-                    class="w-24 h-24 md:w-32 md:h-32 rounded-full p-1 border-2 border-primary group-hover:border-slate-800 dark:group-hover:border-slate-200 transition-all">
-                    <div
-                        class="w-full h-full rounded-full overflow-hidden bg-white shadow-sm flex items-center justify-center">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.webp" alt="Iran Khodro"
-                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all">
-                    </div>
+if ($cat > 0) {
+    $query_args['tax_query'] = [
+        [
+            'taxonomy' => 'company_activity',
+            'field'    => 'term_id',
+            'terms'    => $cat,
+        ],
+    ];
+}
+
+$query = new WP_Query($query_args);
+
+if (!$query->have_posts()) {
+    return;
+}
+?>
+
+<section class="company-stories-section py-4 overflow-hidden mb-8">
+    <?php if ($title) : ?>
+        <div class="flex items-center justify-between mb-6 px-4">
+            <h3 class="section-title flex items-center gap-4 text-xl font-medium">
+                <div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">
+                    <div class="h-1/3 bg-slate-400"></div>
+                    <div class="h-2/3 bg-primary"></div>
                 </div>
-                <span
-                    class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">ایران
-                    خودرو</span>
+                <?php echo esc_html($title); ?>
+            </h3>
+            <div class="flex gap-2">
+                <button class="swiper-prev-stories w-10 h-10 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-primary hover:border-primary transition-all disabled:opacity-30 disabled:pointer-events-none">
+                    <i data-lucide="chevron-right" width="20"></i>
+                </button>
+                <button class="swiper-next-stories w-10 h-10 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-primary hover:border-primary transition-all disabled:opacity-30 disabled:pointer-events-none">
+                    <i data-lucide="chevron-left" width="20"></i>
+                </button>
             </div>
-            <div class="flex flex-col items-center gap-3 group cursor-pointer shrink-0 snap-start">
-                <div
-                    class="w-24 h-24 md:w-32 md:h-32 rounded-full p-1 border-2 border-primary group-hover:border-slate-800 dark:group-hover:border-slate-200 transition-all">
-                    <div
-                        class="w-full h-full rounded-full overflow-hidden bg-white shadow-sm flex items-center justify-center">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.webp" alt="Saipa"
-                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all">
-                    </div>
+        </div>
+    <?php endif; ?>
+
+    <div class="relative px-4">
+        <!-- Shadow Box Container (No background color as requested, but shadow enabled) -->
+        <div class="rounded-3xl  border border-slate-100 dark:border-slate-800/50">
+            <div class="swiper companyStoriesSwiper">
+                <div class="swiper-wrapper !ease-out">
+                    <?php foreach ($query->posts as $post) : 
+                        $post_id = $post->ID;
+                        // Use 'thumbnail' size as requested (smallest appropriate)
+                        $logo_url = get_the_post_thumbnail_url($post_id, 'thumbnail'); 
+                        $has_logo = !empty($logo_url);
+                        if (!$has_logo) {
+                            // Using a consistent UI placeholder instead of a missing file
+                            $logo_url = ''; 
+                        }
+                        $company_name = get_the_title($post);
+                        $permalink = get_permalink($post_id);
+                    ?>
+                        <div class="swiper-slide !w-auto">
+                            <a href="<?php echo esc_url($permalink); ?>" class="flex flex-col items-center gap-3 group/item">
+                                <!-- Instagram Style Ring -->
+                                <div class="relative group-hover/item:scale-110 transition-transform duration-500">
+                                    <!-- Fit and Fill: Ensuring the image fills the circle container -->
+                                    <div class="w-[72px] h-[72px] sm:w-[90px] sm:h-[90px] rounded-full p-[3px] bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] animate-story-ring">
+                                        <div class="w-full h-full rounded-full p-[2px] bg-white dark:bg-slate-900">
+                                            <div class="w-full h-full rounded-full overflow-hidden bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center">
+                                                <?php if ($has_logo) : ?>
+                                                    <img 
+                                                        src="<?php echo esc_url($logo_url); ?>" 
+                                                        alt="<?php echo esc_attr($company_name); ?>" 
+                                                        class="w-full h-full object-cover transition-all duration-700 group-hover/item:scale-110"
+                                                        loading="lazy"
+                                                    >
+                                                <?php else : ?>
+                                                    <div class="w-full h-full flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-400">
+                                                        <i data-lucide="building-2" width="32" class="opacity-50"></i>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Hover Overlay -->
+                                    <div class="absolute inset-0 rounded-full bg-primary/5 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                                </div>
+                                
+                                <?php if ($show_name) : ?>
+                                    <!-- Long name support: Removed truncate, added line-clamp-2 or wrapping -->
+                                    <span class="text-[11px] sm:text-xs font-bold text-slate-700 dark:text-slate-300 text-center max-w-[90px] sm:max-w-[110px] leading-tight group-hover/item:text-primary transition-colors line-clamp-2 min-h-[2.5em] flex items-center justify-center">
+                                        <?php echo esc_html($company_name); ?>
+                                    </span>
+                                <?php endif; ?>
+                            </a>
+                        </div>
+                    <?php endforeach; wp_reset_postdata(); ?>
                 </div>
-                <span
-                    class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">سایپا</span>
-            </div>
-            <div class="flex flex-col items-center gap-3 group cursor-pointer shrink-0 snap-start">
-                <div
-                    class="w-24 h-24 md:w-32 md:h-32 rounded-full p-1 border-2 border-primary group-hover:border-slate-800 dark:group-hover:border-slate-200 transition-all">
-                    <div
-                        class="w-full h-full rounded-full overflow-hidden bg-white shadow-sm flex items-center justify-center">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.webp" alt="Central Bank"
-                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all">
-                    </div>
-                </div>
-                <span
-                    class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">بانک
-                    مرکزی</span>
-            </div>
-            <div class="flex flex-col items-center gap-3 group cursor-pointer shrink-0 snap-start">
-                <div
-                    class="w-24 h-24 md:w-32 md:h-32 rounded-full p-1 border-2 border-primary group-hover:border-slate-800 dark:group-hover:border-slate-200 transition-all">
-                    <div
-                        class="w-full h-full rounded-full overflow-hidden bg-white shadow-sm flex items-center justify-center">
-                        <img src="https://picsum.photos/seed/comp4/100/100" alt="Oil & Gas"
-                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all">
-                    </div>
-                </div>
-                <span
-                    class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">نفت
-                    و گاز پارس</span>
-            </div>
-            <div class="flex flex-col items-center gap-3 group cursor-pointer shrink-0 snap-start">
-                <div
-                    class="w-24 h-24 md:w-32 md:h-32 rounded-full p-1 border-2 border-primary group-hover:border-slate-800 dark:group-hover:border-slate-200 transition-all">
-                    <div
-                        class="w-full h-full rounded-full overflow-hidden bg-white shadow-sm flex items-center justify-center">
-                        <img src="https://picsum.photos/seed/comp5/100/100" alt="Mobarakeh Steel"
-                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all">
-                    </div>
-                </div>
-                <span
-                    class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">فولاد
-                    مبارکه</span>
-            </div>
-            <div class="flex flex-col items-center gap-3 group cursor-pointer shrink-0 snap-start">
-                <div
-                    class="w-24 h-24 md:w-32 md:h-32 rounded-full p-1 border-2 border-primary group-hover:border-slate-800 dark:group-hover:border-slate-200 transition-all">
-                    <div
-                        class="w-full h-full rounded-full overflow-hidden bg-white shadow-sm flex items-center justify-center">
-                        <img src="https://picsum.photos/seed/comp6/100/100" alt="Zob Ahan"
-                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all">
-                    </div>
-                </div>
-                <span
-                    class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">ذوب
-                    آهن</span>
-            </div>
-            <div class="flex flex-col items-center gap-3 group cursor-pointer shrink-0 snap-start">
-                <div
-                    class="w-24 h-24 md:w-32 md:h-32 rounded-full p-1 border-2 border-primary group-hover:border-slate-800 dark:group-hover:border-slate-200 transition-all">
-                    <div
-                        class="w-full h-full rounded-full overflow-hidden bg-white shadow-sm flex items-center justify-center">
-                        <img src="https://picsum.photos/seed/comp6/100/100" alt="Zob Ahan"
-                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all">
-                    </div>
-                </div>
-                <span
-                    class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">مس
-                    کرمان</span>
-            </div>
-            <div class="flex flex-col items-center gap-3 group cursor-pointer shrink-0 snap-start">
-                <div
-                    class="w-24 h-24 md:w-32 md:h-32 rounded-full p-1 border-2 border-primary group-hover:border-slate-800 dark:group-hover:border-slate-200 transition-all">
-                    <div
-                        class="w-full h-full rounded-full overflow-hidden bg-white shadow-sm flex items-center justify-center">
-                        <img src="https://picsum.photos/seed/comp6/100/100" alt="Zob Ahan"
-                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all">
-                    </div>
-                </div>
-                <span
-                    class="text-sm font-medium text-text-main dark:text-slate-300 group-hover:text-primary transition-colors text-center w-28 truncate">ذوب
-                    آهن</span>
             </div>
         </div>
     </div>
 </section>
+
+<style>
+.animate-story-ring {
+    background-size: 200% 200%;
+    animation: story-gradient-shift 4s ease infinite;
+}
+@keyframes story-gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.companyStoriesSwiper .swiper-slide {
+    width: auto !important;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof Swiper !== 'undefined') {
+        const swiper = new Swiper('.companyStoriesSwiper', {
+            slidesPerView: 2,
+            spaceBetween: 16,
+            <?php if ($autoplay) : ?>
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+            },
+            <?php endif; ?>
+            freeMode: {
+                enabled: true,
+                sticky: true,
+            },
+            grabCursor: true,
+            mousewheel: {
+                forceToAxis: true,
+            },
+            navigation: {
+                nextEl: '.swiper-next-stories',
+                prevEl: '.swiper-prev-stories',
+            },
+            breakpoints: {
+                480: {
+                    slidesPerView: 3,
+                    spaceBetween: 16,
+                },
+                640: {
+                    slidesPerView: 4,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 6,
+                    spaceBetween: 24,
+                },
+                1024: {
+                    slidesPerView: <?php echo intval($visible_items); ?>,
+                    spaceBetween: 28,
+                }
+            },
+            on: {
+                init: function() {
+                    if (typeof lucide !== 'undefined') {
+                        lucide.createIcons();
+                    }
+                }
+            }
+        });
+    }
+});
+</script>

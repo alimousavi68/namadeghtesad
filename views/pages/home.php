@@ -23,6 +23,12 @@
             <!-- Main Content (Columns 1-9) -->
             <div class="lg:col-span-9 space-y-8">
 
+                <?php 
+                if (is_active_sidebar('home-top-content-sidebar')) {
+                    dynamic_sidebar('home-top-content-sidebar');
+                }
+                ?>
+                 
                 <!-- Macro Econ Category -->
                 <?php 
                 if (get_theme_mod('hasht_home_grid_enable', true)) {

@@ -76,7 +76,7 @@ if (!$query->have_posts()) {
                         $company_name = get_the_title($post);
                         $permalink = get_permalink($post_id);
                     ?>
-                        <div class="swiper-slide !w-auto">
+                        <div class="swiper-slide !w-[100px] sm:!w-[120px]">
                             <a href="<?php echo esc_url($permalink); ?>" class="flex flex-col items-center gap-3 group/item">
                                 <!-- Instagram Style Ring -->
                                 <div class="relative group-hover/item:scale-110 transition-transform duration-500">
@@ -129,9 +129,6 @@ if (!$query->have_posts()) {
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
-.companyStoriesSwiper .swiper-slide {
-    width: auto !important;
-}
 </style>
 
 <script>
@@ -139,12 +136,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof Swiper !== 'undefined') {
         const storiesContainer = document.querySelector('.companyStoriesSwiper');
         const slideCount = storiesContainer ? storiesContainer.querySelectorAll('.swiper-slide').length : 0;
-        const visibleItems = <?php echo intval($visible_items); ?>;
         
         const swiper = new Swiper('.companyStoriesSwiper', {
-            slidesPerView: 2,
+            slidesPerView: 'auto',
             spaceBetween: 16,
-            loop: slideCount >= 4, // Enable loop if we have enough slides
+            loop: slideCount >= 5, // Loop works best with more slides
+            loopedSlides: slideCount >= 5 ? slideCount : null,
+            loopAdditionalSlides: 3,
+            centeredSlides: false,
             <?php if ($autoplay) : ?>
             autoplay: {
                 delay: 3000,
@@ -155,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
             freeMode: {
                 enabled: true,
                 sticky: true,
+                momentumBounce: false,
             },
             grabCursor: true,
             mousewheel: {
@@ -165,28 +165,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 prevEl: '.swiper-prev-stories',
             },
             breakpoints: {
-                480: {
-                    slidesPerView: slideCount < 3 ? slideCount : 3,
-                    spaceBetween: 16,
-                },
                 640: {
-                    slidesPerView: slideCount < 4 ? slideCount : 4,
                     spaceBetween: 20,
                 },
                 768: {
-                    slidesPerView: slideCount < 6 ? slideCount : 6,
                     spaceBetween: 24,
                 },
                 1024: {
-                    slidesPerView: slideCount < visibleItems ? slideCount : visibleItems,
                     spaceBetween: 28,
                 }
             },
             on: {
                 init: function() {
-                    if (typeof lucide !== 'undefined') {
-                        lucide.createIcons();
-                    }
+                    // Lucide icons are initialized globally in main.js
                 }
             }
         });

@@ -983,6 +983,9 @@ $share_text = rawurlencode(get_the_title($post_id) . ' - ' . get_permalink($post
                             'post_status' => 'publish',
                             'post__not_in' => [$post_id],
                             'ignore_sticky_posts' => 1,
+                            'no_found_rows' => true,
+                            'update_post_meta_cache' => true,
+                            'update_post_term_cache' => false,
                         ];
 
                         if ($related_query_type === 'category') {

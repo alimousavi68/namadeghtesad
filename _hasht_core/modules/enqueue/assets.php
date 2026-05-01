@@ -78,7 +78,8 @@ if (!function_exists('core_enqueue_assets')) {
             );
         }
 
-        // 2. Theme JS
+        // 2. Theme JS (Redundant - logic merged into main.js)
+        /*
         if (file_exists(get_template_directory() . '/assets/js/theme.js')) {
             wp_enqueue_script(
                 'theme-js',
@@ -88,6 +89,7 @@ if (!function_exists('core_enqueue_assets')) {
                 true
             );
         }
+        */
     }
 }
 

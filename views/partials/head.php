@@ -1,59 +1,5 @@
-<!-- Tailwind CSS (Local) -->
-<script src="<?php echo get_template_directory_uri(); ?>/assets/js/tailwindcss.js"></script>
-
-<!-- Tailwind Config -->
-<script>
-    if (window.tailwind) {
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['IRANYekanX', 'Vazirmatn', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: 'var(--color-primary)',
-                        secondary: 'var(--color-secondary)',
-                        background: 'var(--color-background)',
-                        text: {
-                            main: 'var(--color-text-main)',
-                            light: 'var(--color-text-light)',
-                        },
-                        border: {
-                            DEFAULT: 'var(--color-border)',
-                        },
-                        header: {
-                            bg: 'var(--color-header-bg)',
-                        },
-                        footer: {
-                            bg: 'var(--color-footer-bg)',
-                        }
-                    },
-                    animation: {
-                        'ticker-scroll': 'ticker-ltr 90s linear infinite',
-                        'pulse-heart': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        'ticker-ltr': {
-                            '0%': { transform: 'translateX(-50%)' },
-                            '100%': { transform: 'translateX(0)' }, 
-                        }
-                    }
-                }
-            }
-        }
-    }
-</script>
-
 <!-- Lucide Icons (Local) -->
 <script src="<?php echo get_template_directory_uri(); ?>/assets/js/lucide.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        if (window.lucide) {
-            lucide.createIcons();
-        }
-    });
-</script>
 
 <!-- Standard CSS (Fonts & Scrollbars & Print) -->
 <style>

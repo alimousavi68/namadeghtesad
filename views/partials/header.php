@@ -121,9 +121,6 @@
     <!-- Mobile Menu Overlay -->
     <div id="mobile-menu-overlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[90] opacity-0 invisible transition-all duration-300"></div>
 
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu-overlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[90] opacity-0 invisible transition-all duration-300"></div>
-
     <!-- Mobile Menu -->
     <nav id="mobile-menu"
         class="fixed inset-y-0 right-0 w-80 bg-white dark:bg-slate-900 border-r border-slate-100 dark:border-slate-800 shadow-2xl transition-transform duration-300 z-[100] translate-x-full overflow-y-auto">
@@ -134,8 +131,7 @@
             ?>
                 <img src="<?php echo esc_url($logo[0]); ?>" alt="<?php bloginfo('name'); ?>" class="h-14 w-auto object-contain dark:brightness-0 dark:invert" />
             <?php else: ?>
-                <img src="https://namadeghtesad.ir/wp-content/uploads/2023/12/logona.png" alt="نماد اقتصاد"
-                    class="h-14 w-auto object-contain dark:brightness-0 dark:invert" />
+                <span class="text-xl font-black text-primary"><?php bloginfo('name'); ?></span>
             <?php endif; ?>
             <button id="menu-close" class="p-2 text-slate-500 hover:text-rose-600 transition-colors"><i data-lucide="x" width="24"></i></button>
         </div>

@@ -303,6 +303,9 @@ class Hasht_Selected_News_Widget extends WP_Widget {
             'posts_per_page' => $count,
             'post_status'    => 'publish',
             'ignore_sticky_posts' => 1,
+            'no_found_rows'  => true,
+            'update_post_meta_cache' => true,
+            'update_post_term_cache' => false,
         ];
 
         $exclude_cats = [];
@@ -788,6 +791,9 @@ class Hasht_Notes_Interviews_Widget extends WP_Widget {
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
+            'no_found_rows'  => true,
+            'update_post_meta_cache' => true,
+            'update_post_term_cache' => false,
         ];
         if ($cat) {
             $query_args['cat'] = $cat;

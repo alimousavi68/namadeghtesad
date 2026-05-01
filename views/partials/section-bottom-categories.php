@@ -26,7 +26,13 @@ $configs = [
 ];
 
 foreach ($configs as $key => $conf) {
-    $args = ['post_type' => 'post', 'posts_per_page' => $conf['count']];
+    $args = [
+        'post_type'      => 'post', 
+        'posts_per_page' => $conf['count'],
+        'no_found_rows'  => true,
+        'update_post_meta_cache' => true,
+        'update_post_term_cache' => false,
+    ];
     if ($conf['slug']) {
         $args['cat'] = $conf['slug'];
     }

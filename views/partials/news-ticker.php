@@ -11,6 +11,9 @@ $args = [
     'post_type'      => 'post',
     'posts_per_page' => $count,
     'post_status'    => 'publish',
+    'no_found_rows'  => true,
+    'update_post_meta_cache' => false, // Only titles/links used
+    'update_post_term_cache' => false,
 ];
 if ($cat_id) {
     $args['cat'] = $cat_id;

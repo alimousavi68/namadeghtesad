@@ -10,6 +10,9 @@ $args = [
     'post_status'         => 'publish',
     'orderby'             => 'date',
     'order'               => 'DESC',
+    'no_found_rows'       => true,
+    'update_post_meta_cache' => true,
+    'update_post_term_cache' => false,
 ];
 
 if (!empty($cat_id)) {

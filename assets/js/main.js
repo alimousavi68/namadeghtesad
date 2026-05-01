@@ -1,11 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded, initializing scripts...');
     
-    // Initialize Lucide Icons (handled in head.php for faster render, but re-run here just in case of dynamic content)
-    if (window.lucide) {
-        lucide.createIcons();
-    }
-
     // Set Current Date
     const currentDateElem = document.getElementById('current-date');
     if (currentDateElem) {
@@ -244,9 +239,6 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         document.body.appendChild(lightbox);
 
-        // Re-init icons for the new lightbox elements
-        if (window.lucide) lucide.createIcons();
-
         const lightboxImg = document.getElementById('lightbox-img');
         const closeBtn = document.getElementById('lightbox-close');
         const prevBtn = document.getElementById('lightbox-prev');
@@ -336,6 +328,97 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'ArrowLeft') showNext(); // RTL: Left is Next
             if (e.key === 'ArrowRight') showPrev(); // RTL: Right is Prev
         });
+    }
+
+    /**
+     * Extra Logic Merged from theme.js
+     */
+
+    // 1. Smooth Scroll with Offset for [data-scroll-to]
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-scroll-to]');
+        if (!btn) return;
+        
+        const id = btn.getAttribute('data-scroll-to');
+        if (!id) return;
+        
+        const el = document.getElementById(id);
+        if (!el) return;
+        
+        e.preventDefault();
+        
+        // Highlight active nav item
+        document.querySelectorAll('[data-scroll-to]').forEach((b) => {
+            b.classList.remove('bg-rose-50', 'text-rose-700', 'border-rose-200', 'dark:bg-rose-900/20', 'dark:text-rose-200', 'dark:border-rose-900/30');
+            b.querySelectorAll('svg, i').forEach((icon) => icon.classList.remove('text-rose-600', 'dark:text-rose-200'));
+        });
+        
+        btn.classList.add('bg-rose-50', 'text-rose-700', 'border-rose-200', 'dark:bg-rose-900/20', 'dark:text-rose-200', 'dark:border-rose-900/30');
+        btn.querySelectorAll('svg, i').forEach((icon) => icon.classList.add('text-rose-600', 'dark:text-rose-200'));
+
+        const header = document.getElementById('main-header');
+        const headerOffset = header ? header.getBoundingClientRect().height : 0;
+        const top = el.getBoundingClientRect().top + window.scrollY - headerOffset - 24;
+        
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    });
+
+    // 2. IntersectionObserver for Company Section Highlighting
+    const companySections = document.querySelectorAll('#company-basic, #company-intro, #company-description, #company-products, #company-posts');
+    if (companySections.length > 0 && typeof IntersectionObserver !== 'undefined') {
+        const header = document.getElementById('main-header');
+        const headerOffset = header ? header.getBoundingClientRect().height : 0;
+
+        const setActiveNav = (id) => {
+            const btn = document.querySelector(`[data-scroll-to="${id}"]`);
+            if (!btn) return;
+            
+            document.querySelectorAll('[data-scroll-to]').forEach((b) => {
+                b.classList.remove('bg-rose-50', 'text-rose-700', 'border-rose-200', 'dark:bg-rose-900/20', 'dark:text-rose-200', 'dark:border-rose-900/30');
+                b.querySelectorAll('svg, i').forEach((icon) => icon.classList.remove('text-rose-600', 'dark:text-rose-200'));
+            });
+            
+            btn.classList.add('bg-rose-50', 'text-rose-700', 'border-rose-200', 'dark:bg-rose-900/20', 'dark:text-rose-200', 'dark:border-rose-900/30');
+            btn.querySelectorAll('svg, i').forEach((icon) => icon.classList.add('text-rose-600', 'dark:text-rose-200'));
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setActiveNav(entry.target.id);
+                }
+            });
+        }, {
+            rootMargin: `-${headerOffset + 40}px 0px -60% 0px`,
+            threshold: 0
+        });
+
+        companySections.forEach(section => observer.observe(section));
+    }
+
+    // 3. Mobile Submenu Toggle
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-toggle-submenu]');
+        if (!btn) return;
+        
+        const li = btn.closest('li');
+        const submenu = li ? li.querySelector('ul') : null;
+        if (submenu) {
+            const isOpen = !submenu.classList.contains('hidden');
+            submenu.classList.toggle('hidden', isOpen);
+            btn.setAttribute('aria-expanded', String(!isOpen));
+            
+            // Rotate icon
+            const icon = btn.querySelector('svg, i');
+            if (icon) {
+                icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+            }
+        }
+    });
+
+    // Final Lucide Initialization
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
     }
 
 });

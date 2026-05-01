@@ -350,11 +350,6 @@ add_action('wp_enqueue_scripts', function () {
     );
 });
 
-// Load Seeder (Only for development)
-if (file_exists(__DIR__ . '/inc/seeder.php')) {
-    require_once __DIR__ . '/inc/seeder.php';
-}
-
 // Load Custom Widgets
 if (file_exists(__DIR__ . '/inc/widgets.php')) {
     require_once __DIR__ . '/inc/widgets.php';

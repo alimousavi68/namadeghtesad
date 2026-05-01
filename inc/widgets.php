@@ -934,9 +934,9 @@ class Hasht_Company_Stories_Widget extends WP_Widget {
 
         echo $args['before_widget'];
 
-        // Enqueue Swiper only when widget is active
-        wp_enqueue_style('swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', [], '11.0.0');
-        wp_enqueue_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', [], '11.0.0', true);
+        // Enqueue Swiper locally
+        wp_enqueue_style('swiper', get_template_directory_uri() . '/assets/css/swiper-bundle.min.css', [], '11.0.0');
+        wp_enqueue_script('swiper', get_template_directory_uri() . '/assets/js/swiper-bundle.min.js', [], '11.0.0', true);
 
         get_template_part('views/partials/section-company-stories', null, [
             'title'         => $title,

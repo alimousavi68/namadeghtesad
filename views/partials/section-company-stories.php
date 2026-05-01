@@ -76,7 +76,7 @@ if (!$query->have_posts()) {
                         $company_name = get_the_title($post);
                         $permalink = get_permalink($post_id);
                     ?>
-                        <div class="swiper-slide !w-[100px] sm:!w-[120px]">
+                        <div class="swiper-slide">
                             <a href="<?php echo esc_url($permalink); ?>" class="flex flex-col items-center gap-3 group/item">
                                 <!-- Instagram Style Ring -->
                                 <div class="relative group-hover/item:scale-110 transition-transform duration-500">
@@ -136,9 +136,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof Swiper !== 'undefined') {
         const storiesContainer = document.querySelector('.companyStoriesSwiper');
         const slideCount = storiesContainer ? storiesContainer.querySelectorAll('.swiper-slide').length : 0;
+        const visibleItems = <?php echo intval($visible_items); ?>;
         
         const swiper = new Swiper('.companyStoriesSwiper', {
-            slidesPerView: 'auto',
+            slidesPerView: 2,
             spaceBetween: 16,
             loop: slideCount >= 5, // Loop works best with more slides
             loopedSlides: slideCount >= 5 ? slideCount : null,
@@ -165,13 +166,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 prevEl: '.swiper-prev-stories',
             },
             breakpoints: {
+                480: {
+                    slidesPerView: slideCount < 3 ? slideCount : 3,
+                    spaceBetween: 16,
+                },
                 640: {
+                    slidesPerView: slideCount < 4 ? slideCount : 4,
                     spaceBetween: 20,
                 },
                 768: {
+                    slidesPerView: slideCount < 6 ? slideCount : 6,
                     spaceBetween: 24,
                 },
                 1024: {
+                    slidesPerView: slideCount < visibleItems ? slideCount : visibleItems,
                     spaceBetween: 28,
                 }
             },

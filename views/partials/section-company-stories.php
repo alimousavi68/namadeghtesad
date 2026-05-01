@@ -141,9 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const swiper = new Swiper('.companyStoriesSwiper', {
             slidesPerView: 2,
             spaceBetween: 16,
-            loop: slideCount >= 5, // Loop works best with more slides
-            loopedSlides: slideCount >= 5 ? slideCount : null,
-            loopAdditionalSlides: 3,
+            loop: slideCount > 4, // Enable loop if we have more than 4 slides
             centeredSlides: false,
             <?php if ($autoplay) : ?>
             autoplay: {
@@ -152,11 +150,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 pauseOnMouseEnter: true,
             },
             <?php endif; ?>
-            freeMode: {
-                enabled: true,
-                sticky: true,
-                momentumBounce: false,
-            },
             grabCursor: true,
             mousewheel: {
                 forceToAxis: true,
@@ -167,19 +160,19 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             breakpoints: {
                 480: {
-                    slidesPerView: slideCount < 3 ? slideCount : 3,
+                    slidesPerView: Math.min(slideCount, 3),
                     spaceBetween: 16,
                 },
                 640: {
-                    slidesPerView: slideCount < 4 ? slideCount : 4,
+                    slidesPerView: Math.min(slideCount, 4),
                     spaceBetween: 20,
                 },
                 768: {
-                    slidesPerView: slideCount < 6 ? slideCount : 6,
+                    slidesPerView: Math.min(slideCount, 6),
                     spaceBetween: 24,
                 },
                 1024: {
-                    slidesPerView: slideCount < visibleItems ? slideCount : visibleItems,
+                    slidesPerView: Math.min(slideCount, visibleItems),
                     spaceBetween: 28,
                 }
             },

@@ -137,9 +137,14 @@ if (!$query->have_posts()) {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     if (typeof Swiper !== 'undefined') {
+        const storiesContainer = document.querySelector('.companyStoriesSwiper');
+        const slideCount = storiesContainer ? storiesContainer.querySelectorAll('.swiper-slide').length : 0;
+        const visibleItems = <?php echo intval($visible_items); ?>;
+        
         const swiper = new Swiper('.companyStoriesSwiper', {
             slidesPerView: 2,
             spaceBetween: 16,
+            loop: slideCount >= 4, // Enable loop if we have enough slides
             <?php if ($autoplay) : ?>
             autoplay: {
                 delay: 3000,
@@ -161,19 +166,19 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             breakpoints: {
                 480: {
-                    slidesPerView: 3,
+                    slidesPerView: slideCount < 3 ? slideCount : 3,
                     spaceBetween: 16,
                 },
                 640: {
-                    slidesPerView: 4,
+                    slidesPerView: slideCount < 4 ? slideCount : 4,
                     spaceBetween: 20,
                 },
                 768: {
-                    slidesPerView: 6,
+                    slidesPerView: slideCount < 6 ? slideCount : 6,
                     spaceBetween: 24,
                 },
                 1024: {
-                    slidesPerView: <?php echo intval($visible_items); ?>,
+                    slidesPerView: slideCount < visibleItems ? slideCount : visibleItems,
                     spaceBetween: 28,
                 }
             },

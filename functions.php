@@ -339,6 +339,15 @@ add_action('wp_enqueue_scripts', function () {
             'ajax_url' => admin_url( 'admin-ajax.php' )
         ]);
     }
+
+    // Enqueue Main JS (Global)
+    wp_enqueue_script(
+        'hasht-main',
+        get_template_directory_uri() . '/assets/js/main.js',
+        ['jquery', 'lucide'],
+        '1.0.1',
+        true
+    );
 });
 
 // Load Seeder (Only for development)

@@ -23,11 +23,7 @@
             <!-- Main Content (Columns 1-9) -->
             <div class="lg:col-span-9 space-y-8">
 
-                <?php 
-                if (is_active_sidebar('home-top-content-sidebar')) {
-                    dynamic_sidebar('home-top-content-sidebar');
-                }
-                ?>
+               
                  
                 <!-- Macro Econ Category -->
                 <?php 
@@ -74,6 +70,12 @@
                 }
                 ?>
 
+                 <?php 
+                if (is_active_sidebar('home-top-content-sidebar')) {
+                    dynamic_sidebar('home-top-content-sidebar');
+                }
+                ?>
+
                 <!-- Visual Multimedia Showcase -->
                 <?php 
                 if (get_theme_mod('hasht_home_multimedia_enable', true)) {
@@ -109,10 +111,6 @@
         ?>
 
     </div>
-<?php core_end_section(); ?>
-
-<?php core_start_section('scripts'); ?>
-    <script src="<?php echo get_template_directory_uri(); ?>/assets/js/main.js" defer></script>
 <?php core_end_section(); ?>
 
 <?php core_view('layout/base'); ?>

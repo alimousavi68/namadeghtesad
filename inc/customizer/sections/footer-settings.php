@@ -50,6 +50,19 @@ return [
                         'type'  => 'text',
                     ],
                 ]
+            ],
+            'hasht_footer_licenses' => [
+                'title'       => 'مجوزهای سایت',
+                'description' => 'تنظیمات مربوط به نمادها و مجوزهای سایت',
+                'priority'    => 30,
+                'fields'      => [
+                    'hasht_footer_license_codes' => [
+                        'label'       => 'کدهای مجوز (HTML/اسکریپت)',
+                        'type'        => 'textarea',
+                        'description' => 'کدهای مربوط به ای‌نماد، ساماندهی و غیره را اینجا قرار دهید. دقت کنید که کدها بدون تغییر کپی شوند تا اسکریپت‌ها به درستی عمل کنند.',
+                        'sanitize_callback' => function($input) { return $input; },
+                    ],
+                ]
             ]
         ]
     ]

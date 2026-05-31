@@ -94,37 +94,6 @@ echo '<img src="' . esc_url($logo[0]) . '" alt="' . get_bloginfo('name') . '" cl
                 ?>
             </nav>
 
-            <!-- Help Links -->
-            <nav class="col-span-1 footer-accordion" aria-label="Help Links">
-                <?php
-                $menu_title_help = 'خدمات مخاطبان';
-                if (isset($locations['footer_help'])) {
-                    $menu_obj = wp_get_nav_menu_object($locations['footer_help']);
-                    if ($menu_obj) {
-                        $menu_title_help = $menu_obj->name;
-                    }
-                }
-                ?>
-                <button class="w-full flex items-center justify-between text-white font-medium mb-4 md:mb-6 border-r-2 border-primary pr-3 md:cursor-default">
-                    <span><?php echo esc_html($menu_title_help); ?></span>
-                    <i data-lucide="chevron-down" class="w-5 h-5 md:hidden transition-transform duration-300"></i>
-                </button>
-                <?php
-                wp_nav_menu([
-                    'theme_location' => 'footer_help',
-                    'container'      => false,
-                    'menu_class'     => 'space-y-4 text-sm font-medium hidden md:block overflow-hidden transition-all duration-300',
-                    'fallback_cb'    => false,
-                    'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-                    'walker'         => new class extends Walker_Nav_Menu {
-                        function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
-                            $output .= '<li><a href="' . esc_url($item->url) . '" class="hover:text-primary transition-colors">' . esc_html($item->title) . '</a></li>';
-                        }
-                    }
-                ]);
-                ?>
-            </nav>
-
             <!-- Contact -->
             <section class="col-span-1 footer-accordion">
                 <button class="w-full flex items-center justify-between text-white font-medium mb-4 md:mb-6 border-r-2 border-primary pr-3 md:cursor-default">
@@ -173,6 +142,19 @@ echo '<img src="' . esc_url($logo[0]) . '" alt="' . get_bloginfo('name') . '" cl
                         </li>
                     <?php endif; ?>
                 </ul>
+            </section>
+
+            <!-- Licenses -->
+            <section class="col-span-1 footer-accordion">
+                <button class="w-full flex items-center justify-between text-white font-medium mb-4 md:mb-6 border-r-2 border-primary pr-3 md:cursor-default">
+                    <span>مجوز ها</span>
+                    <i data-lucide="chevron-down" class="w-5 h-5 md:hidden transition-transform duration-300"></i>
+                </button>
+                <div class="hidden md:block overflow-hidden transition-all duration-300">
+                    <div class="flex flex-wrap gap-4 items-center justify-start bg-slate-800/30 p-4 rounded-xl border border-slate-700/50">
+                        <?php echo get_theme_mod('hasht_footer_license_codes'); ?>
+                    </div>
+                </div>
             </section>
         </div>
 

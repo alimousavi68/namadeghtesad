@@ -48,7 +48,7 @@
                         }
                         ?>
                     </div>
-                    <aside class="xl:col-span-4">
+                    <aside class="xl:col-span-4 space-y-6">
                         <?php 
                         if (get_theme_mod('hasht_home_notes_enable', true)) {
                             // Display the dedicated widget area instead of the hardcoded view

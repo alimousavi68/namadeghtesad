@@ -770,7 +770,7 @@ class Hasht_Notes_Interviews_Widget extends WP_Widget {
             $cat_link = get_category_link($cat);
         }
 
-        echo '<div class="space-y-5 sticky top-10">';
+        echo '<div class="space-y-4">';
         echo '<div class="flex items-center justify-between">';
         echo '<h3 class="section-title flex items-center gap-4 text-xl font-medium">';
         echo '<div class="w-1.5 h-8 flex flex-col rounded-full overflow-hidden shrink-0">';

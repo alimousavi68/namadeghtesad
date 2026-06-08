@@ -1,7 +1,7 @@
 <!-- Footer -->
 <footer class="bg-footer-bg text-slate-300 pt-16 pb-8 border-t border-slate-800">
     <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
             <!-- Brand Info -->
             <section class="col-span-1 flex flex-col items-center text-center md:items-start md:text-right">
                 <h2 class="text-3xl font-medium text-white mb-1">
@@ -145,7 +145,7 @@ echo '<img src="' . esc_url($logo[0]) . '" alt="' . get_bloginfo('name') . '" cl
             </section>
 
             <!-- Licenses -->
-            <section class="col-span-1 footer-accordion">
+            <section class="hidden col-span-1 footer-accordion">
                 <button class="w-full flex items-center justify-between text-white font-medium mb-4 md:mb-6 border-r-2 border-primary pr-3 md:cursor-default">
                     <span>مجوز ها</span>
                     <i data-lucide="chevron-down" class="w-5 h-5 md:hidden transition-transform duration-300"></i>

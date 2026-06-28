@@ -1173,22 +1173,22 @@ class Hasht_Special_Dossier_Widget extends WP_Widget {
         $height_mode = !empty($instance['height_mode']) ? $instance['height_mode'] : 'h-[380px]';
         $custom_height = !empty($instance['custom_height']) ? absint($instance['custom_height']) : 380;
 
-        $tags = get_tags(['hide_empty' => false]);
+        $tag_name = '';
+        if ($tag_id) {
+            $tag = get_term($tag_id, 'post_tag');
+            if ($tag && !is_wp_error($tag)) {
+                $tag_name = $tag->name;
+            }
+        }
         ?>
         <p>
             <label for="<?php echo esc_attr($this->get_field_id('title')); ?>">عنوان ابزارک (برای مدیریت):</label>
             <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text" value="<?php echo esc_attr($title); ?>">
         </p>
         <p>
-            <label for="<?php echo esc_attr($this->get_field_id('tag_id')); ?>">تگ پرونده ویژه (منبع اخبار):</label>
-            <select class="widefat" id="<?php echo esc_attr($this->get_field_id('tag_id')); ?>" name="<?php echo esc_attr($this->get_field_name('tag_id')); ?>">
-                <option value="0">انتخاب تگ</option>
-                <?php if (!empty($tags)) : foreach ($tags as $tag) : ?>
-                    <option value="<?php echo esc_attr($tag->term_id); ?>" <?php selected($tag_id, $tag->term_id); ?>>
-                        <?php echo esc_html($tag->name); ?> (<?php echo esc_html($tag->count); ?> نوشته)
-                    </option>
-                <?php endforeach; endif; ?>
-            </select>
+            <label for="<?php echo esc_attr($this->get_field_id('tag_name_display')); ?>">تگ پرونده ویژه (جستجو و انتخاب):</label>
+            <input class="widefat hasht-tag-autocomplete" id="<?php echo esc_attr($this->get_field_id('tag_name_display')); ?>" type="text" value="<?php echo esc_attr($tag_name); ?>" placeholder="بخشی از نام تگ را تایپ کنید...">
+            <input type="hidden" class="hasht-tag-id-hidden" id="<?php echo esc_attr($this->get_field_id('tag_id')); ?>" name="<?php echo esc_attr($this->get_field_name('tag_id')); ?>" value="<?php echo esc_attr($tag_id); ?>">
         </p>
         <p>
             <label for="<?php echo esc_attr($this->get_field_id('dossier_headline')); ?>">تیتر برجسته و بزرگ پرونده:</label>
@@ -1237,4 +1237,143 @@ class Hasht_Special_Dossier_Widget extends WP_Widget {
         $instance['custom_height'] = !empty($new_instance['custom_height']) ? absint($new_instance['custom_height']) : 380;
         return $instance;
     }
+}
+
+/**
+ * AJAX Tag Search for Widgets (Autocomplete)
+ */
+add_action('wp_ajax_hasht_search_tags', 'hasht_ajax_search_tags');
+function hasht_ajax_search_tags() {
+    check_ajax_referer('hasht-widget-nonce', 'nonce');
+    $q = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
+    if (empty($q)) {
+        wp_send_json_success([]);
+    }
+    
+    $tags = get_terms([
+        'taxonomy'   => 'post_tag',
+        'search'     => $q,
+        'hide_empty' => false,
+        'number'     => 15,
+    ]);
+    
+    $results = [];
+    if (!is_wp_error($tags) && !empty($tags)) {
+        foreach ($tags as $tag) {
+            $results[] = [
+                'id'   => $tag->term_id,
+                'name' => $tag->name . ' (' . $tag->count . ' نوشته)',
+            ];
+        }
+    }
+    wp_send_json_success($results);
+}
+
+/**
+ * Enqueue jQuery UI Autocomplete and styles in WordPress Admin for widgets
+ */
+add_action('admin_enqueue_scripts', 'hasht_admin_widget_scripts');
+function hasht_admin_widget_scripts($hook) {
+    if ($hook !== 'widgets.php' && $hook !== 'customize.php') {
+        return;
+    }
+    
+    wp_enqueue_script('jquery-ui-autocomplete');
+    
+    // Autocomplete overlay CSS styling for WP Admin
+    $inline_css = '
+        .ui-autocomplete {
+            z-index: 999999 !important;
+            background: #fff;
+            border: 1px solid #ccd0d4;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-height: 250px;
+            overflow-y: auto;
+            list-style: none;
+            padding: 5px 0;
+            margin: 2px 0 0 0;
+            border-radius: 4px;
+        }
+        .ui-menu-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            color: #2c3338;
+            font-size: 13px;
+        }
+        .ui-menu-item:hover, .ui-state-active {
+            background-color: #3b82f6 !important;
+            color: #fff !important;
+            outline: none;
+        }
+    ';
+    wp_register_style('hasht-widget-admin-css', false);
+    wp_enqueue_style('hasht-widget-admin-css');
+    wp_add_inline_style('hasht-widget-admin-css', $inline_css);
+    
+    $inline_js = "
+    jQuery(document).ready(function($) {
+        function initAutocomplete(container) {
+            $(container).find('.hasht-tag-autocomplete').each(function() {
+                var \$input = \$(this);
+                var \$hidden = \$input.siblings('.hasht-tag-id-hidden');
+                if (\$input.data('autocomplete-initialized')) {
+                    return;
+                }
+                \$input.data('autocomplete-initialized', true);
+                \$input.autocomplete({
+                    source: function(request, response) {
+                        \$.ajax({
+                            url: ajaxurl,
+                            dataType: 'json',
+                            data: {
+                                action: 'hasht_search_tags',
+                                q: request.term,
+                                nonce: hasht_widget_vars.nonce
+                            },
+                            success: function(res) {
+                                if (res.success) {
+                                    response(\$.map(res.data, function(item) {
+                                        return {
+                                            label: item.name,
+                                            value: item.name,
+                                            id: item.id
+                                        };
+                                    }));
+                                }
+                            }
+                        });
+                    },
+                    minLength: 2,
+                    select: function(event, ui) {
+                        \$hidden.val(ui.item.id).trigger('change');
+                    }
+                });
+            });
+        }
+
+        // Init on load
+        initAutocomplete(document);
+
+        // Init on widgets events (Gutenberg/Classic)
+        \$(document).on('widget-added widget-updated', function(event, widget) {
+            initAutocomplete(widget);
+        });
+
+        // Customizer panels support
+        if (typeof wp !== 'undefined' && wp.customize) {
+            wp.customize.bind('ready', function() {
+                wp.customize.control.bind('add', function(control) {
+                    if (control.container) {
+                        initAutocomplete(control.container);
+                    }
+                });
+            });
+        }
+    });
+    ";
+    
+    wp_add_inline_script('jquery-ui-autocomplete', $inline_js);
+    wp_localize_script('jquery-ui-autocomplete', 'hasht_widget_vars', [
+        'nonce' => wp_create_nonce('hasht-widget-nonce'),
+    ]);
 }

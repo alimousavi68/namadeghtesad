@@ -59,7 +59,7 @@ function hasht_widgets_init() {
     register_widget('Hasht_Selected_News_Widget');
     register_widget('Hasht_Market_Widget');
     register_widget('Hasht_Advertisement_Widget');
-    register_widget('Hasht_Pro_Ad_Widget');
+    register_widget('Hasht_Pro_Ad_Widget'); 
     register_widget('Hasht_Notes_Interviews_Widget');
     register_widget('Hasht_Company_Stories_Widget');
     register_widget('Hasht_Special_Dossier_Widget');

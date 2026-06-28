@@ -48,6 +48,13 @@ if (!function_exists('core_enqueue_assets')) {
                 [],
                 $ver('/assets/css/tokens.css')
             );
+        } else {
+            wp_register_style('theme-tokens', false);
+            wp_enqueue_style('theme-tokens');
+            if (function_exists('core_generate_tokens_css')) {
+                $inline_css = core_generate_tokens_css();
+                wp_add_inline_style('theme-tokens', $inline_css);
+            }
         }
 
         // 4. Theme Main

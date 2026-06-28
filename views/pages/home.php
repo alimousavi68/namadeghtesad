@@ -39,16 +39,36 @@
                 }
                 ?>
 
-                <!-- Society + Sidebar -->
+                <!-- Society & Content Grid + Sidebar -->
                 <div class="grid grid-cols-1 xl:grid-cols-12 gap-12">
-                    <div class="xl:col-span-8">
+                    <div class="xl:col-span-8 space-y-8">
                         <?php 
                         if (get_theme_mod('hasht_home_society_enable', true)) {
                             core_view('partials/section-society-economics');
                         }
                         ?>
+
+                        <!-- Industry & Energy (Feature Section) -->
+                        <?php 
+                        if (get_theme_mod('hasht_home_industry_enable', true) || get_theme_mod('hasht_home_energy_enable', true)) {
+                            core_view('partials/section-industry-energy');
+                        }
+                        ?>
+
+                        <?php 
+                        if (is_active_sidebar('home-top-content-sidebar')) {
+                            dynamic_sidebar('home-top-content-sidebar');
+                        }
+                        ?>
+
+                        <!-- Visual Multimedia Showcase -->
+                        <?php 
+                        if (get_theme_mod('hasht_home_multimedia_enable', true)) {
+                            core_view('partials/section-multimedia');
+                        }
+                        ?>
                     </div>
-                    <aside class="xl:col-span-4 space-y-6 sticky top-10">
+                    <aside class="xl:col-span-4 space-y-6 sticky top-28 self-start">
                         <?php 
                         if (get_theme_mod('hasht_home_notes_enable', true)) {
                             // Display the dedicated widget area instead of the hardcoded view
@@ -62,26 +82,6 @@
                         ?>
                     </aside>
                 </div>
-
-                <!-- Industry & Energy (Feature Section) -->
-                <?php 
-                if (get_theme_mod('hasht_home_industry_enable', true) || get_theme_mod('hasht_home_energy_enable', true)) {
-                    core_view('partials/section-industry-energy');
-                }
-                ?>
-
-                 <?php 
-                if (is_active_sidebar('home-top-content-sidebar')) {
-                    dynamic_sidebar('home-top-content-sidebar');
-                }
-                ?>
-
-                <!-- Visual Multimedia Showcase -->
-                <?php 
-                if (get_theme_mod('hasht_home_multimedia_enable', true)) {
-                    core_view('partials/section-multimedia');
-                }
-                ?>
 
             </div>
 

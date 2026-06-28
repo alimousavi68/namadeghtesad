@@ -4,6 +4,7 @@ module.exports = {
   content: [
     './*.php',
     './views/**/*.php',
+    './inc/**/*.php',
     './_hasht_core/views/**/*.php',
     './assets/js/**/*.js',
   ],

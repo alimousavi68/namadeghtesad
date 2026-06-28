@@ -1027,40 +1027,49 @@ class Hasht_Special_Dossier_Widget extends WP_Widget {
 
     public function widget($args, $instance) {
         $title = !empty($instance['title']) ? $instance['title'] : 'پرونده ویژه';
-        $category = !empty($instance['category']) ? $instance['category'] : 0;
+        $tag_id = !empty($instance['tag_id']) ? absint($instance['tag_id']) : 0;
+        $dossier_headline = !empty($instance['dossier_headline']) ? $instance['dossier_headline'] : '';
         $custom_img = !empty($instance['custom_img']) ? $instance['custom_img'] : '';
         $badge_text = !empty($instance['badge_text']) ? $instance['badge_text'] : 'پرونده ویژه';
         $cta_text = !empty($instance['cta_text']) ? $instance['cta_text'] : 'ورود به پرونده';
+        $height_mode = !empty($instance['height_mode']) ? $instance['height_mode'] : 'h-[380px]';
+        $custom_height = !empty($instance['custom_height']) ? absint($instance['custom_height']) : 380;
 
-        if ($category <= 0) {
+        if ($tag_id <= 0) {
             return;
         }
 
-        // Get category info
-        $cat_info = get_category($category);
-        if (!$cat_info || is_wp_error($cat_info)) {
+        // Get tag info
+        $tag_info = get_term($tag_id, 'post_tag');
+        if (!$tag_info || is_wp_error($tag_info)) {
             return;
         }
 
-        $category_link = get_category_link($category);
-        $total_posts = $cat_info->count;
+        $tag_link = get_tag_link($tag_id);
+        $total_posts = $tag_info->count;
 
-        // Query the latest post in this category to fetch cover image and headline
+        // Query the latest post in this tag to fetch cover image and latest post title
         $query_args = [
             'post_type'      => 'post',
             'posts_per_page' => 1,
-            'cat'            => $category,
             'post_status'    => 'publish',
             'no_found_rows'  => true,
+            'tax_query'      => [
+                [
+                    'taxonomy' => 'post_tag',
+                    'field'    => 'term_id',
+                    'terms'    => $tag_id,
+                ]
+            ]
         ];
         $query = new WP_Query($query_args);
 
-        $headline = $cat_info->name; // Fallback to category name
+        $latest_post_title = '';
         $cover_url = '';
 
         if ($query->have_posts()) {
             $query->the_post();
-            $headline = get_the_title();
+            $latest_post_title = get_the_title();
             if (empty($custom_img)) {
                 $cover_url = get_the_post_thumbnail_url(get_the_ID(), 'large');
             }
@@ -1071,19 +1080,42 @@ class Hasht_Special_Dossier_Widget extends WP_Widget {
             $cover_url = $custom_img;
         }
 
+        // Determine inline styles and classes for height
+        $container_classes = "relative w-full rounded-2xl overflow-hidden group shadow-md hover:shadow-xl transition-all duration-500";
+        $inline_style = "";
+
+        if ($height_mode === 'custom') {
+            $inline_style = "style=\"height: {$custom_height}px;\"";
+        } elseif ($height_mode === 'aspect-square') {
+            $container_classes .= " aspect-square h-auto";
+            $inline_style = "style=\"aspect-ratio: 1/1; height: auto;\"";
+        } elseif ($height_mode === 'h-[300px]') {
+            $container_classes .= " h-[300px]";
+            $inline_style = "style=\"height: 300px;\"";
+        } elseif ($height_mode === 'h-[220px]') {
+            $container_classes .= " h-[220px]";
+            $inline_style = "style=\"height: 220px;\"";
+        } else {
+            $container_classes .= " h-[380px]";
+            $inline_style = "style=\"height: 380px;\"";
+        }
+
+        // Headline displaying logic:
+        $display_headline = !empty($dossier_headline) ? $dossier_headline : $tag_info->name;
+
         // Output
         echo $args['before_widget'];
         ?>
-        <div class="relative w-full h-[380px] rounded-2xl overflow-hidden group shadow-md hover:shadow-xl transition-all duration-500">
+        <div class="<?php echo esc_attr($container_classes); ?>" <?php echo $inline_style; ?>>
             <!-- Background Image -->
             <?php if ($cover_url) : ?>
-                <img src="<?php echo esc_url($cover_url); ?>" alt="<?php echo esc_attr($headline); ?>" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
+                <img src="<?php echo esc_url($cover_url); ?>" alt="<?php echo esc_attr($display_headline); ?>" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
             <?php else : ?>
                 <div class="absolute inset-0 bg-slate-900"></div>
             <?php endif; ?>
 
             <!-- Overlay Gradient -->
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent z-10"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent z-10"></div>
 
             <!-- Pulsing Badge (Top Right for RTL) -->
             <div class="absolute top-4 right-4 z-20 flex items-center gap-2 bg-rose-600/90 text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-sm">
@@ -1095,18 +1127,21 @@ class Hasht_Special_Dossier_Widget extends WP_Widget {
             </div>
 
             <!-- Content Area (Bottom) -->
-            <div class="absolute bottom-0 inset-x-0 p-6 z-20 flex flex-col justify-end h-1/2">
-                <!-- Category/Theme Meta -->
-                <span class="text-[12px] font-semibold text-rose-500 mb-1.5 block">
-                    <?php echo esc_html($cat_info->name); ?>
-                </span>
+            <div class="absolute bottom-0 inset-x-0 p-5 z-20 flex flex-col justify-end">
 
-                <!-- Headline -->
-                <h3 class="text-white text-[16px] md:text-[18px] font-bold leading-relaxed mb-4 line-clamp-2 transition-colors duration-300 group-hover:text-rose-100">
-                    <a href="<?php echo esc_url($category_link); ?>">
-                        <?php echo esc_html($headline); ?>
+                <!-- Prominent Dossier Headline (Large) -->
+                <h3 class="text-white text-[18px] md:text-[20px] font-extrabold leading-snug mb-2 line-clamp-2 transition-colors duration-300 group-hover:text-rose-100">
+                    <a href="<?php echo esc_url($tag_link); ?>">
+                        <?php echo esc_html($display_headline); ?>
                     </a>
                 </h3>
+
+                <!-- Secondary Latest Article Title (Small) -->
+                <?php if (!empty($latest_post_title)) : ?>
+                    <p class="text-slate-300 text-[12px] line-clamp-1 mb-4 leading-relaxed font-medium">
+                        <span class="text-slate-400">آخرین خبر:</span> <?php echo esc_html($latest_post_title); ?>
+                    </p>
+                <?php endif; ?>
 
                 <!-- Divider & Footer Info -->
                 <div class="flex items-center justify-between border-t border-white/10 pt-4 mt-2">
@@ -1117,7 +1152,7 @@ class Hasht_Special_Dossier_Widget extends WP_Widget {
                     </span>
 
                     <!-- Call To Action -->
-                    <a href="<?php echo esc_url($category_link); ?>" class="flex items-center gap-1 text-[11px] font-bold text-white bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 hover:bg-rose-600 hover:border-rose-600 hover:gap-1.5 transition-all duration-300">
+                    <a href="<?php echo esc_url($tag_link); ?>" class="flex items-center gap-1 text-[11px] font-bold text-white bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 hover:bg-rose-600 hover:border-rose-600 hover:gap-1.5 transition-all duration-300">
                         <?php echo esc_html($cta_text); ?>
                         <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
                     </a>
@@ -1130,30 +1165,40 @@ class Hasht_Special_Dossier_Widget extends WP_Widget {
 
     public function form($instance) {
         $title = !empty($instance['title']) ? $instance['title'] : 'پرونده ویژه';
-        $category = !empty($instance['category']) ? $instance['category'] : 0;
+        $tag_id = !empty($instance['tag_id']) ? absint($instance['tag_id']) : 0;
+        $dossier_headline = !empty($instance['dossier_headline']) ? $instance['dossier_headline'] : '';
         $custom_img = !empty($instance['custom_img']) ? $instance['custom_img'] : '';
         $badge_text = !empty($instance['badge_text']) ? $instance['badge_text'] : 'پرونده ویژه';
         $cta_text = !empty($instance['cta_text']) ? $instance['cta_text'] : 'ورود به پرونده';
+        $height_mode = !empty($instance['height_mode']) ? $instance['height_mode'] : 'h-[380px]';
+        $custom_height = !empty($instance['custom_height']) ? absint($instance['custom_height']) : 380;
+
+        $tags = get_tags(['hide_empty' => false]);
         ?>
         <p>
-            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>">عنوان ویجت:</label>
+            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>">عنوان ابزارک (برای مدیریت):</label>
             <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text" value="<?php echo esc_attr($title); ?>">
         </p>
         <p>
-            <label for="<?php echo esc_attr($this->get_field_id('category')); ?>">دسته‌بندی پرونده:</label>
-            <?php wp_dropdown_categories([
-                'show_option_none' => 'انتخاب دسته‌بندی',
-                'hide_empty'      => 0,
-                'id'              => $this->get_field_id('category'),
-                'name'            => $this->get_field_name('category'),
-                'selected'        => $category,
-                'class'           => 'widefat',
-            ]); ?>
+            <label for="<?php echo esc_attr($this->get_field_id('tag_id')); ?>">تگ پرونده ویژه (منبع اخبار):</label>
+            <select class="widefat" id="<?php echo esc_attr($this->get_field_id('tag_id')); ?>" name="<?php echo esc_attr($this->get_field_name('tag_id')); ?>">
+                <option value="0">انتخاب تگ</option>
+                <?php if (!empty($tags)) : foreach ($tags as $tag) : ?>
+                    <option value="<?php echo esc_attr($tag->term_id); ?>" <?php selected($tag_id, $tag->term_id); ?>>
+                        <?php echo esc_html($tag->name); ?> (<?php echo esc_html($tag->count); ?> نوشته)
+                    </option>
+                <?php endforeach; endif; ?>
+            </select>
+        </p>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('dossier_headline')); ?>">تیتر برجسته و بزرگ پرونده:</label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('dossier_headline')); ?>" name="<?php echo esc_attr($this->get_field_name('dossier_headline')); ?>" type="text" value="<?php echo esc_attr($dossier_headline); ?>" placeholder="مثلاً: بررسی زمین خواری در تهران">
+            <small>اگر خالی باشد، نام تگ انتخاب شده به عنوان تیتر قرار می‌گیرد.</small>
         </p>
         <p>
             <label for="<?php echo esc_attr($this->get_field_id('custom_img')); ?>">آدرس تصویر سفارشی کاور (اختیاری):</label>
             <input class="widefat" id="<?php echo esc_attr($this->get_field_id('custom_img')); ?>" name="<?php echo esc_attr($this->get_field_name('custom_img')); ?>" type="text" value="<?php echo esc_attr($custom_img); ?>" placeholder="https://...">
-            <small>اگر خالی باشد، تصویر آخرین خبر این دسته‌بندی استفاده می‌شود.</small>
+            <small>اگر خالی باشد، تصویر شاخص آخرین نوشته این تگ به عنوان کاور استفاده می‌شود.</small>
         </p>
         <p>
             <label for="<?php echo esc_attr($this->get_field_id('badge_text')); ?>">متن نشان (Badge):</label>
@@ -1163,16 +1208,33 @@ class Hasht_Special_Dossier_Widget extends WP_Widget {
             <label for="<?php echo esc_attr($this->get_field_id('cta_text')); ?>">متن دکمه فراخوان (CTA):</label>
             <input class="widefat" id="<?php echo esc_attr($this->get_field_id('cta_text')); ?>" name="<?php echo esc_attr($this->get_field_name('cta_text')); ?>" type="text" value="<?php echo esc_attr($cta_text); ?>">
         </p>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('height_mode')); ?>">حالت ارتفاع / ابعاد:</label>
+            <select class="widefat" id="<?php echo esc_attr($this->get_field_id('height_mode')); ?>" name="<?php echo esc_attr($this->get_field_name('height_mode')); ?>" onchange="jQuery(this).parent().next('.custom-height-input').toggle(this.value === 'custom');">
+                <option value="h-[220px]" <?php selected($height_mode, 'h-[220px]'); ?>>مستطیل افقی (220px)</option>
+                <option value="h-[380px]" <?php selected($height_mode, 'h-[380px]'); ?>>مستطیل عمودی بزرگ (380px)</option>
+                <option value="h-[300px]" <?php selected($height_mode, 'h-[300px]'); ?>>مستطیل عمودی کوچک (300px)</option>
+                <option value="aspect-square" <?php selected($height_mode, 'aspect-square'); ?>>مربعی خودکار (Square)</option>
+                <option value="custom" <?php selected($height_mode, 'custom'); ?>>ارتفاع سفارشی (پیکسل)</option>
+            </select>
+        </p>
+        <p class="custom-height-input" style="<?php echo ($height_mode === 'custom') ? '' : 'display:none;'; ?>">
+            <label for="<?php echo esc_attr($this->get_field_id('custom_height')); ?>">ارتفاع سفارشی (به پیکسل):</label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('custom_height')); ?>" name="<?php echo esc_attr($this->get_field_name('custom_height')); ?>" type="number" value="<?php echo esc_attr($custom_height); ?>" min="150" step="10">
+        </p>
         <?php
     }
 
     public function update($new_instance, $old_instance) {
         $instance = [];
         $instance['title'] = !empty($new_instance['title']) ? strip_tags($new_instance['title']) : '';
-        $instance['category'] = !empty($new_instance['category']) ? absint($new_instance['category']) : 0;
+        $instance['tag_id'] = !empty($new_instance['tag_id']) ? absint($new_instance['tag_id']) : 0;
+        $instance['dossier_headline'] = !empty($new_instance['dossier_headline']) ? strip_tags($new_instance['dossier_headline']) : '';
         $instance['custom_img'] = !empty($new_instance['custom_img']) ? esc_url_raw($new_instance['custom_img']) : '';
         $instance['badge_text'] = !empty($new_instance['badge_text']) ? strip_tags($new_instance['badge_text']) : '';
         $instance['cta_text'] = !empty($new_instance['cta_text']) ? strip_tags($new_instance['cta_text']) : '';
+        $instance['height_mode'] = !empty($new_instance['height_mode']) ? sanitize_key($new_instance['height_mode']) : 'h-[380px]';
+        $instance['custom_height'] = !empty($new_instance['custom_height']) ? absint($new_instance['custom_height']) : 380;
         return $instance;
     }
 }

@@ -62,6 +62,7 @@ function hasht_widgets_init() {
     register_widget('Hasht_Pro_Ad_Widget');
     register_widget('Hasht_Notes_Interviews_Widget');
     register_widget('Hasht_Company_Stories_Widget');
+    register_widget('Hasht_Special_Dossier_Widget');
 }
 add_action('widgets_init', 'hasht_widgets_init');
 
@@ -1007,6 +1008,171 @@ class Hasht_Company_Stories_Widget extends WP_Widget {
         $instance['cat'] = (!empty($new_instance['cat'])) ? absint($new_instance['cat']) : 0;
         $instance['visible_items'] = (!empty($new_instance['visible_items'])) ? absint($new_instance['visible_items']) : 8;
         $instance['autoplay'] = isset($new_instance['autoplay']) ? (bool) $new_instance['autoplay'] : false;
+        return $instance;
+    }
+}
+
+/**
+ * Widget: Special Dossier (Cinematic full-cover card)
+ */
+class Hasht_Special_Dossier_Widget extends WP_Widget {
+
+    public function __construct() {
+        parent::__construct(
+            'hasht_special_dossier',
+            'نماد اقتصاد: پرونده ویژه (حرفه‌ای)',
+            ['description' => 'نمایش یک پرونده ویژه به صورت کارت تمام‌کاور سینمایی و جذاب با شمارنده اخبار مرتبط']
+        );
+    }
+
+    public function widget($args, $instance) {
+        $title = !empty($instance['title']) ? $instance['title'] : 'پرونده ویژه';
+        $category = !empty($instance['category']) ? $instance['category'] : 0;
+        $custom_img = !empty($instance['custom_img']) ? $instance['custom_img'] : '';
+        $badge_text = !empty($instance['badge_text']) ? $instance['badge_text'] : 'پرونده ویژه';
+        $cta_text = !empty($instance['cta_text']) ? $instance['cta_text'] : 'ورود به پرونده';
+
+        if ($category <= 0) {
+            return;
+        }
+
+        // Get category info
+        $cat_info = get_category($category);
+        if (!$cat_info || is_wp_error($cat_info)) {
+            return;
+        }
+
+        $category_link = get_category_link($category);
+        $total_posts = $cat_info->count;
+
+        // Query the latest post in this category to fetch cover image and headline
+        $query_args = [
+            'post_type'      => 'post',
+            'posts_per_page' => 1,
+            'cat'            => $category,
+            'post_status'    => 'publish',
+            'no_found_rows'  => true,
+        ];
+        $query = new WP_Query($query_args);
+
+        $headline = $cat_info->name; // Fallback to category name
+        $cover_url = '';
+
+        if ($query->have_posts()) {
+            $query->the_post();
+            $headline = get_the_title();
+            if (empty($custom_img)) {
+                $cover_url = get_the_post_thumbnail_url(get_the_ID(), 'large');
+            }
+            wp_reset_postdata();
+        }
+
+        if (!empty($custom_img)) {
+            $cover_url = $custom_img;
+        }
+
+        // Output
+        echo $args['before_widget'];
+        ?>
+        <div class="relative w-full h-[380px] rounded-2xl overflow-hidden group shadow-md hover:shadow-xl transition-all duration-500">
+            <!-- Background Image -->
+            <?php if ($cover_url) : ?>
+                <img src="<?php echo esc_url($cover_url); ?>" alt="<?php echo esc_attr($headline); ?>" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
+            <?php else : ?>
+                <div class="absolute inset-0 bg-slate-900"></div>
+            <?php endif; ?>
+
+            <!-- Overlay Gradient -->
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent z-10"></div>
+
+            <!-- Pulsing Badge (Top Right for RTL) -->
+            <div class="absolute top-4 right-4 z-20 flex items-center gap-2 bg-rose-600/90 text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-sm">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                </span>
+                <?php echo esc_html($badge_text); ?>
+            </div>
+
+            <!-- Content Area (Bottom) -->
+            <div class="absolute bottom-0 inset-x-0 p-6 z-20 flex flex-col justify-end h-1/2">
+                <!-- Category/Theme Meta -->
+                <span class="text-[12px] font-semibold text-rose-500 mb-1.5 block">
+                    <?php echo esc_html($cat_info->name); ?>
+                </span>
+
+                <!-- Headline -->
+                <h3 class="text-white text-[16px] md:text-[18px] font-bold leading-relaxed mb-4 line-clamp-2 transition-colors duration-300 group-hover:text-rose-100">
+                    <a href="<?php echo esc_url($category_link); ?>">
+                        <?php echo esc_html($headline); ?>
+                    </a>
+                </h3>
+
+                <!-- Divider & Footer Info -->
+                <div class="flex items-center justify-between border-t border-white/10 pt-4 mt-2">
+                    <!-- Related Count -->
+                    <span class="text-slate-300 text-[11px] font-medium flex items-center gap-1.5">
+                        <i data-lucide="layers" class="w-3.5 h-3.5 opacity-80"></i>
+                        شامل <?php echo esc_html($total_posts); ?> گزارش مرتبط
+                    </span>
+
+                    <!-- Call To Action -->
+                    <a href="<?php echo esc_url($category_link); ?>" class="flex items-center gap-1 text-[11px] font-bold text-white bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 hover:bg-rose-600 hover:border-rose-600 hover:gap-1.5 transition-all duration-300">
+                        <?php echo esc_html($cta_text); ?>
+                        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <?php
+        echo $args['after_widget'];
+    }
+
+    public function form($instance) {
+        $title = !empty($instance['title']) ? $instance['title'] : 'پرونده ویژه';
+        $category = !empty($instance['category']) ? $instance['category'] : 0;
+        $custom_img = !empty($instance['custom_img']) ? $instance['custom_img'] : '';
+        $badge_text = !empty($instance['badge_text']) ? $instance['badge_text'] : 'پرونده ویژه';
+        $cta_text = !empty($instance['cta_text']) ? $instance['cta_text'] : 'ورود به پرونده';
+        ?>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>">عنوان ویجت:</label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text" value="<?php echo esc_attr($title); ?>">
+        </p>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('category')); ?>">دسته‌بندی پرونده:</label>
+            <?php wp_dropdown_categories([
+                'show_option_none' => 'انتخاب دسته‌بندی',
+                'hide_empty'      => 0,
+                'id'              => $this->get_field_id('category'),
+                'name'            => $this->get_field_name('category'),
+                'selected'        => $category,
+                'class'           => 'widefat',
+            ]); ?>
+        </p>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('custom_img')); ?>">آدرس تصویر سفارشی کاور (اختیاری):</label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('custom_img')); ?>" name="<?php echo esc_attr($this->get_field_name('custom_img')); ?>" type="text" value="<?php echo esc_attr($custom_img); ?>" placeholder="https://...">
+            <small>اگر خالی باشد، تصویر آخرین خبر این دسته‌بندی استفاده می‌شود.</small>
+        </p>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('badge_text')); ?>">متن نشان (Badge):</label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('badge_text')); ?>" name="<?php echo esc_attr($this->get_field_name('badge_text')); ?>" type="text" value="<?php echo esc_attr($badge_text); ?>">
+        </p>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('cta_text')); ?>">متن دکمه فراخوان (CTA):</label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('cta_text')); ?>" name="<?php echo esc_attr($this->get_field_name('cta_text')); ?>" type="text" value="<?php echo esc_attr($cta_text); ?>">
+        </p>
+        <?php
+    }
+
+    public function update($new_instance, $old_instance) {
+        $instance = [];
+        $instance['title'] = !empty($new_instance['title']) ? strip_tags($new_instance['title']) : '';
+        $instance['category'] = !empty($new_instance['category']) ? absint($new_instance['category']) : 0;
+        $instance['custom_img'] = !empty($new_instance['custom_img']) ? esc_url_raw($new_instance['custom_img']) : '';
+        $instance['badge_text'] = !empty($new_instance['badge_text']) ? strip_tags($new_instance['badge_text']) : '';
+        $instance['cta_text'] = !empty($new_instance['cta_text']) ? strip_tags($new_instance['cta_text']) : '';
         return $instance;
     }
 }

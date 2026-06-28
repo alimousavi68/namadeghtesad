@@ -40,21 +40,19 @@ if (!function_exists('core_enqueue_assets')) {
             );
         }
 
+        $tokens_file = get_template_directory() . '/assets/css/tokens.css';
+        $use_tokens_file = file_exists($tokens_file) && is_writable($tokens_file);
+        $dependencies = ['core-static'];
+
         // 3. Theme Token
-        if (file_exists(get_template_directory() . '/assets/css/tokens.css')) {
+        if ($use_tokens_file) {
             wp_enqueue_style(
                 'theme-tokens',
                 get_stylesheet_directory_uri() . '/assets/css/tokens.css',
                 [],
                 $ver('/assets/css/tokens.css')
             );
-        } else {
-            wp_register_style('theme-tokens', false);
-            wp_enqueue_style('theme-tokens');
-            if (function_exists('core_generate_tokens_css')) {
-                $inline_css = core_generate_tokens_css();
-                wp_add_inline_style('theme-tokens', $inline_css);
-            }
+            $dependencies[] = 'theme-tokens';
         }
 
         // 4. Theme Main
@@ -62,9 +60,16 @@ if (!function_exists('core_enqueue_assets')) {
             wp_enqueue_style(
                 'theme-main',
                 get_stylesheet_directory_uri() . '/assets/css/theme.css',
-                ['core-static', 'theme-tokens'],
+                $dependencies,
                 $ver('/assets/css/theme.css')
             );
+
+            if (!$use_tokens_file) {
+                if (function_exists('core_generate_tokens_css')) {
+                    $inline_css = core_generate_tokens_css();
+                    wp_add_inline_style('theme-main', $inline_css);
+                }
+            }
         }
 
         // 5. Theme Style.css

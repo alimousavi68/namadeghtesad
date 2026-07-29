@@ -948,10 +948,8 @@ class Hasht_Company_Stories_Widget extends WP_Widget {
         get_template_part('views/partials/section-company-stories', null, [
             'title'         => $title,
             'count'         => $count,
-            'show_name'     => $show_name,
             'cat'           => $cat,
-            'visible_items' => $visible_items,
-            'autoplay'      => $autoplay,
+            'view_all_text' => isset($instance['view_all_text']) ? $instance['view_all_text'] : 'لیست همه',
         ]);
 
         echo $args['after_widget'];
@@ -962,8 +960,7 @@ class Hasht_Company_Stories_Widget extends WP_Widget {
         $count = !empty($instance['count']) ? $instance['count'] : 12;
         $show_name = isset($instance['show_name']) ? (bool) $instance['show_name'] : true;
         $cat = !empty($instance['cat']) ? $instance['cat'] : 0;
-        $visible_items = !empty($instance['visible_items']) ? $instance['visible_items'] : 8;
-        $autoplay = isset($instance['autoplay']) ? (bool) $instance['autoplay'] : false;
+        $view_all_text = !empty($instance['view_all_text']) ? $instance['view_all_text'] : 'لیست همه';
         ?>
         <p>
             <label for="<?php echo $this->get_field_id('title'); ?>">عنوان ویجت:</label>
@@ -986,16 +983,12 @@ class Hasht_Company_Stories_Widget extends WP_Widget {
             <input class="tiny-text" id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>" type="number" step="1" min="1" value="<?php echo esc_attr($count); ?>" size="3">
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id('visible_items'); ?>">تعداد نمایشی در دسکتاپ:</label>
-            <input class="tiny-text" id="<?php echo $this->get_field_id('visible_items'); ?>" name="<?php echo $this->get_field_name('visible_items'); ?>" type="number" step="1" min="1" value="<?php echo esc_attr($visible_items); ?>" size="3">
+            <label for="<?php echo $this->get_field_id('view_all_text'); ?>">متن دکمه مشاهده همه:</label>
+            <input class="widefat" id="<?php echo $this->get_field_id('view_all_text'); ?>" name="<?php echo $this->get_field_name('view_all_text'); ?>" type="text" value="<?php echo esc_attr($view_all_text); ?>">
         </p>
         <p>
             <input class="checkbox" type="checkbox" <?php checked($show_name); ?> id="<?php echo $this->get_field_id('show_name'); ?>" name="<?php echo $this->get_field_name('show_name'); ?>" />
             <label for="<?php echo $this->get_field_id('show_name'); ?>">نمایش نام شرکت</label>
-        </p>
-        <p>
-            <input class="checkbox" type="checkbox" <?php checked($autoplay); ?> id="<?php echo $this->get_field_id('autoplay'); ?>" name="<?php echo $this->get_field_name('autoplay'); ?>" />
-            <label for="<?php echo $this->get_field_id('autoplay'); ?>">جابجایی خودکار (Autoplay)</label>
         </p>
         <?php
     }
@@ -1006,8 +999,7 @@ class Hasht_Company_Stories_Widget extends WP_Widget {
         $instance['count'] = (!empty($new_instance['count'])) ? absint($new_instance['count']) : 12;
         $instance['show_name'] = isset($new_instance['show_name']) ? (bool) $new_instance['show_name'] : false;
         $instance['cat'] = (!empty($new_instance['cat'])) ? absint($new_instance['cat']) : 0;
-        $instance['visible_items'] = (!empty($new_instance['visible_items'])) ? absint($new_instance['visible_items']) : 8;
-        $instance['autoplay'] = isset($new_instance['autoplay']) ? (bool) $new_instance['autoplay'] : false;
+        $instance['view_all_text'] = (!empty($new_instance['view_all_text'])) ? strip_tags($new_instance['view_all_text']) : 'لیست همه';
         return $instance;
     }
 }

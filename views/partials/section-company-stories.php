@@ -1,17 +1,15 @@
 <?php
 /**
- * Partial: Company Stories
- * Displays a professional, responsive Instagram-style story carousel for companies.
+ * Partial: Company Grid
+ * Displays a professional, responsive grid for companies.
  *
  * @var array $args Widget arguments and instances
  */
 
 $title = !empty($args['title']) ? $args['title'] : '';
-$count = !empty($args['count']) ? $args['count'] : 12;
-$show_name = isset($args['show_name']) ? $args['show_name'] : true;
+$count = !empty($args['count']) ? $args['count'] : 6;
 $cat = !empty($args['cat']) ? $args['cat'] : 0;
-$visible_items = !empty($args['visible_items']) ? $args['visible_items'] : 8;
-$autoplay = isset($args['autoplay']) ? (bool) $args['autoplay'] : false;
+$view_all_text = !empty($args['view_all_text']) ? $args['view_all_text'] : 'لیست همه';
 
 $query_args = [
     'post_type'      => 'company',
@@ -49,139 +47,50 @@ if (!$query->have_posts()) {
                 <?php echo esc_html($title); ?>
             </h3>
             <div class="flex gap-2">
-                <button class="swiper-prev-stories w-10 h-10 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-primary hover:border-primary transition-all disabled:opacity-30 disabled:pointer-events-none">
-                    <i data-lucide="chevron-right" width="20"></i>
-                </button>
-                <button class="swiper-next-stories w-10 h-10 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-primary hover:border-primary transition-all disabled:opacity-30 disabled:pointer-events-none">
-                    <i data-lucide="chevron-left" width="20"></i>
-                </button>
+                <a href="<?php echo esc_url(get_post_type_archive_link('company')); ?>" class="link-more text-sm text-slate-500 hover:text-primary transition-colors flex items-center gap-1 font-medium">
+                    <?php echo esc_html($view_all_text); ?> <i data-lucide="arrow-left" width="16"></i>
+                </a>
             </div>
         </div>
     <?php endif; ?>
 
-    <div class="relative px-4">
-        <!-- Shadow Box Container (No background color as requested, but shadow enabled) -->
-        <div class="rounded-3xl  border border-slate-100 dark:border-slate-800/50">
-            <div class="swiper companyStoriesSwiper">
-                <div class="swiper-wrapper !ease-out">
-                    <?php foreach ($query->posts as $post) : 
-                        $post_id = $post->ID;
-                        // Use 'thumbnail' size as requested (smallest appropriate)
-                        $logo_url = get_the_post_thumbnail_url($post_id, 'thumbnail'); 
-                        $has_logo = !empty($logo_url);
-                        if (!$has_logo) {
-                            // Using a consistent UI placeholder instead of a missing file
-                            $logo_url = ''; 
-                        }
-                        $company_name = get_the_title($post);
-                        $permalink = get_permalink($post_id);
-                    ?>
-                        <div class="swiper-slide">
-                            <a href="<?php echo esc_url($permalink); ?>" class="flex flex-col items-center gap-3 group/item">
-                                <!-- Instagram Style Ring -->
-                                <div class="relative group-hover/item:scale-110 transition-transform duration-500">
-                                    <!-- Fit and Fill: Ensuring the image fills the circle container -->
-                                    <div class="w-[72px] h-[72px] sm:w-[90px] sm:h-[90px] rounded-full p-[3px] bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] animate-story-ring">
-                                        <div class="w-full h-full rounded-full p-[2px] bg-white dark:bg-slate-900">
-                                            <div class="w-full h-full rounded-full overflow-hidden bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center">
-                                                <?php if ($has_logo) : ?>
-                                                    <img 
-                                                        src="<?php echo esc_url($logo_url); ?>" 
-                                                        alt="<?php echo esc_attr($company_name); ?>" 
-                                                        class="w-full h-full object-cover transition-all duration-700 group-hover/item:scale-110"
-                                                        loading="lazy"
-                                                    >
-                                                <?php else : ?>
-                                                    <div class="w-full h-full flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-400">
-                                                        <i data-lucide="building-2" width="32" class="opacity-50"></i>
-                                                    </div>
-                                                <?php endif; ?>
-                                            </div>
+    <div class="px-4">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6">
+            <?php foreach ($query->posts as $post) : 
+                $post_id = $post->ID;
+                $logo_url = get_the_post_thumbnail_url($post_id, 'thumbnail'); 
+                $has_logo = !empty($logo_url);
+                $company_name = get_the_title($post);
+                $permalink = get_permalink($post_id);
+            ?>
+                <a href="<?php echo esc_url($permalink); ?>" class="flex flex-col items-center gap-3 group/item">
+                    <div class="relative group-hover/item:scale-110 transition-transform duration-500">
+                        <div class="w-[72px] h-[72px] sm:w-[90px] sm:h-[90px] rounded-full p-[3px] bg-gradient-to-tr from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800">
+                            <div class="w-full h-full rounded-full p-[2px] bg-white dark:bg-slate-900">
+                                <div class="w-full h-full rounded-full overflow-hidden bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center shadow-inner">
+                                    <?php if ($has_logo) : ?>
+                                        <img 
+                                            src="<?php echo esc_url($logo_url); ?>" 
+                                            alt="<?php echo esc_attr($company_name); ?>" 
+                                            class="w-full h-full object-cover transition-all duration-700 group-hover/item:scale-110"
+                                            loading="lazy"
+                                        >
+                                    <?php else : ?>
+                                        <div class="w-full h-full flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-400">
+                                            <i data-lucide="building-2" width="32" class="opacity-50"></i>
                                         </div>
-                                    </div>
-                                    
-                                    <!-- Hover Overlay -->
-                                    <div class="absolute inset-0 rounded-full bg-primary/5 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                                    <?php endif; ?>
                                 </div>
-                                
-                                <?php if ($show_name) : ?>
-                                    <!-- Long name support: Removed truncate, added line-clamp-2 or wrapping -->
-                                    <span class="text-[11px] sm:text-xs font-bold text-slate-700 dark:text-slate-300 text-center max-w-[90px] sm:max-w-[110px] leading-tight group-hover/item:text-primary transition-colors line-clamp-2 min-h-[2.5em] flex items-center justify-center">
-                                        <?php echo esc_html($company_name); ?>
-                                    </span>
-                                <?php endif; ?>
-                            </a>
+                            </div>
                         </div>
-                    <?php endforeach; wp_reset_postdata(); ?>
-                </div>
-            </div>
+                        <div class="absolute inset-0 rounded-full bg-primary/5 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                    </div>
+                    
+                    <span class="text-[11px] sm:text-xs font-bold text-slate-700 dark:text-slate-300 text-center max-w-[90px] sm:max-w-[110px] leading-tight group-hover/item:text-primary transition-colors line-clamp-2 min-h-[2.5em] flex items-center justify-center">
+                        <?php echo esc_html($company_name); ?>
+                    </span>
+                </a>
+            <?php endforeach; wp_reset_postdata(); ?>
         </div>
     </div>
 </section>
-
-<style>
-.animate-story-ring {
-    background-size: 200% 200%;
-    animation: story-gradient-shift 4s ease infinite;
-}
-@keyframes story-gradient-shift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    if (typeof Swiper !== 'undefined') {
-        const storiesContainer = document.querySelector('.companyStoriesSwiper');
-        const slideCount = storiesContainer ? storiesContainer.querySelectorAll('.swiper-slide').length : 0;
-        const visibleItems = <?php echo intval($visible_items); ?>;
-        
-        const swiper = new Swiper('.companyStoriesSwiper', {
-            slidesPerView: 2,
-            spaceBetween: 16,
-            loop: slideCount > 4, // Enable loop if we have more than 4 slides
-            centeredSlides: false,
-            <?php if ($autoplay) : ?>
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true,
-            },
-            <?php endif; ?>
-            grabCursor: true,
-            mousewheel: {
-                forceToAxis: true,
-            },
-            navigation: {
-                nextEl: '.swiper-next-stories',
-                prevEl: '.swiper-prev-stories',
-            },
-            breakpoints: {
-                480: {
-                    slidesPerView: Math.min(slideCount, 3),
-                    spaceBetween: 16,
-                },
-                640: {
-                    slidesPerView: Math.min(slideCount, 4),
-                    spaceBetween: 20,
-                },
-                768: {
-                    slidesPerView: Math.min(slideCount, 6),
-                    spaceBetween: 24,
-                },
-                1024: {
-                    slidesPerView: Math.min(slideCount, visibleItems),
-                    spaceBetween: 28,
-                }
-            },
-            on: {
-                init: function() {
-                    // Lucide icons are initialized globally in main.js
-                }
-            }
-        });
-    }
-});
-</script>

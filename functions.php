@@ -459,13 +459,15 @@ class Hasht_Mobile_Walker extends Walker_Nav_Menu
         
         if ($depth === 0) {
             // Top Level Items
-            $output .= '<div class="flex items-center justify-between border-b border-slate-50 dark:border-slate-800/50 last:border-0">';
-            $output .= '<a href="' . esc_url($item->url) . '" class="flex-1 px-4 py-4 text-base font-bold text-slate-800 dark:text-slate-100 hover:text-rose-600 transition-colors">' . esc_html($item->title) . '</a>';
+            $output .= '<div class="flex items-center justify-between border-b border-slate-50 dark:border-slate-800/50 last:border-0 w-full">';
             
             if ($has_children) {
-                $output .= '<button type="button" class="p-4 text-slate-400 hover:text-rose-600 transition-colors" data-toggle-submenu aria-expanded="false">';
+                $output .= '<button type="button" class="w-full flex items-center justify-between px-4 py-4 text-base font-bold text-slate-800 dark:text-slate-100 hover:text-rose-600 transition-colors text-right" data-toggle-submenu aria-expanded="false">';
+                $output .= '<span>' . esc_html($item->title) . '</span>';
                 $output .= '<i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></i>';
                 $output .= '</button>';
+            } else {
+                $output .= '<a href="' . esc_url($item->url) . '" class="flex-1 px-4 py-4 text-base font-bold text-slate-800 dark:text-slate-100 hover:text-rose-600 transition-colors block w-full">' . esc_html($item->title) . '</a>';
             }
             $output .= '</div>';
         } else {

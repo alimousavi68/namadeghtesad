@@ -158,4 +158,23 @@
         -moz-font-feature-settings: "ss02";
         -webkit-font-feature-settings: "ss02";
     }
+
+    /* WordPress Alignment Classes */
+    .aligncenter {
+        @apply block mx-auto text-center justify-center;
+    }
+    .alignleft {
+        @apply float-left mr-4 mb-4;
+    }
+    .alignright {
+        @apply float-right ml-4 mb-4;
+    }
+    .single-content figure.aligncenter {
+        @apply flex flex-col items-center mx-auto text-center justify-center;
+    }
+    .single-content figure.aligncenter img,
+    .single-content img.aligncenter,
+    .single-content video.aligncenter {
+        @apply mx-auto block;
+    }
 }

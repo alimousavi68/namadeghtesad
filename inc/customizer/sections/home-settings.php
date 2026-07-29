@@ -391,12 +391,6 @@ $settings = [
                         'type'    => 'text',
                         'default' => '',
                     ],
-                    'hasht_home_publications_cat' => [
-                        'label'   => 'دسته‌بندی',
-                        'type'    => 'select',
-                        'choices' => $cats_options,
-                        'default' => '',
-                    ],
                     'hasht_home_publications_count' => [
                         'label'   => 'تعداد نمایش',
                         'type'    => 'number',

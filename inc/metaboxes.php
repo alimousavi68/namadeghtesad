@@ -261,6 +261,7 @@ class Hasht_News_Meta_Box {
                         <option value="monthly" <?php selected($pub_type, 'monthly'); ?>>ماهنامه</option>
                         <option value="quarterly" <?php selected($pub_type, 'quarterly'); ?>>فصلنامه</option>
                         <option value="yearbook" <?php selected($pub_type, 'yearbook'); ?>>سالنامه</option>
+                        <option value="special_issue" <?php selected($pub_type, 'special_issue'); ?>>ویژه‌نامه</option>
                     </select>
                 </div>
                 <div class="hasht-field-row">

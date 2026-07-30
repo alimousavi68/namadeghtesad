@@ -168,8 +168,14 @@
     
     .single-content figure,
     .single-content .wp-block-embed,
-    .single-content .wp-block-image {
+    .single-content .wp-block-image,
+    .single-content .wp-video {
         @apply mx-auto block max-w-full text-center flex flex-col items-center my-6;
+    }
+    
+    .single-content .wp-video {
+        width: 100% !important;
+        max-width: 100% !important;
     }
     
     .single-content .wp-block-gallery {

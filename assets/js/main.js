@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Lightbox Logic
-    const galleryItems = document.querySelectorAll('.gallery-item, .single-content .wp-block-gallery img, .single-content .wp-block-image img, .single-content figure img');
+    const galleryItems = document.querySelectorAll('.gallery-item, .single-content .wp-block-gallery img, .single-content .wp-block-image img, .single-content figure img, .single-content img[class*="wp-image-"]');
     if (galleryItems.length > 0) {
         // Create Lightbox DOM
         const lightbox = document.createElement('div');

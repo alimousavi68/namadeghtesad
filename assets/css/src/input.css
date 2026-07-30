@@ -159,7 +159,24 @@
         -webkit-font-feature-settings: "ss02";
     }
 
-    /* WordPress Alignment Classes */
+    /* Force Center Align Media */
+    .single-content img,
+    .single-content video,
+    .single-content iframe {
+        @apply mx-auto block max-w-full my-6;
+    }
+    
+    .single-content figure,
+    .single-content .wp-block-embed,
+    .single-content .wp-block-image {
+        @apply mx-auto block max-w-full text-center flex flex-col items-center my-6;
+    }
+    
+    .single-content .wp-block-gallery {
+        @apply mx-auto flex justify-center flex-wrap gap-4 my-6;
+    }
+
+    /* WordPress Alignment Classes (Overrides) */
     .aligncenter {
         @apply block mx-auto text-center justify-center;
     }
@@ -168,13 +185,5 @@
     }
     .alignright {
         @apply float-right ml-4 mb-4;
-    }
-    .single-content figure.aligncenter {
-        @apply flex flex-col items-center mx-auto text-center justify-center;
-    }
-    .single-content figure.aligncenter img,
-    .single-content img.aligncenter,
-    .single-content video.aligncenter {
-        @apply mx-auto block;
     }
 }

@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Lightbox Logic
-    const galleryItems = document.querySelectorAll('.gallery-item');
+    const galleryItems = document.querySelectorAll('.gallery-item, .single-content .wp-block-gallery img, .single-content .wp-block-image img, .single-content figure img');
     if (galleryItems.length > 0) {
         // Create Lightbox DOM
         const lightbox = document.createElement('div');
@@ -256,7 +256,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function openLightbox(index) {
             currentIndex = index;
-            const src = galleryItems[index].getAttribute('href');
+            const item = galleryItems[index];
+            let src = item.getAttribute('href');
+            if (!src) {
+                const parentA = item.closest('a');
+                src = parentA ? parentA.getAttribute('href') : (item.getAttribute('src') || item.src);
+            }
             lightboxImg.src = src;
             updateCounter();
             lightbox.classList.remove('hidden');
@@ -281,7 +286,12 @@ document.addEventListener('DOMContentLoaded', () => {
             lightboxImg.classList.add('opacity-0');
             setTimeout(() => {
                 currentIndex = (currentIndex + 1) % totalItems;
-                const src = galleryItems[currentIndex].getAttribute('href');
+                const item = galleryItems[currentIndex];
+                let src = item.getAttribute('href');
+                if (!src) {
+                    const parentA = item.closest('a');
+                    src = parentA ? parentA.getAttribute('href') : (item.getAttribute('src') || item.src);
+                }
                 lightboxImg.src = src;
                 updateCounter();
                 // Fade in
@@ -294,7 +304,12 @@ document.addEventListener('DOMContentLoaded', () => {
             lightboxImg.classList.add('opacity-0');
             setTimeout(() => {
                 currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-                const src = galleryItems[currentIndex].getAttribute('href');
+                const item = galleryItems[currentIndex];
+                let src = item.getAttribute('href');
+                if (!src) {
+                    const parentA = item.closest('a');
+                    src = parentA ? parentA.getAttribute('href') : (item.getAttribute('src') || item.src);
+                }
                 lightboxImg.src = src;
                 updateCounter();
                 // Fade in
@@ -304,6 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Event Listeners
         galleryItems.forEach((item, index) => {
+            item.style.cursor = 'pointer';
             item.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();

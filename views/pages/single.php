@@ -839,10 +839,9 @@ $share_text = rawurlencode(get_the_title($post_id) . ' - ' . get_permalink($post
                         <?php endif; ?>
 
                         <?php
-                        $related_company_id = 0;
-                        if ($content_type === 'company') {
-                            $related_company_id = absint(get_post_meta($post_id, '_news_related_company_id', true));
-                            $related_post = $related_company_id ? get_post($related_company_id) : null;
+                        $related_company_id = absint(get_post_meta($post_id, '_news_related_company_id', true));
+                        if ($related_company_id) {
+                            $related_post = get_post($related_company_id);
                             if (!$related_post || $related_post->post_type !== 'company') {
                                 $related_company_id = 0;
                             }
